@@ -62,10 +62,6 @@ namespace OGame.Bot.Infrastructure.API
 
                 return new ResourcesOverview();
             }
-
-
-
-            
         }
 
 
