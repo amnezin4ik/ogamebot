@@ -52,18 +52,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthorizationClient.cs" />
+    <Compile Include="APIClients\AuthorizationClient.cs" />
+    <Compile Include="APIClients\FleetEventsClient.cs" />
+    <Compile Include="APIClients\HttpClientFactory.cs" />
+    <Compile Include="APIClients\IAuthorizationClient.cs" />
+    <Compile Include="APIClients\IFleetEventsClient.cs" />
+    <Compile Include="APIClients\IHttpClientFactory.cs" />
+    <Compile Include="APIClients\IResourcesClient.cs" />
+    <Compile Include="APIClients\ResourcesClient.cs" />
+    <Compile Include="Dto\Coordinates.cs" />
+    <Compile Include="Dto\FleetEvent.cs" />
+    <Compile Include="Dto\FleetEventPlanet.cs" />
+    <Compile Include="Dto\MissionType.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\IHttpHelper.cs" />
-    <Compile Include="HttpClientFactory.cs" />
-    <Compile Include="IAuthorizationClient.cs" />
-    <Compile Include="IHttpClientFactory.cs" />
-    <Compile Include="IResourcesClient.cs" />
-    <Compile Include="Models\ResourcesOverview.cs" />
-    <Compile Include="Models\ResourceType.cs" />
-    <Compile Include="Models\SessionData.cs" />
+    <Compile Include="Dto\ResourcesOverview.cs" />
+    <Compile Include="Dto\ResourceType.cs" />
+    <Compile Include="Dto\SessionData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourcesClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

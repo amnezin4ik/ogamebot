@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using NUnit.Framework;
+using OGame.Bot.Infrastructure.API.APIClients;
 using OGame.Bot.Infrastructure.API.Helpers;
 
 namespace OGame.Bot.Infrastructure.API.Tests
@@ -22,7 +23,7 @@ namespace OGame.Bot.Infrastructure.API.Tests
 
             var httpHelper = new HttpHelper();
             var resourcesClient = new ResourcesClient(httpClientFactory, httpHelper);
-            var resourcesOverview = await resourcesClient.GetResourcesOverviewAsync(sessionData);
+            //var resourcesOverview = await resourcesClient.GetResourcesOverviewAsync(sessionData);
         }
     }
 }
