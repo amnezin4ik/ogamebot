@@ -1,0 +1,157 @@
+﻿<html><head></head><body><div id="eventListWrap">
+    <div id="eventHeader">
+        <a class="close_details eventToggle" href="javascript:void(0);">
+            <img src="https://gf2.geo.gfsrv.net/cdndf/3e567d6f16d040326c7a0ea29a4f41.gif" height="16" width="16">
+        </a>
+        <h2>События</h2>
+    </div>    <table id="eventContent">
+        <tbody>
+                                                    
+<tr class="eventFleet" id="eventRow-1336655" data-mission-type="3" data-return-flight="false" data-arrival-time="1494962729">
+
+    <td class="countDown friendly textBeefy" id="counter-eventlist-1336655">
+        загрузка...    </td>
+            <td class="arrivalTime">22:25:29 ч</td>
+    
+    <td class="missionFleet">
+        <img src="https://gf1.geo.gfsrv.net/cdn38/2af2939219d8227a11a50ff4df7b51.gif" class="tooltipHTML" title="Собственный флот|Транспорт">
+    </td>
+
+            <td class="originFleet">
+                            <figure class="planetIcon planet"></figure>p1                                    </td>
+        <td class="coordsOrigin">
+            <a href="https://s140-ru.ogame.gameforge.com/game/index.php?page=galaxy&amp;galaxy=1&amp;system=279" target="_top">
+                [1:279:6]            </a>
+        </td>
+    
+
+    <td class="detailsFleet">
+                    <span>1</span>
+            </td>
+    <td class="icon_movement">
+                <span class="tooltip tooltipRight tooltipClose" title="<div class=&quot;htmlTooltip&quot;>
+    <h1>Флот:</h1>
+    <div class=&quot;splitLine&quot;></div>
+<table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;fleetinfo&quot;>
+    <tr>
+        <th colspan=&quot;2&quot;>Корабли:</th>
+    </tr>
+            <tr>
+        <td>Большой транспорт:</td>
+        <td class=&quot;value&quot;>1</td>
+    </tr>
+                <tr>
+        <td colspan=&quot;2&quot;>&amp;nbsp;</td>
+    </tr>
+    <tr>
+        <th colspan=&quot;2&quot;>Груз:</th>
+    </tr>
+    <tr>
+        <td>Металл:</td>
+        <td class=&quot;value&quot;>0</td>
+    </tr>
+    <tr>
+        <td>Кристалл:</td>
+        <td class=&quot;value&quot;>0</td>
+    </tr>
+    <tr>
+        <td>Дейтерий:</td>
+        <td class=&quot;value&quot;>0</td>
+    </tr>
+    </table>
+</div>
+" data-federation-user-id="">&nbsp;</span>
+            </td>
+    <td class="destFleet">
+                    <span class="tooltip" title="Главная планета">
+            <figure class="planetIcon planet"></figure>Главная планета</span>
+            </td>
+
+    <td class="destCoords">
+        <a href="https://s140-ru.ogame.gameforge.com/game/index.php?page=galaxy&amp;galaxy=1&amp;system=279" target="_top">
+            [1:279:10]        </a>
+    </td>
+
+
+    <td class="sendProbe">
+            </td>
+    <td class="sendMail">
+                    <a href="javascript:void(0)" class="sendMail js_openChat tooltip" data-playerid="101350" title="Veterok"><span class="icon icon_chat"></span></a>            </td>
+</tr>
+
+                                                                    
+<tr class="eventFleet" id="eventRow-1336656" data-mission-type="3" data-return-flight="true" data-arrival-time="1494963376">
+
+    <td class="countDown friendly textBeefy" id="counter-eventlist-1336656">
+        загрузка...    </td>
+            <td class="arrivalTime">22:36:16 ч</td>
+    
+    <td class="missionFleet">
+        <img src="https://gf1.geo.gfsrv.net/cdn38/2af2939219d8227a11a50ff4df7b51.gif" class="tooltipHTML" title="Собственный флот|Транспорт (В)">
+    </td>
+
+            <td class="originFleet">
+                            <figure class="planetIcon planet"></figure>p1                                    </td>
+        <td class="coordsOrigin">
+            <a href="https://s140-ru.ogame.gameforge.com/game/index.php?page=galaxy&amp;galaxy=1&amp;system=279" target="_top">
+                [1:279:6]            </a>
+        </td>
+    
+
+    <td class="detailsFleet">
+                    <span>1</span>
+            </td>
+    <td class="icon_movement_reserve">
+                <span class="tooltip tooltipRight tooltipClose" title="<div class=&quot;htmlTooltip&quot;>
+    <h1>Флот:</h1>
+    <div class=&quot;splitLine&quot;></div>
+<table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;fleetinfo&quot;>
+    <tr>
+        <th colspan=&quot;2&quot;>Корабли:</th>
+    </tr>
+            <tr>
+        <td>Большой транспорт:</td>
+        <td class=&quot;value&quot;>1</td>
+    </tr>
+                <tr>
+        <td colspan=&quot;2&quot;>&amp;nbsp;</td>
+    </tr>
+    <tr>
+        <th colspan=&quot;2&quot;>Груз:</th>
+    </tr>
+    <tr>
+        <td>Металл:</td>
+        <td class=&quot;value&quot;>0</td>
+    </tr>
+    <tr>
+        <td>Кристалл:</td>
+        <td class=&quot;value&quot;>0</td>
+    </tr>
+    <tr>
+        <td>Дейтерий:</td>
+        <td class=&quot;value&quot;>0</td>
+    </tr>
+    </table>
+</div>
+" data-federation-user-id="">&nbsp;</span>
+            </td>
+    <td class="destFleet">
+                    <span class="tooltip" title="Главная планета">
+            <figure class="planetIcon planet"></figure>Главная планета</span>
+            </td>
+
+    <td class="destCoords">
+        <a href="https://s140-ru.ogame.gameforge.com/game/index.php?page=galaxy&amp;galaxy=1&amp;system=279" target="_top">
+            [1:279:10]        </a>
+    </td>
+
+
+    <td class="sendProbe">
+            </td>
+    <td class="sendMail">
+                    <a href="javascript:void(0)" class="sendMail js_openChat tooltip" data-playerid="101350" title="Veterok"><span class="icon icon_chat"></span></a>            </td>
+</tr>
+
+                                    </tbody>
+    </table>    <div id="eventFooter"></div>
+</div></body></html>
