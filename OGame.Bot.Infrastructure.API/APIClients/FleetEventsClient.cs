@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using AngleSharp.Parser.Html;
 using OGame.Bot.Infrastructure.API.Dto;
 using OGame.Bot.Infrastructure.API.Helpers;
-using static System.String;
 
 namespace OGame.Bot.Infrastructure.API.APIClients
 {
@@ -54,7 +53,7 @@ namespace OGame.Bot.Infrastructure.API.APIClients
                         var fleetEvent = new FleetEvent
                         {
                             Id = eventId,
-                            MissionType = (MissionType)missionType,
+                            FleetMissionType = (FleetMissionType)missionType,
                             ArrivalTimeUtc = TimeSpan.FromSeconds(arrivalTimeSeconds),
                             PlanetFrom = planetFrom,
                             PlanetTo = planetTo
@@ -64,7 +63,7 @@ namespace OGame.Bot.Infrastructure.API.APIClients
                 }
                 else
                 {
-                    //TODO: chech eventsList container, if not exists - send error code or relogin
+                    //TODO: chech eventsList container, if not exists - send error code
                 }
             }
             return fleetEvents;
@@ -73,7 +72,7 @@ namespace OGame.Bot.Infrastructure.API.APIClients
         private Coordinates ParseCoordinatesFromString(string coordinatesString)
         {
             Coordinates coordinates = null;
-            if (!IsNullOrWhiteSpace(coordinatesString))
+            if (!string.IsNullOrWhiteSpace(coordinatesString))
             {
                 var coordinatesArray = coordinatesString.Trim().TrimStart('[').TrimEnd(']').Split(':');
                 if (coordinatesArray.Length == 3)

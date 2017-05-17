@@ -42,7 +42,7 @@ namespace OGame.Bot.Infrastructure.API.Tests
             Assert.AreEqual(2, fleetEvents.Count());
             var firstEvent = fleetEvents.ElementAt(0);
             Assert.AreEqual("eventRow-1336655", firstEvent.Id);
-            Assert.AreEqual(MissionType.Transport, firstEvent.MissionType);
+            Assert.AreEqual(FleetMissionType.Transport, firstEvent.FleetMissionType);
             Assert.AreEqual(1494962729, firstEvent.ArrivalTimeUtc.TotalSeconds);
             Assert.AreEqual("p1", firstEvent.PlanetFrom.PlanetName);
             Assert.AreEqual(1, firstEvent.PlanetFrom.PlanetCoordinates.Galaxy);
@@ -55,7 +55,7 @@ namespace OGame.Bot.Infrastructure.API.Tests
 
             var secondEvent = fleetEvents.ElementAt(1);
             Assert.AreEqual("eventRow-1336656", secondEvent.Id);
-            Assert.AreEqual(MissionType.Transport, secondEvent.MissionType);
+            Assert.AreEqual(FleetMissionType.Transport, secondEvent.FleetMissionType);
             Assert.AreEqual(1494963376, secondEvent.ArrivalTimeUtc.TotalSeconds);
             Assert.AreEqual("p1", secondEvent.PlanetFrom.PlanetName);
             Assert.AreEqual(1, secondEvent.PlanetFrom.PlanetCoordinates.Galaxy);

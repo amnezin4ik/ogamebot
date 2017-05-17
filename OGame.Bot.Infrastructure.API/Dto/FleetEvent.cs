@@ -8,7 +8,7 @@ namespace OGame.Bot.Infrastructure.API.Dto
 
         public TimeSpan ArrivalTimeUtc { get; set; }
 
-        public MissionType MissionType { get; set; }
+        public FleetMissionType FleetMissionType { get; set; }
 
         public FleetEventPlanet PlanetFrom { get; set; }
 
