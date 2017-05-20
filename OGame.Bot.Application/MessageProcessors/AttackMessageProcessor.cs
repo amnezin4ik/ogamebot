@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using OGame.Bot.Application.Messages;
+using OGame.Bot.Modules.Common;
 
 namespace OGame.Bot.Application.MessageProcessors
 {
     public class AttackMessageProcessor : IAttackMessageProcessor
     {
+        private readonly IDateTimeProvider _dateTimeProvider;
+
+        public AttackMessageProcessor(IDateTimeProvider dateTimeProvider)
+        {
+            _dateTimeProvider = dateTimeProvider;
+        }
+
         public bool CanProcess(Message message)
         {
             return message.MessageType == MessageType.Attack;

@@ -5,12 +5,12 @@ using OGame.Bot.Application.Services;
 
 namespace OGame.Bot.Wpf
 {
-    public class UsageExample
+    public class ApplicationUsageSample
     {
         private readonly IMessageServiceBus _messageServiceBus;
         private readonly IGlobalStateUpdater _globalStateUpdater;
 
-        public UsageExample(IMessageServiceBus messageServiceBus, IGlobalStateUpdater globalStateUpdater)
+        public ApplicationUsageSample(IMessageServiceBus messageServiceBus, IGlobalStateUpdater globalStateUpdater)
         {
             _messageServiceBus = messageServiceBus;
             _globalStateUpdater = globalStateUpdater;

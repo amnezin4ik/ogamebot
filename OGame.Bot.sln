@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGame.Bot.Domain", "OGame.B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGame.Bot.Wpf", "OGame.Bot.Wpf\OGame.Bot.Wpf.csproj", "{DBD8F7A8-1EAD-4873-BF25-2BB3EA3EC0EA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{FA69BDA6-336E-4BFE-ACE9-09656A38169C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGame.Bot.Modules.Common", "OGame.Bot.Modules.Common\OGame.Bot.Modules.Common.csproj", "{297F176E-6159-453A-944F-0CE70771385B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,8 +49,15 @@ Global
 		{DBD8F7A8-1EAD-4873-BF25-2BB3EA3EC0EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBD8F7A8-1EAD-4873-BF25-2BB3EA3EC0EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBD8F7A8-1EAD-4873-BF25-2BB3EA3EC0EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{297F176E-6159-453A-944F-0CE70771385B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{297F176E-6159-453A-944F-0CE70771385B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{297F176E-6159-453A-944F-0CE70771385B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{297F176E-6159-453A-944F-0CE70771385B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{297F176E-6159-453A-944F-0CE70771385B} = {FA69BDA6-336E-4BFE-ACE9-09656A38169C}
 	EndGlobalSection
 EndGlobal

@@ -19,7 +19,7 @@ namespace OGame.Bot.Application.MessageProcessors
 
         public IMessageProcessor GetMessageProcessor(Message message)
         {
-            var messageProcessor = _messageProcessors.FirstOrDefault(ep => ep.CanProcess(message));
+            var messageProcessor = _messageProcessors.FirstOrDefault(mp => mp.CanProcess(message));
             if (messageProcessor == null)
             {
                 throw new NotSupportedException($"Can't find MessageProcessor for \"{message.MessageType}\" message type");
