@@ -7,7 +7,7 @@ namespace OGame.Bot.Application.MessageProcessors
     {
         bool CanProcess(Message message);
 
-        Task Process(Message message);
+        Task ProcessAsync(Message message);
 
         bool ShouldProcessRightNow(Message message);
     }

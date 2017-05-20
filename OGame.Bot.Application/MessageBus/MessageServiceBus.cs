@@ -10,17 +10,22 @@ namespace OGame.Bot.Application.MessageBus
     public sealed class MessageServiceBus : IMessageServiceBus
     {
         private readonly IMessageProcessorFactory _messageProcessorFactory;
+        private readonly IMessagesComparer _messagesComparer;
         private readonly Queue<Message> _messagesQueue;
 
-        public MessageServiceBus(IMessageProcessorFactory messageProcessorFactory)
+        public MessageServiceBus(IMessageProcessorFactory messageProcessorFactory, IMessagesComparer messagesComparer)
         {
             _messageProcessorFactory = messageProcessorFactory;
+            _messagesComparer = messagesComparer;
             _messagesQueue = new Queue<Message>();
         }
 
-        public void EnqueueMessage(Message message)
+        public void Add(Message message)
         {
-            _messagesQueue.Enqueue(message);
+            if (!_messagesQueue.Contains(message, _messagesComparer))
+            {
+                _messagesQueue.Enqueue(message);
+            }
         }
 
         public async Task Run(CancellationToken cancellationToken)
@@ -33,7 +38,7 @@ namespace OGame.Bot.Application.MessageBus
                     var messageProcessor = _messageProcessorFactory.GetMessageProcessor(message);
                     if (messageProcessor.ShouldProcessRightNow(message))
                     {
-                        await messageProcessor.Process(message);
+                        await messageProcessor.ProcessAsync(message);
                     }
                     else
                     {

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using OGame.Bot.Application.Messages;
 
 namespace OGame.Bot.Application.MessageProcessors
@@ -10,14 +11,20 @@ namespace OGame.Bot.Application.MessageProcessors
             return message.MessageType == MessageType.Attack;
         }
 
-        public async Task Process(Message message)
+        public async Task ProcessAsync(Message message)
         {
-            throw new System.NotImplementedException();
+            var attackMessage = message as AttackMessage;
+            if (attackMessage == null)
+            {
+                throw new NotSupportedException($"Can't process message with \"{message.MessageType}\" message type");
+            }
+
+            throw new NotImplementedException();
         }
 
         public bool ShouldProcessRightNow(Message message)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

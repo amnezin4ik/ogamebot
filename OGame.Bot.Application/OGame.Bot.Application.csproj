@@ -41,17 +41,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MessageBus\IMessageServiceBus.cs" />
-    <Compile Include="MessageProcessors\IFleetMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\IAttackMessageProcessor.cs" />
     <Compile Include="MessageProcessors\IMessageProcessor.cs" />
-    <Compile Include="MessageBus\IMessageProcessorFactory.cs" />
-    <Compile Include="MessageBus\MessageProcessorFactory.cs" />
     <Compile Include="MessageBus\MessageServiceBus.cs" />
-    <Compile Include="MessageProcessors\FleetMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\AttackMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\IMessageProcessorFactory.cs" />
+    <Compile Include="MessageProcessors\MessageProcessorFactory.cs" />
+    <Compile Include="Messages\IMessagesComparer.cs" />
     <Compile Include="Messages\Message.cs" />
+    <Compile Include="Messages\MessagesComparer.cs" />
     <Compile Include="Messages\MessageType.cs" />
-    <Compile Include="Messages\MissionMessage.cs" />
+    <Compile Include="Messages\AttackMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UpdateStateCenter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OGame.Bot.Domain.Services\OGame.Bot.Domain.Services.csproj">
