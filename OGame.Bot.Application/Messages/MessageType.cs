@@ -2,5 +2,8 @@
 {
     public enum MessageType
     {
+        ReturnFleet,
+        Transport,
+        Attack
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace OGame.Bot.Application.MessageProcessors
 {
-    public interface IFleetMessageProcessor : IMessageProcessor
+    public interface IAttackMessageProcessor : IMessageProcessor
     {
     }
 }

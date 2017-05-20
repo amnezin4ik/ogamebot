@@ -23,7 +23,7 @@ namespace OGame.Bot.Application.MessageBus
             _messagesQueue.Enqueue(message);
         }
 
-        public async Task RunProcessing(CancellationToken cancellationToken)
+        public async Task Run(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
             {

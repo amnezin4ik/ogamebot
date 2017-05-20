@@ -3,11 +3,11 @@ using OGame.Bot.Application.Messages;
 
 namespace OGame.Bot.Application.MessageProcessors
 {
-    public class FleetMessageProcessor : IFleetMessageProcessor
+    public class AttackMessageProcessor : IAttackMessageProcessor
     {
         public bool CanProcess(Message message)
         {
-            throw new System.NotImplementedException();
+            return message.MessageType == MessageType.Attack;
         }
 
         public async Task Process(Message message)

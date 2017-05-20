@@ -7,6 +7,6 @@ namespace OGame.Bot.Application.MessageBus
     public interface IMessageServiceBus
     {
         void EnqueueMessage(Message message);
-        Task RunProcessing(CancellationToken cancellationToken);
+        Task Run(CancellationToken cancellationToken);
     }
 }
