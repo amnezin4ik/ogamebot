@@ -8,12 +8,12 @@ using Dto = OGame.Bot.Infrastructure.API.Dto;
 
 namespace OGame.Bot.Domain.Services.Implementations
 {
-    public class GlobalMissionService : IGlobalMissionService
+    public class MissionService : IMissionService
     {
         private readonly IMissionClient _missionClient;
         private readonly IMapper _mapper;
 
-        public GlobalMissionService(IMissionClient missionClient, IMapper mapper)
+        public MissionService(IMissionClient missionClient, IMapper mapper)
         {
             _missionClient = missionClient;
             _mapper = mapper;
@@ -30,7 +30,7 @@ namespace OGame.Bot.Domain.Services.Implementations
         public async Task<IEnumerable<Mission>> GetMissionsAsync(SessionData sessionData, MissionType missionType)
         {
             var sessionDataDto = _mapper.Map<SessionData, Dto.SessionData>(sessionData);
-            //TODO: use GetMissionsAsync API method
+            //TODO: use GetMissionsAsync API method to avoid .Where() statement
             var allMissionsDtos = await _missionClient.GetAllMissionsAsync(sessionDataDto);
             var allMissions = _mapper.Map<IEnumerable<Dto.Mission>, IEnumerable<Mission>>(allMissionsDtos);
             var targetMissions = allMissions.Where(m => m.MissionType == missionType);
