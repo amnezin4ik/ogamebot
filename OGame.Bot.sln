@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGame.Bot.Application", "OG
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGame.Bot.Domain", "OGame.Bot.Domain\OGame.Bot.Domain.csproj", "{DCD85D68-0311-4038-BCB8-8144A1A3B12F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGame.Bot.Wpf", "OGame.Bot.Wpf\OGame.Bot.Wpf.csproj", "{DBD8F7A8-1EAD-4873-BF25-2BB3EA3EC0EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DCD85D68-0311-4038-BCB8-8144A1A3B12F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCD85D68-0311-4038-BCB8-8144A1A3B12F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCD85D68-0311-4038-BCB8-8144A1A3B12F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBD8F7A8-1EAD-4873-BF25-2BB3EA3EC0EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBD8F7A8-1EAD-4873-BF25-2BB3EA3EC0EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBD8F7A8-1EAD-4873-BF25-2BB3EA3EC0EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBD8F7A8-1EAD-4873-BF25-2BB3EA3EC0EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

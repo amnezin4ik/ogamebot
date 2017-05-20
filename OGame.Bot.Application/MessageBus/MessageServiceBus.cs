@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,15 +13,17 @@ namespace OGame.Bot.Application.MessageBus
         private readonly IMessageProcessorFactory _messageProcessorFactory;
         private readonly IMessagesComparer _messagesComparer;
         private readonly Queue<Message> _messagesQueue;
+        private readonly int _processingReRunDelaySeconds;
 
         public MessageServiceBus(IMessageProcessorFactory messageProcessorFactory, IMessagesComparer messagesComparer)
         {
             _messageProcessorFactory = messageProcessorFactory;
             _messagesComparer = messagesComparer;
             _messagesQueue = new Queue<Message>();
+            _processingReRunDelaySeconds = 1;
         }
 
-        public void Add(Message message)
+        public void AddMessage(Message message)
         {
             if (!_messagesQueue.Contains(message, _messagesComparer))
             {
@@ -41,15 +44,15 @@ namespace OGame.Bot.Application.MessageBus
                         var postProcessMessages = await messageProcessor.ProcessAsync(message);
                         foreach (var postProcessMessage in postProcessMessages)
                         {
-                            Add(postProcessMessage);
+                            AddMessage(postProcessMessage);
                         }
                     }
                     else
                     {
-                        _messagesQueue.Enqueue(message);
+                        AddMessage(message);
                     }
                 }
-                await Task.Delay(1000, cancellationToken);
+                await Task.Delay(TimeSpan.FromSeconds(_processingReRunDelaySeconds), cancellationToken);
             }
         }
     }
