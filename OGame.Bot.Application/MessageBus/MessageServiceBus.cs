@@ -38,7 +38,11 @@ namespace OGame.Bot.Application.MessageBus
                     var messageProcessor = _messageProcessorFactory.GetMessageProcessor(message);
                     if (messageProcessor.ShouldProcessRightNow(message))
                     {
-                        await messageProcessor.ProcessAsync(message);
+                        var postProcessMessages = await messageProcessor.ProcessAsync(message);
+                        foreach (var postProcessMessage in postProcessMessages)
+                        {
+                            Add(postProcessMessage);
+                        }
                     }
                     else
                     {

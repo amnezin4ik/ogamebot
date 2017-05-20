@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using OGame.Bot.Application.Messages;
 
 namespace OGame.Bot.Application.MessageProcessors
@@ -7,7 +8,7 @@ namespace OGame.Bot.Application.MessageProcessors
     {
         bool CanProcess(Message message);
 
-        Task ProcessAsync(Message message);
+        Task<IEnumerable<Message>> ProcessAsync(Message message);
 
         bool ShouldProcessRightNow(Message message);
     }

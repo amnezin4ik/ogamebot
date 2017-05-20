@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using OGame.Bot.Application.Messages;
 
@@ -11,7 +12,7 @@ namespace OGame.Bot.Application.MessageProcessors
             return message.MessageType == MessageType.Attack;
         }
 
-        public async Task ProcessAsync(Message message)
+        public async Task<IEnumerable<Message>> ProcessAsync(Message message)
         {
             var attackMessage = message as AttackMessage;
             if (attackMessage == null)
