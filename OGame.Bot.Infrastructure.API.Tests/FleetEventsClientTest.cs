@@ -31,18 +31,18 @@ namespace OGame.Bot.Infrastructure.API.Tests
                 .ReturnsAsync(testResponce);
 
             var htmlParser = new HtmlParser();
-            var fleetEventsClient = new FleetEventsClient(httpClientFactoryMock.Object, httpHelperMock.Object, htmlParser);
+            var fleetEventsClient = new MissionClient(httpClientFactoryMock.Object, httpHelperMock.Object, htmlParser);
             var cookieContainer = new CookieContainer();
             var sessionData = new SessionData(cookieContainer);
 
 
-            var fleetEvents = await fleetEventsClient.GetFleetEventsAsync(sessionData);
+            var fleetEvents = await fleetEventsClient.GetAllMissionsAsync(sessionData);
 
 
             Assert.AreEqual(2, fleetEvents.Count());
             var firstEvent = fleetEvents.ElementAt(0);
             Assert.AreEqual("eventRow-1336655", firstEvent.Id);
-            Assert.AreEqual(FleetMissionType.Transport, firstEvent.FleetMissionType);
+            Assert.AreEqual(MissionType.Transport, firstEvent.MissionType);
             Assert.AreEqual(1494962729, firstEvent.ArrivalTimeUtc.TotalSeconds);
             Assert.AreEqual("p1", firstEvent.PlanetFrom.PlanetName);
             Assert.AreEqual(1, firstEvent.PlanetFrom.PlanetCoordinates.Galaxy);
@@ -55,7 +55,7 @@ namespace OGame.Bot.Infrastructure.API.Tests
 
             var secondEvent = fleetEvents.ElementAt(1);
             Assert.AreEqual("eventRow-1336656", secondEvent.Id);
-            Assert.AreEqual(FleetMissionType.Transport, secondEvent.FleetMissionType);
+            Assert.AreEqual(MissionType.Transport, secondEvent.MissionType);
             Assert.AreEqual(1494963376, secondEvent.ArrivalTimeUtc.TotalSeconds);
             Assert.AreEqual("p1", secondEvent.PlanetFrom.PlanetName);
             Assert.AreEqual(1, secondEvent.PlanetFrom.PlanetCoordinates.Galaxy);

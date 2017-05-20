@@ -1,6 +1,6 @@
-﻿namespace OGame.Bot.Infrastructure.API.Dto
+﻿namespace OGame.Bot.Domain
 {
-    public class FleetEventPlanet
+    public class MissionPlanet
     {
         public Coordinates PlanetCoordinates { get; set; }
 

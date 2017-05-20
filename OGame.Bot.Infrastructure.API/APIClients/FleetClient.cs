@@ -40,17 +40,17 @@ namespace OGame.Bot.Infrastructure.API.APIClients
             return fleet;
         }
 
-        public void MoveFleetToAttentionPhase(Fleet fleet)
+        public void MoveToAttentionPhase(Fleet fleet)
         {
             
         }
 
-        public void SendFleetPhaseAttention(Coordinates missionCoordinates, FleetTargetType targetType, FleetSpeed speed)
+        public void MoveToGoPhase(Coordinates missionCoordinates, MissionTarget target, FleetSpeed speed)
         {
             
         }
 
-        public void SendFleetPhaseGo(FleetMissionType missionType, /*Resources*/ bool takeAllResources = false)
+        public void Go(MissionType missionType, /*Resources*/ bool takeAllResources = false)
         {
 
         }

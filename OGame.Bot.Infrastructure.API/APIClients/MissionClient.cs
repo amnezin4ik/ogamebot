@@ -9,22 +9,22 @@ using OGame.Bot.Infrastructure.API.Helpers;
 
 namespace OGame.Bot.Infrastructure.API.APIClients
 {
-    public class FleetEventsClient : IFleetEventsClient
+    public class MissionClient : IMissionClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IHttpHelper _httpHelper;
         private readonly HtmlParser _htmlParser;
 
-        public FleetEventsClient(IHttpClientFactory httpClientFactory, IHttpHelper httpHelper, HtmlParser htmlParser)
+        public MissionClient(IHttpClientFactory httpClientFactory, IHttpHelper httpHelper, HtmlParser htmlParser)
         {
             _httpClientFactory = httpClientFactory;
             _httpHelper = httpHelper;
             _htmlParser = htmlParser;
         }
 
-        public async Task<IEnumerable<FleetEvent>> GetFleetEventsAsync(SessionData sessionData)
+        public async Task<IEnumerable<Mission>> GetAllMissionsAsync(SessionData sessionData)
         {
-            var fleetEvents = new List<FleetEvent>();
+            var fleetEvents = new List<Mission>();
             var handler = new HttpClientHandler { CookieContainer = sessionData.RequestCookies };
             using (var httpClient = _httpClientFactory.GetHttpClient(handler))
             {
@@ -37,23 +37,23 @@ namespace OGame.Bot.Infrastructure.API.APIClients
                     foreach (var fleetEventElement in fleetEventElements)
                     {
                         var eventId = fleetEventElement.GetAttribute("id");
-                        var missionType = Int32.Parse(fleetEventElement.GetAttribute("data-mission-type"));
-                        var arrivalTimeSeconds = Double.Parse(fleetEventElement.GetAttribute("data-arrival-time"));
+                        var missionType = int.Parse(fleetEventElement.GetAttribute("data-mission-type"));
+                        var arrivalTimeSeconds = double.Parse(fleetEventElement.GetAttribute("data-arrival-time"));
 
                         var originPlanetName = fleetEventElement.QuerySelector("td[class=originFleet]").TextContent.Trim();
                         var originCoordsString = fleetEventElement.QuerySelector("td[class=coordsOrigin]").TextContent.Trim();
                         var originCoordinates = ParseCoordinatesFromString(originCoordsString);
-                        var planetFrom = new FleetEventPlanet { PlanetName = originPlanetName , PlanetCoordinates = originCoordinates };
+                        var planetFrom = new MissionPlanet { PlanetName = originPlanetName , PlanetCoordinates = originCoordinates };
 
                         var destPlanetName = fleetEventElement.QuerySelector("td[class=destFleet]").TextContent.Trim();
                         var destCoordsString = fleetEventElement.QuerySelector("td[class=destCoords]").TextContent.Trim();
                         var destCoordinates = ParseCoordinatesFromString(destCoordsString);
-                        var planetTo = new FleetEventPlanet { PlanetName = destPlanetName, PlanetCoordinates = destCoordinates };
+                        var planetTo = new MissionPlanet { PlanetName = destPlanetName, PlanetCoordinates = destCoordinates };
 
-                        var fleetEvent = new FleetEvent
+                        var fleetEvent = new Mission
                         {
                             Id = eventId,
-                            FleetMissionType = (FleetMissionType)missionType,
+                            MissionType = (MissionType)missionType,
                             ArrivalTimeUtc = TimeSpan.FromSeconds(arrivalTimeSeconds),
                             PlanetFrom = planetFrom,
                             PlanetTo = planetTo

@@ -1,6 +1,6 @@
 ﻿namespace OGame.Bot.Infrastructure.API.Dto
 {
-    public enum FleetTargetType
+    public enum MissionTarget
     {
         Planet = 1,
         Debris = 2,

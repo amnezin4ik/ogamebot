@@ -3,11 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGame.Bot.Wpf", "OGame.Bot.Wpf\OGame.Bot.Wpf.csproj", "{B5DBAB9B-E5A4-44E5-88C5-46C63B0BDFE5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGame.Bot.Infrastructure.API", "OGame.Bot.Infrastructure.API\OGame.Bot.Infrastructure.API.csproj", "{725EF847-15C3-47DC-B0E1-9375620A5A47}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGame.Bot.Infrastructure.API.Tests", "OGame.Bot.Infrastructure.API.Tests\OGame.Bot.Infrastructure.API.Tests.csproj", "{5AA67F25-E289-4D68-B673-62B55B601A5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGame.Bot.Domain.Services", "OGame.Bot.Domain.Services\OGame.Bot.Domain.Services.csproj", "{536D9B9A-2FBE-4A1B-9075-D16DBB9BEBA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGame.Bot.Application", "OGame.Bot.Application\OGame.Bot.Application.csproj", "{8CBBFE9D-E107-4786-AF01-9128293DEAE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGame.Bot.Domain", "OGame.Bot.Domain\OGame.Bot.Domain.csproj", "{DCD85D68-0311-4038-BCB8-8144A1A3B12F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B5DBAB9B-E5A4-44E5-88C5-46C63B0BDFE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5DBAB9B-E5A4-44E5-88C5-46C63B0BDFE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B5DBAB9B-E5A4-44E5-88C5-46C63B0BDFE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B5DBAB9B-E5A4-44E5-88C5-46C63B0BDFE5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{725EF847-15C3-47DC-B0E1-9375620A5A47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{725EF847-15C3-47DC-B0E1-9375620A5A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{725EF847-15C3-47DC-B0E1-9375620A5A47}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +27,18 @@ Global
 		{5AA67F25-E289-4D68-B673-62B55B601A5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AA67F25-E289-4D68-B673-62B55B601A5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AA67F25-E289-4D68-B673-62B55B601A5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{536D9B9A-2FBE-4A1B-9075-D16DBB9BEBA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{536D9B9A-2FBE-4A1B-9075-D16DBB9BEBA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{536D9B9A-2FBE-4A1B-9075-D16DBB9BEBA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{536D9B9A-2FBE-4A1B-9075-D16DBB9BEBA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CBBFE9D-E107-4786-AF01-9128293DEAE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CBBFE9D-E107-4786-AF01-9128293DEAE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CBBFE9D-E107-4786-AF01-9128293DEAE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CBBFE9D-E107-4786-AF01-9128293DEAE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCD85D68-0311-4038-BCB8-8144A1A3B12F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCD85D68-0311-4038-BCB8-8144A1A3B12F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCD85D68-0311-4038-BCB8-8144A1A3B12F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCD85D68-0311-4038-BCB8-8144A1A3B12F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

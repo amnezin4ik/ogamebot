@@ -1,6 +1,6 @@
-﻿namespace OGame.Bot.Infrastructure.API.Dto
+﻿namespace OGame.Bot.Domain
 {
-    public enum FleetMissionType
+    public enum MissionType
     {
         Attak = 1,
         CommonAttak = 2,

@@ -4,8 +4,8 @@ using OGame.Bot.Infrastructure.API.Dto;
 
 namespace OGame.Bot.Infrastructure.API.APIClients
 {
-    public interface IFleetEventsClient
+    public interface IMissionClient
     {
-        Task<IEnumerable<FleetEvent>> GetFleetEventsAsync(SessionData sessionData);
+        Task<IEnumerable<Mission>> GetAllMissionsAsync(SessionData sessionData);
     }
 }
