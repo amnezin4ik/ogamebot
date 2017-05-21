@@ -49,18 +49,18 @@ namespace OGame.Bot.Application.MessageProcessors
             var weAttaked = await _userPlanetsService.IsItUserPlanetAsync(attackMessage.PlanetTo);
             if (weAttaked)
             {
+                MissionPlanet destinationPlanet;
                 var userPlanets = await _userPlanetsService.GetAllUserPlanetsAsync();
-                MissionPlanet planetToSave;
                 if (userPlanets.Count() > 1)
                 {
                     var anotherUserPlanet = userPlanets.First(p => p.Coordinates != attackMessage.PlanetTo.Coordinates);
-                    planetToSave = _mapper.Map<UserPlanet, MissionPlanet>(anotherUserPlanet);
+                    destinationPlanet = _mapper.Map<UserPlanet, MissionPlanet>(anotherUserPlanet);
                 }
                 else
                 {
-                    planetToSave = await _galaxyService.GetNearestInactivePlanetAsync(40);
+                    destinationPlanet = await _galaxyService.GetNearestInactivePlanetAsync(40);
                 }
-                var saveMission = await _fleetService.SaveFleetAndResourcesAsync(attackMessage.PlanetTo, planetToSave, FleetSpeed.Percent10);
+                var saveMission = await _fleetService.SaveFleetAndResourcesAsync(attackMessage.PlanetTo, destinationPlanet, FleetSpeed.Percent10);
                 var returnFleetMessage = new ReturnFleetMessage(saveMission);
                 resultMessages.Add(returnFleetMessage);
             }
