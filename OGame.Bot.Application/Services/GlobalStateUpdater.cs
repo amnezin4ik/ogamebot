@@ -9,15 +9,6 @@ namespace OGame.Bot.Application.Services
 {
     public class GlobalStateUpdater : IGlobalStateUpdater
     {
-        private readonly int _minUpdateDelayInMinutes;
-        private readonly int _maxUpdateDelayInMinutes;
-
-        public GlobalStateUpdater(int minUpdateDelayInMinutes = 5, int maxUpdateDelayInMinutes = 10)
-        {
-            _minUpdateDelayInMinutes = minUpdateDelayInMinutes;
-            _maxUpdateDelayInMinutes = maxUpdateDelayInMinutes;
-        }
-
         public async Task Run(IMessageServiceBus messageServiceBus, CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
@@ -27,7 +18,7 @@ namespace OGame.Bot.Application.Services
                 {
                     messageServiceBus.AddMessage(message);
                 }
-                var delayInMinutes = new Random().Next(_minUpdateDelayInMinutes, _maxUpdateDelayInMinutes);
+                var delayInMinutes = new Random().Next(5, 10);
                 await Task.Delay(TimeSpan.FromMinutes(delayInMinutes), cancellationToken);
             }
         }
