@@ -44,8 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementations\GlobalMissionService.cs" />
-    <Compile Include="Interfaces\IGlobalMissionService.cs" />
+    <Compile Include="Implementations\MissionService.cs" />
+    <Compile Include="Interfaces\IFleetService.cs" />
+    <Compile Include="Interfaces\IGalaxyService.cs" />
+    <Compile Include="Interfaces\IMissionService.cs" />
+    <Compile Include="Interfaces\IUserPlanetsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

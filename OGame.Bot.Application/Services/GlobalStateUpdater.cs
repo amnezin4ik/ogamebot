@@ -9,14 +9,21 @@ namespace OGame.Bot.Application.Services
 {
     public class GlobalStateUpdater : IGlobalStateUpdater
     {
-        public async Task Run(IMessageServiceBus messageServiceBus, CancellationToken cancellationToken)
+        private readonly IMessageServiceBus _messageServiceBus;
+
+        public GlobalStateUpdater(IMessageServiceBus messageServiceBus)
+        {
+            _messageServiceBus = messageServiceBus;
+        }
+
+        public async Task Run(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
             {
                 var messages = await GetNewMessagesAsync();
                 foreach (var message in messages)
                 {
-                    messageServiceBus.AddMessage(message);
+                    _messageServiceBus.AddMessage(message);
                 }
                 var delayInMinutes = new Random().Next(5, 10);
                 await Task.Delay(TimeSpan.FromMinutes(delayInMinutes), cancellationToken);

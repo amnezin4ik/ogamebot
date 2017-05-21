@@ -20,7 +20,7 @@ namespace OGame.Bot.Wpf
         {
             //TODO: I think it should be done otherwise, but right now I don't know how XD
             await _messageServiceBus.Run(cancellationToken).ConfigureAwait(false);
-            await _globalStateUpdater.Run(_messageServiceBus, cancellationToken).ConfigureAwait(false);
+            await _globalStateUpdater.Run(cancellationToken).ConfigureAwait(false);
         }
     }
 }
