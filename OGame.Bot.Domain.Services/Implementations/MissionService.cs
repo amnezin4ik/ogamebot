@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using OGame.Bot.Domain.Services.Interfaces;
@@ -30,11 +29,10 @@ namespace OGame.Bot.Domain.Services.Implementations
         public async Task<IEnumerable<Mission>> GetMissionsAsync(SessionData sessionData, MissionType missionType)
         {
             var sessionDataDto = _mapper.Map<SessionData, Dto.SessionData>(sessionData);
-            //TODO: use GetMissionsAsync API method to avoid .Where() statement
-            var allMissionsDtos = await _missionClient.GetAllMissionsAsync(sessionDataDto);
-            var allMissions = _mapper.Map<IEnumerable<Dto.Mission>, IEnumerable<Mission>>(allMissionsDtos);
-            var targetMissions = allMissions.Where(m => m.MissionType == missionType);
-            return targetMissions;
+            var missionTypeDto = _mapper.Map<MissionType, Dto.MissionType>(missionType);
+            var missionsDtos = await _missionClient.GetMissionsAsync(sessionDataDto, missionTypeDto);
+            var missions = _mapper.Map<IEnumerable<Dto.Mission>, IEnumerable<Mission>>(missionsDtos);
+            return missions;
         }
     }
 }

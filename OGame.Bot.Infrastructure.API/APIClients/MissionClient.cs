@@ -24,6 +24,18 @@ namespace OGame.Bot.Infrastructure.API.APIClients
 
         public async Task<IEnumerable<Mission>> GetAllMissionsAsync(SessionData sessionData)
         {
+            var fleetEvents = await GetMissionsByTypeAsync(sessionData, null);
+            return fleetEvents;
+        }
+
+        public async Task<IEnumerable<Mission>> GetMissionsAsync(SessionData sessionData, MissionType missionType)
+        {
+            var fleetEvents = await GetMissionsByTypeAsync(sessionData, missionType);
+            return fleetEvents;
+        }
+
+        private async Task<IEnumerable<Mission>> GetMissionsByTypeAsync(SessionData sessionData, MissionType? missionType)
+        {
             var fleetEvents = new List<Mission>();
             var handler = new HttpClientHandler { CookieContainer = sessionData.RequestCookies };
             using (var httpClient = _httpClientFactory.GetHttpClient(handler))
@@ -36,14 +48,19 @@ namespace OGame.Bot.Infrastructure.API.APIClients
                 {
                     foreach (var fleetEventElement in fleetEventElements)
                     {
+                        var missionTypeInt = int.Parse(fleetEventElement.GetAttribute("data-mission-type"));
+                        var currentMissionType = (MissionType) missionTypeInt;
+                        if (missionType.HasValue && currentMissionType != missionType)
+                        {
+                            continue;
+                        }
                         var eventId = fleetEventElement.GetAttribute("id");
-                        var missionType = int.Parse(fleetEventElement.GetAttribute("data-mission-type"));
                         var arrivalTimeSeconds = double.Parse(fleetEventElement.GetAttribute("data-arrival-time"));
 
                         var originPlanetName = fleetEventElement.QuerySelector("td[class=originFleet]").TextContent.Trim();
                         var originCoordsString = fleetEventElement.QuerySelector("td[class=coordsOrigin]").TextContent.Trim();
                         var originCoordinates = ParseCoordinatesFromString(originCoordsString);
-                        var planetFrom = new MissionPlanet { PlanetName = originPlanetName , PlanetCoordinates = originCoordinates };
+                        var planetFrom = new MissionPlanet { PlanetName = originPlanetName, PlanetCoordinates = originCoordinates };
 
                         var destPlanetName = fleetEventElement.QuerySelector("td[class=destFleet]").TextContent.Trim();
                         var destCoordsString = fleetEventElement.QuerySelector("td[class=destCoords]").TextContent.Trim();
@@ -53,17 +70,13 @@ namespace OGame.Bot.Infrastructure.API.APIClients
                         var fleetEvent = new Mission
                         {
                             Id = eventId,
-                            MissionType = (MissionType)missionType,
+                            MissionType = currentMissionType,
                             ArrivalTimeUtc = TimeSpan.FromSeconds(arrivalTimeSeconds),
                             PlanetFrom = planetFrom,
                             PlanetTo = planetTo
                         };
                         fleetEvents.Add(fleetEvent);
                     }
-                }
-                else
-                {
-                    //TODO: chech eventsList container, if not exists - send error code
                 }
             }
             return fleetEvents;
