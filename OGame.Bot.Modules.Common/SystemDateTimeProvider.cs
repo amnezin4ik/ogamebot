@@ -4,9 +4,9 @@ namespace OGame.Bot.Modules.Common
 {
     public class SystemDateTimeProvider : IDateTimeProvider
     {
-        public DateTime GetUtcNow()
+        public TimeSpan GetUtcNow()
         {
-            return DateTime.UtcNow;
+            return new TimeSpan(DateTime.UtcNow.Ticks);
         }
     }
 }

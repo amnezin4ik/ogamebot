@@ -4,7 +4,12 @@ namespace OGame.Bot.Domain
 {
     public class Mission
     {
-        public string Id { get; set; }
+        public Mission(string id)
+        {
+            Id = id;
+        }
+
+        public string Id { get; }
 
         public TimeSpan ArrivalTimeUtc { get; set; }
 
