@@ -18,7 +18,7 @@ namespace OGame.Bot.Application.Services
             _maxUpdateDelayInMinutes = maxUpdateDelayInMinutes;
         }
 
-        public async Task RunAsync(IMessageServiceBus messageServiceBus, CancellationToken cancellationToken)
+        public async Task Run(IMessageServiceBus messageServiceBus, CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
             {

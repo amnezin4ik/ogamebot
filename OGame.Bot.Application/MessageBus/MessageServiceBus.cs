@@ -13,21 +13,29 @@ namespace OGame.Bot.Application.MessageBus
         private readonly IMessageProcessorFactory _messageProcessorFactory;
         private readonly IMessagesComparer _messagesComparer;
         private readonly Queue<Message> _messagesQueue;
-        private readonly int _processingReRunDelaySeconds;
+        private readonly int _processingReRunDelayInSeconds;
+        private readonly object _enqueueSyncRoot;
 
         public MessageServiceBus(IMessageProcessorFactory messageProcessorFactory, IMessagesComparer messagesComparer)
         {
             _messageProcessorFactory = messageProcessorFactory;
             _messagesComparer = messagesComparer;
             _messagesQueue = new Queue<Message>();
-            _processingReRunDelaySeconds = 1;
+            _processingReRunDelayInSeconds = 1;
+            _enqueueSyncRoot = new object();
         }
 
         public void AddMessage(Message message)
         {
             if (!_messagesQueue.Contains(message, _messagesComparer))
             {
-                _messagesQueue.Enqueue(message);
+                lock (_enqueueSyncRoot)
+                {
+                    if (!_messagesQueue.Contains(message, _messagesComparer))
+                    {
+                        _messagesQueue.Enqueue(message);
+                    }
+                }
             }
         }
 
@@ -52,7 +60,7 @@ namespace OGame.Bot.Application.MessageBus
                         AddMessage(message);
                     }
                 }
-                await Task.Delay(TimeSpan.FromSeconds(_processingReRunDelaySeconds), cancellationToken);
+                await Task.Delay(TimeSpan.FromSeconds(_processingReRunDelayInSeconds), cancellationToken);
             }
         }
     }
