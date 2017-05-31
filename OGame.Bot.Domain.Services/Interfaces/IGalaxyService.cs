@@ -4,6 +4,6 @@ namespace OGame.Bot.Domain.Services.Interfaces
 {
     public interface IGalaxyService
     {
-        Task<MissionPlanet> GetNearestInactivePlanetAsync(int minimumDistanceGalaxies);
+        Task<MissionPlanet> GetNearestInactivePlanetAsync(int minimumDistanceGalaxies = 0);
     }
 }

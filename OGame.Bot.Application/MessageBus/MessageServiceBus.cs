@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -58,8 +57,6 @@ namespace OGame.Bot.Application.MessageBus
                         AddMessage(message);
                     }
                 }
-                var delayInSeconds = 1;
-                await Task.Delay(TimeSpan.FromSeconds(delayInSeconds), cancellationToken);
             }
         }
     }

@@ -54,12 +54,15 @@
   <ItemGroup>
     <Compile Include="ApplicationDiModule.cs" />
     <Compile Include="MessageBus\IMessageServiceBus.cs" />
+    <Compile Include="MessageProcessors\IUpdateSessionDataMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\UpdateSessionDataMessageProcessor.cs" />
     <Compile Include="MessageProcessors\IAttackMessageProcessor.cs" />
     <Compile Include="MessageProcessors\IMessageProcessor.cs" />
     <Compile Include="MessageBus\MessageServiceBus.cs" />
     <Compile Include="MessageProcessors\AttackMessageProcessor.cs" />
     <Compile Include="MessageProcessors\IMessageProcessorFactory.cs" />
     <Compile Include="MessageProcessors\MessageProcessorFactory.cs" />
+    <Compile Include="Messages\UpdateSessionDataMessage.cs" />
     <Compile Include="Messages\IMessagesComparer.cs" />
     <Compile Include="Messages\Message.cs" />
     <Compile Include="Messages\MessagesComparer.cs" />

@@ -48,6 +48,8 @@
     <Compile Include="Interfaces\IFleetService.cs" />
     <Compile Include="Interfaces\IGalaxyService.cs" />
     <Compile Include="Interfaces\IMissionService.cs" />
+    <Compile Include="Interfaces\ISessionDataProvider.cs" />
+    <Compile Include="Interfaces\IUpdatableSessionDataProvider.cs" />
     <Compile Include="Interfaces\IUserPlanetsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

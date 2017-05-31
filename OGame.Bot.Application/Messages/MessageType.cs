@@ -4,6 +4,7 @@
     {
         ReturnFleet,
         Transport,
-        Attack
+        Attack,
+        UpdateSessionData
     }
 }

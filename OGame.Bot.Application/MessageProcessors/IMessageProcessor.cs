@@ -8,8 +8,8 @@ namespace OGame.Bot.Application.MessageProcessors
     {
         bool CanProcess(Message message);
 
-        Task<IEnumerable<Message>> ProcessAsync(Message message);
-
         bool ShouldProcessRightNow(Message message);
+
+        Task<IEnumerable<Message>> ProcessAsync(Message message);
     }
 }

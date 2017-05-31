@@ -9,11 +9,13 @@ namespace OGame.Bot.Application.MessageProcessors
     {
         private readonly IReadOnlyCollection<IMessageProcessor> _messageProcessors;
 
-        public MessageProcessorFactory(IAttackMessageProcessor attackMessageProcessor)
+        public MessageProcessorFactory(IAttackMessageProcessor attackMessageProcessor, 
+                                       IUpdateSessionDataMessageProcessor updateSessionDataMessageProcessor)
         {
             _messageProcessors = new List<IMessageProcessor>
             {
-                attackMessageProcessor
+                attackMessageProcessor,
+                updateSessionDataMessageProcessor
             };
         }
 

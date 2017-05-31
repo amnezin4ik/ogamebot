@@ -37,6 +37,19 @@ namespace OGame.Bot.Application.MessageProcessors
             return message.MessageType == MessageType.Attack;
         }
 
+        public bool ShouldProcessRightNow(Message message)
+        {
+            var attackMessage = message as AttackMessage;
+            if (attackMessage == null)
+            {
+                throw new NotSupportedException($"Can't process message with \"{message.MessageType}\" message type");
+            }
+
+            var timeToAttack = attackMessage.ArrivalTimeUtc - _dateTimeProvider.GetUtcNow();
+            var shouldProcess = timeToAttack.TotalSeconds < 100;
+            return shouldProcess;
+        }
+
         public async Task<IEnumerable<Message>> ProcessAsync(Message message)
         {
             var attackMessage = message as AttackMessage;
@@ -58,26 +71,23 @@ namespace OGame.Bot.Application.MessageProcessors
                 }
                 else
                 {
-                    destinationPlanet = await _galaxyService.GetNearestInactivePlanetAsync(40);
+                    destinationPlanet = await _galaxyService.GetNearestInactivePlanetAsync();
                 }
                 var saveMission = await _fleetService.SaveFleetAndResourcesAsync(attackMessage.PlanetTo, destinationPlanet, FleetSpeed.Percent10);
-                var returnFleetMessage = new ReturnFleetMessage(saveMission);
+                var approximateStartOfReturn = GetApproximateStartOfReturn(attackMessage);
+                var returnFleetMessage = new ReturnFleetMessage(saveMission, approximateStartOfReturn);
                 resultMessages.Add(returnFleetMessage);
             }
             return resultMessages;
         }
 
-        public bool ShouldProcessRightNow(Message message)
+        private TimeSpan GetApproximateStartOfReturn(AttackMessage attackMessage)
         {
-            var attackMessage = message as AttackMessage;
-            if (attackMessage == null)
-            {
-                throw new NotSupportedException($"Can't process message with \"{message.MessageType}\" message type");
-            }
-
-            var timeToAttack = attackMessage.ArrivalTimeUtc - _dateTimeProvider.GetUtcNow();
-            var shouldProcess = timeToAttack.TotalSeconds < 100;
-            return shouldProcess;
+            var utcNow = _dateTimeProvider.GetUtcNow();
+            var timeToAttack = attackMessage.ArrivalTimeUtc - utcNow;
+            var halfTimeToAttack = timeToAttack.Ticks / 2;
+            var approximateStartOfReturn = utcNow + TimeSpan.FromTicks(halfTimeToAttack) + TimeSpan.FromSeconds(5);
+            return approximateStartOfReturn;
         }
     }
 }
