@@ -7,7 +7,7 @@ using OGame.Bot.Infrastructure.API.Helpers;
 
 namespace OGame.Bot.Infrastructure.API.APIClients
 {
-    public class FleetClient
+    public class FleetClient : IFleetClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IHttpHelper _httpHelper;
