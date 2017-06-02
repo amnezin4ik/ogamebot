@@ -85,7 +85,11 @@ namespace OGame.Bot.Application.MessageBus
                 _runTaskCancellationTokenSource.Cancel();
                 try
                 {
-                    await _runTask;
+                    if (_runTask.Status != TaskStatus.Canceled &&
+                        _runTask.Status != TaskStatus.WaitingForActivation)
+                    {
+                        await _runTask;
+                    }
                 }
                 catch (Exception e)
                 {

@@ -47,17 +47,29 @@ namespace OGame.Bot.UnitTests.Application.MessageBus
         [Test]
         public void Run_ShouldThrowExceptionWhenCalledTwice()
         {
+            var messageServiceBus = new MessageServiceBus(null, null);
+            messageServiceBus.Run();
+            Assert.Throws<InvalidOperationException>(() => messageServiceBus.Run());
+        }
+
+        [Test]
+        public async Task StopAsync_ShouldStopProcessing()
+        {
             var messageProcessorFactoryMock = new Mock<IMessageProcessorFactory>();
             var messagesComparerMock = new Mock<IMessagesComparer>();
             var messageServiceBus = new MessageServiceBus(messageProcessorFactoryMock.Object, messagesComparerMock.Object);
 
             messageServiceBus.Run();
 
-            Assert.Throws<InvalidOperationException>(() => messageServiceBus.Run());
+            Assert.IsTrue(messageServiceBus.IsRunning);
+
+            await messageServiceBus.StopAsync();
+
+            Assert.IsFalse(messageServiceBus.IsRunning);
         }
 
         [Test]
-        public async Task StopAsync_ShouldStopProcessing()
+        public async Task StopAsync_ShouldNotProcessMessagesAfterStop()
         {
             var messageProcessorMock = new Mock<IMessageProcessor>();
             var messageProcessorFactoryMock = new Mock<IMessageProcessorFactory>();

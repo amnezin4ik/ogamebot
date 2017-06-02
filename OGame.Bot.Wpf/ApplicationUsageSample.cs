@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
 using OGame.Bot.Application.MessageBus;
 using OGame.Bot.Application.Services;
 

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NLog;
 using OGame.Bot.Application.MessageBus;
 using OGame.Bot.Application.Messages;
+using OGame.Bot.Domain;
+using OGame.Bot.Domain.Services.Interfaces;
 
 namespace OGame.Bot.Application.Services
 {
@@ -12,12 +15,14 @@ namespace OGame.Bot.Application.Services
     {
         private readonly Logger _logger = LogManager.GetLogger(nameof(GlobalStateUpdater));
         private readonly IMessageServiceBus _messageServiceBus;
+        private readonly IMissionService _missionService;
         private Task _runTask;
         private CancellationTokenSource _runCancellationTokenSource;
 
-        public GlobalStateUpdater(IMessageServiceBus messageServiceBus)
+        public GlobalStateUpdater(IMessageServiceBus messageServiceBus, IMissionService missionService)
         {
             _messageServiceBus = messageServiceBus;
+            _missionService = missionService;
             IsRunning = false;
         }
 
@@ -54,7 +59,11 @@ namespace OGame.Bot.Application.Services
                 _runCancellationTokenSource.Cancel();
                 try
                 {
-                    await _runTask;
+                    if (_runTask.Status != TaskStatus.Canceled && 
+                        _runTask.Status != TaskStatus.WaitingForActivation)
+                    {
+                        await _runTask;
+                    }
                 }
                 catch (Exception e)
                 {
@@ -71,8 +80,19 @@ namespace OGame.Bot.Application.Services
 
         private async Task<IEnumerable<Message>> GetNewMessagesAsync()
         {
-            //TODO: check current game state, create and return necessary messages. maybe it should be separate service
-            throw new NotImplementedException();
+            var newMessages = new List<Message>();
+
+            var attackMessages = await GetAttackMessagesAsync();
+            newMessages.AddRange(attackMessages);
+
+            return newMessages;
+        }
+
+        private async Task<IEnumerable<Message>> GetAttackMessagesAsync()
+        {
+            var attackMissions = await _missionService.GetMissionsAsync(MissionType.Attak);
+            var attackMessages = attackMissions.Select(am => new AttackMessage(am)).ToList();
+            return attackMessages;
         }
     }
 }

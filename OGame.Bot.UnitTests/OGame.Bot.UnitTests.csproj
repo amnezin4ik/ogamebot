@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\MessageBus\MessageServiceBusTest.cs" />
+    <Compile Include="Application\Services\GlobalStateUpdaterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,14 +68,16 @@
       <Project>{8CBBFE9D-E107-4786-AF01-9128293DEAE2}</Project>
       <Name>OGame.Bot.Application</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OGame.Bot.Domain.Services\OGame.Bot.Domain.Services.csproj">
+      <Project>{536d9b9a-2fbe-4a1b-9075-d16dbb9beba4}</Project>
+      <Name>OGame.Bot.Domain.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OGame.Bot.Domain\OGame.Bot.Domain.csproj">
       <Project>{DCD85D68-0311-4038-BCB8-8144A1A3B12F}</Project>
       <Name>OGame.Bot.Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Application\Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
