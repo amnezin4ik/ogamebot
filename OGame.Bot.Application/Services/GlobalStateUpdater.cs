@@ -16,18 +16,21 @@ namespace OGame.Bot.Application.Services
             _messageServiceBus = messageServiceBus;
         }
 
-        public async Task Run(CancellationToken cancellationToken)
+        public void Run(CancellationToken cancellationToken)
         {
-            while (!cancellationToken.IsCancellationRequested)
+            Task.Run(async () =>
             {
-                var messages = await GetNewMessagesAsync();
-                foreach (var message in messages)
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    _messageServiceBus.AddMessage(message);
+                    var messages = await GetNewMessagesAsync();
+                    foreach (var message in messages)
+                    {
+                        _messageServiceBus.AddMessage(message);
+                    }
+                    var delayInMinutes = new Random().Next(5, 10);
+                    await Task.Delay(TimeSpan.FromMinutes(delayInMinutes), cancellationToken);
                 }
-                var delayInMinutes = new Random().Next(5, 10);
-                await Task.Delay(TimeSpan.FromMinutes(delayInMinutes), cancellationToken);
-            }
+            }, cancellationToken);
         }
         
         private async Task<IEnumerable<Message>> GetNewMessagesAsync()

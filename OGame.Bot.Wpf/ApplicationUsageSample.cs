@@ -16,11 +16,11 @@ namespace OGame.Bot.Wpf
             _globalStateUpdater = globalStateUpdater;
         }
 
-        public async Task Run(CancellationToken cancellationToken)
+        public void Run(CancellationToken cancellationToken)
         {
             //TODO: I think it should be done otherwise, but right now I don't know how XD
-            await _messageServiceBus.Run(cancellationToken).ConfigureAwait(false);
-            await _globalStateUpdater.Run(cancellationToken).ConfigureAwait(false);
+            _messageServiceBus.Run();
+            _globalStateUpdater.Run(cancellationToken);
         }
     }
 }

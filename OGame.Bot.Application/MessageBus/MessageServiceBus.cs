@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using NLog;
 using OGame.Bot.Application.MessageProcessors;
 using OGame.Bot.Application.Messages;
 
@@ -9,18 +11,24 @@ namespace OGame.Bot.Application.MessageBus
 {
     public sealed class MessageServiceBus : IMessageServiceBus
     {
+        private readonly Logger _logger = LogManager.GetLogger(nameof(MessageServiceBus));
         private readonly IMessageProcessorFactory _messageProcessorFactory;
         private readonly IMessagesComparer _messagesComparer;
-        private readonly Queue<Message> _messagesQueue;
+        private readonly ConcurrentQueue<Message> _messagesQueue;
         private readonly object _enqueueSyncRoot;
+        private Task _runTask;
+        private CancellationTokenSource _runCancellationTokenSource;
 
         public MessageServiceBus(IMessageProcessorFactory messageProcessorFactory, IMessagesComparer messagesComparer)
         {
             _messageProcessorFactory = messageProcessorFactory;
             _messagesComparer = messagesComparer;
-            _messagesQueue = new Queue<Message>();
+            _messagesQueue = new ConcurrentQueue<Message>();
             _enqueueSyncRoot = new object();
+            IsRunning = false;
         }
+
+        public bool IsRunning { get; private set; }
 
         public void AddMessage(Message message)
         {
@@ -36,28 +44,60 @@ namespace OGame.Bot.Application.MessageBus
             }
         }
 
-        public async Task Run(CancellationToken cancellationToken)
+        public void Run()
         {
-            while (!cancellationToken.IsCancellationRequested)
+            if (IsRunning)
             {
-                if (_messagesQueue.Any())
+                throw new InvalidOperationException("Run method was already called");
+            }
+            IsRunning = true;
+
+            _runCancellationTokenSource = new CancellationTokenSource();
+            _runTask = Task.Run(async () =>
+            {
+                while (!_runCancellationTokenSource.IsCancellationRequested)
                 {
-                    var message = _messagesQueue.Dequeue();
-                    var messageProcessor = _messageProcessorFactory.GetMessageProcessor(message);
-                    if (messageProcessor.ShouldProcessRightNow(message))
+                    Message message;
+                    if (_messagesQueue.TryDequeue(out message))
                     {
-                        var postProcessMessages = await messageProcessor.ProcessAsync(message);
-                        foreach (var postProcessMessage in postProcessMessages)
+                        var messageProcessor = _messageProcessorFactory.GetMessageProcessor(message);
+                        if (messageProcessor.ShouldProcessRightNow(message))
                         {
-                            AddMessage(postProcessMessage);
+                            var postProcessMessages = await messageProcessor.ProcessAsync(message);
+                            foreach (var postProcessMessage in postProcessMessages)
+                            {
+                                AddMessage(postProcessMessage);
+                            }
+                        }
+                        else
+                        {
+                            AddMessage(message);
                         }
                     }
-                    else
-                    {
-                        AddMessage(message);
-                    }
+                }
+            }, _runCancellationTokenSource.Token);
+        }
+
+        public async Task BreakAsync()
+        {
+            if (IsRunning)
+            {
+                _runCancellationTokenSource.Cancel();
+                try
+                {
+                    await _runTask;
+                }
+                catch (Exception e)
+                {
+                    _logger.Error(e);
+                    throw;
+                }
+                finally
+                {
+                    _runCancellationTokenSource.Dispose();
                 }
             }
+            IsRunning = false;
         }
     }
 }

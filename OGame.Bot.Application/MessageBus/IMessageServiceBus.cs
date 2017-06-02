@@ -6,8 +6,12 @@ namespace OGame.Bot.Application.MessageBus
 {
     public interface IMessageServiceBus
     {
+        bool IsRunning { get; }
+
         void AddMessage(Message message);
 
-        Task Run(CancellationToken cancellationToken);
+        void Run();
+
+        Task BreakAsync();
     }
 }
