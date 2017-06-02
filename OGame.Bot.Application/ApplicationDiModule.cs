@@ -10,6 +10,7 @@ namespace OGame.Bot.Application
         {
             builder.RegisterType<GlobalStateUpdater>().As<IGlobalStateUpdater>().SingleInstance();
             builder.RegisterType<MessageServiceBus>().As<IMessageServiceBus>().SingleInstance();
+            builder.RegisterType<MessagesProvider>().As<IMessagesProvider>().SingleInstance();
         }
     }
 }
