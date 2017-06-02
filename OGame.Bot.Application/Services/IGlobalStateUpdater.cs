@@ -5,6 +5,10 @@ namespace OGame.Bot.Application.Services
 {
     public interface IGlobalStateUpdater
     {
-        Task Run(CancellationToken cancellationToken);
+        void Run();
+
+        Task StopAsync();
+
+        bool IsRunning { get; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGame.Bot.Infrastructure.API", "OGame.Bot.Infrastructure.API\OGame.Bot.Infrastructure.API.csproj", "{725EF847-15C3-47DC-B0E1-9375620A5A47}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{FA69BDA6-336E-4BFE-ACE9-09656A38169C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGame.Bot.Modules.Common", "OGame.Bot.Modules.Common\OGame.Bot.Modules.Common.csproj", "{297F176E-6159-453A-944F-0CE70771385B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGame.Bot.UnitTests", "OGame.Bot.UnitTests\OGame.Bot.UnitTests.csproj", "{F5456AD6-9B05-4962-A15F-DDFDBBBA596F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{297F176E-6159-453A-944F-0CE70771385B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{297F176E-6159-453A-944F-0CE70771385B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{297F176E-6159-453A-944F-0CE70771385B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5456AD6-9B05-4962-A15F-DDFDBBBA596F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5456AD6-9B05-4962-A15F-DDFDBBBA596F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5456AD6-9B05-4962-A15F-DDFDBBBA596F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5456AD6-9B05-4962-A15F-DDFDBBBA596F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,37 +13,13 @@ namespace OGame.Bot.Application.Messages
             _attackMission = attackMission;
         }
 
-        public string Id
-        {
-            get
-            {
-                return _attackMission.Id;
-            }
-        }
+        public string Id => _attackMission.Id;
 
-        public TimeSpan ArrivalTimeUtc
-        {
-            get
-            {
-                return _attackMission.ArrivalTimeUtc;
-            }
-        }
+        public TimeSpan ArrivalTimeUtc => _attackMission.ArrivalTimeUtc;
 
-        public MissionPlanet PlanetFrom
-        {
-            get
-            {
-                return _attackMission.PlanetFrom;
-            }
-        }
+        public MissionPlanet PlanetFrom => _attackMission.PlanetFrom;
 
-        public MissionPlanet PlanetTo
-        {
-            get
-            {
-                return _attackMission.PlanetTo;
-            }
-        }
+        public MissionPlanet PlanetTo => _attackMission.PlanetTo;
 
         public override int GetHashCode()
         {
