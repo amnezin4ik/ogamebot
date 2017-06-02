@@ -17,7 +17,7 @@ namespace OGame.Bot.Application.MessageBus
         private readonly ConcurrentQueue<Message> _messagesQueue;
         private readonly object _enqueueSyncRoot;
         private Task _runTask;
-        private CancellationTokenSource _runCancellationTokenSource;
+        private CancellationTokenSource _runTaskCancellationTokenSource;
 
         public MessageServiceBus(IMessageProcessorFactory messageProcessorFactory, IMessagesComparer messagesComparer)
         {
@@ -52,10 +52,10 @@ namespace OGame.Bot.Application.MessageBus
             }
             IsRunning = true;
 
-            _runCancellationTokenSource = new CancellationTokenSource();
+            _runTaskCancellationTokenSource = new CancellationTokenSource();
             _runTask = Task.Run(async () =>
             {
-                while (!_runCancellationTokenSource.IsCancellationRequested)
+                while (!_runTaskCancellationTokenSource.IsCancellationRequested)
                 {
                     Message message;
                     if (_messagesQueue.TryDequeue(out message))
@@ -75,14 +75,14 @@ namespace OGame.Bot.Application.MessageBus
                         }
                     }
                 }
-            }, _runCancellationTokenSource.Token);
+            }, _runTaskCancellationTokenSource.Token);
         }
 
-        public async Task BreakAsync()
+        public async Task StopAsync()
         {
             if (IsRunning)
             {
-                _runCancellationTokenSource.Cancel();
+                _runTaskCancellationTokenSource.Cancel();
                 try
                 {
                     await _runTask;
@@ -94,7 +94,7 @@ namespace OGame.Bot.Application.MessageBus
                 }
                 finally
                 {
-                    _runCancellationTokenSource.Dispose();
+                    _runTaskCancellationTokenSource.Dispose();
                 }
             }
             IsRunning = false;

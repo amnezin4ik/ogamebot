@@ -57,7 +57,7 @@ namespace OGame.Bot.UnitTests.Application.MessageBus
         }
 
         [Test]
-        public async Task BreakAsync_ShouldStopProcessing()
+        public async Task StopAsync_ShouldStopProcessing()
         {
             var messageProcessorMock = new Mock<IMessageProcessor>();
             var messageProcessorFactoryMock = new Mock<IMessageProcessorFactory>();
@@ -71,7 +71,7 @@ namespace OGame.Bot.UnitTests.Application.MessageBus
             Assert.IsTrue(messageServiceBus.IsRunning);
 
 
-            await messageServiceBus.BreakAsync();
+            await messageServiceBus.StopAsync();
             var messageToProcess = new AttackMessage(new Mission(""));
             messageServiceBus.AddMessage(messageToProcess);
             await Task.Delay(TimeSpan.FromMilliseconds(30));

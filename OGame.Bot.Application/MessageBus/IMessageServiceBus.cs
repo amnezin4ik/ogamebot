@@ -12,6 +12,6 @@ namespace OGame.Bot.Application.MessageBus
 
         void Run();
 
-        Task BreakAsync();
+        Task StopAsync();
     }
 }
