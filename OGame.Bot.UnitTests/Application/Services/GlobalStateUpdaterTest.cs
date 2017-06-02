@@ -6,7 +6,6 @@ using OGame.Bot.Application.MessageBus;
 using OGame.Bot.Application.Messages;
 using OGame.Bot.Application.Services;
 using OGame.Bot.Domain;
-using OGame.Bot.Domain.Services.Interfaces;
 
 namespace OGame.Bot.UnitTests.Application.Services
 {
@@ -18,13 +17,19 @@ namespace OGame.Bot.UnitTests.Application.Services
         {
             var messageServiceBusMock = new Mock<IMessageServiceBus>();
 
-            var mission = new Mission("") { MissionType = MissionType.Attak };
-            var missionServiceMock = new Mock<IMissionService>();
-            missionServiceMock
-                .Setup(m => m.GetMissionsAsync(It.IsAny<MissionType>()))
-                .ReturnsAsync(new[] { mission, mission });
+            var mission = new Mission("") {MissionType = MissionType.Attak};
+            var newMissions = new[]
+            {
+                new AttackMessage(mission),
+                new AttackMessage(mission)
+            };
 
-            var globalStateUpdater = new GlobalStateUpdater(messageServiceBusMock.Object, missionServiceMock.Object);
+            var messagesProviderMock = new Mock<IMessagesProvider>();
+            messagesProviderMock
+                .Setup(m => m.GetNewMessagesAsync())
+                .ReturnsAsync(newMissions);
+
+            var globalStateUpdater = new GlobalStateUpdater(messageServiceBusMock.Object, messagesProviderMock.Object);
 
 
             globalStateUpdater.Run();
@@ -47,8 +52,8 @@ namespace OGame.Bot.UnitTests.Application.Services
         public async Task StopAsync_ShouldStopProcessing()
         {
             var messageServiceBusMock = new Mock<IMessageServiceBus>();
-            var missionServiceMock = new Mock<IMissionService>();
-            var globalStateUpdater = new GlobalStateUpdater(messageServiceBusMock.Object, missionServiceMock.Object);
+            var messagesProviderMock = new Mock<IMessagesProvider>();
+            var globalStateUpdater = new GlobalStateUpdater(messageServiceBusMock.Object, messagesProviderMock.Object);
 
             globalStateUpdater.Run();
 
