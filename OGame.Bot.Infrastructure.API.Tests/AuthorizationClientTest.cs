@@ -22,8 +22,8 @@ namespace OGame.Bot.Infrastructure.API.Tests
 
 
             var httpHelper = new HttpHelper();
-            var resourcesClient = new ResourcesClient(httpClientFactory, httpHelper);
-            //var resourcesOverview = await resourcesClient.GetResourcesOverviewAsync(sessionData);
+            var resourcesClient = new ResourceBuildingsClient(httpClientFactory, httpHelper);
+            //var resourcesOverview = await resourcesClient.GetResourceBuildingsAsync(sessionData);
         }
     }
 }

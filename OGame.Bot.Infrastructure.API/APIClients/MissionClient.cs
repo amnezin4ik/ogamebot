@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using AngleSharp.Parser.Html;
 using OGame.Bot.Infrastructure.API.Dto;
@@ -14,12 +13,14 @@ namespace OGame.Bot.Infrastructure.API.APIClients
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IHttpHelper _httpHelper;
         private readonly HtmlParser _htmlParser;
+        private readonly CoordinatesParser _coordinatesParser;
 
-        public MissionClient(IHttpClientFactory httpClientFactory, IHttpHelper httpHelper, HtmlParser htmlParser)
+        public MissionClient(IHttpClientFactory httpClientFactory, IHttpHelper httpHelper, HtmlParser htmlParser, CoordinatesParser coordinatesParser)
         {
             _httpClientFactory = httpClientFactory;
             _httpHelper = httpHelper;
             _htmlParser = htmlParser;
+            _coordinatesParser = coordinatesParser;
         }
 
         public async Task<IEnumerable<Mission>> GetAllMissionsAsync(SessionData sessionData)
@@ -58,12 +59,12 @@ namespace OGame.Bot.Infrastructure.API.APIClients
 
                         var originPlanetName = fleetEventElement.QuerySelector("td[class=originFleet]").TextContent.Trim();
                         var originCoordsString = fleetEventElement.QuerySelector("td[class=coordsOrigin]").TextContent.Trim();
-                        var originCoordinates = ParseCoordinatesFromString(originCoordsString);
+                        var originCoordinates = _coordinatesParser.ParseCoordinatesFromString(originCoordsString);
                         var planetFrom = new MissionPlanet { PlanetName = originPlanetName, PlanetCoordinates = originCoordinates };
 
                         var destPlanetName = fleetEventElement.QuerySelector("td[class=destFleet]").TextContent.Trim();
                         var destCoordsString = fleetEventElement.QuerySelector("td[class=destCoords]").TextContent.Trim();
-                        var destCoordinates = ParseCoordinatesFromString(destCoordsString);
+                        var destCoordinates = _coordinatesParser.ParseCoordinatesFromString(destCoordsString);
                         var planetTo = new MissionPlanet { PlanetName = destPlanetName, PlanetCoordinates = destCoordinates };
 
                         var fleetEvent = new Mission
@@ -81,29 +82,6 @@ namespace OGame.Bot.Infrastructure.API.APIClients
             return fleetEvents;
         }
 
-        private Coordinates ParseCoordinatesFromString(string coordinatesString)
-        {
-            Coordinates coordinates = null;
-            if (!string.IsNullOrWhiteSpace(coordinatesString))
-            {
-                var coordinatesArray = coordinatesString.Trim().TrimStart('[').TrimEnd(']').Split(':');
-                if (coordinatesArray.Length == 3)
-                {
-                    int galaxy, system, position;
-                    if (int.TryParse(coordinatesArray[0], out galaxy) &&
-                        int.TryParse(coordinatesArray[1], out system) &&
-                        int.TryParse(coordinatesArray[2], out position))
-                    {
-                        coordinates = new Coordinates
-                        {
-                            Galaxy = galaxy,
-                            System = system,
-                            Position = position
-                        };
-                    }
-                }
-            }
-            return coordinates;
-        }
+        
     }
 }

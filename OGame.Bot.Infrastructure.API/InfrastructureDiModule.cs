@@ -13,7 +13,8 @@ namespace OGame.Bot.Infrastructure.API
             builder.RegisterType<FleetClient>().As<IFleetClient>();
             builder.RegisterType<HttpClientFactory>().As<IHttpClientFactory>();
             builder.RegisterType<MissionClient>().As<IMissionClient>();
-            builder.RegisterType<ResourcesClient>().As<IResourcesClient>();
+            builder.RegisterType<ResourceBuildingsClient>().As<IResourceBuildingsClient>();
+            builder.RegisterType<UserPlanetsClient>().As<IUserPlanetsClient>();
         }
     }
 }

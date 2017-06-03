@@ -31,7 +31,8 @@ namespace OGame.Bot.Infrastructure.API.Tests
                 .ReturnsAsync(testResponce);
 
             var htmlParser = new HtmlParser();
-            var fleetEventsClient = new MissionClient(httpClientFactoryMock.Object, httpHelperMock.Object, htmlParser);
+            var coordinatesParser = new CoordinatesParser();
+            var fleetEventsClient = new MissionClient(httpClientFactoryMock.Object, httpHelperMock.Object, htmlParser, coordinatesParser);
             var cookieContainer = new CookieContainer();
             var sessionData = new SessionData(cookieContainer);
 

@@ -45,6 +45,8 @@ namespace OGame.Bot.Infrastructure.API.Tests
             var deuterium=1000;
 
             await fleetClient.SendFleetPhase3(sessionData, moveToGoPhaseInfo, metal, crystal, deuterium);
+
+
         }
     }
 }
