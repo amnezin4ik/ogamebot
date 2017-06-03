@@ -2,9 +2,9 @@
 
 namespace OGame.Bot.Infrastructure.API.Dto
 {
-    public class GoPhaseInfo
+    public class SendFleetPhase3Info
     {
-        public GoPhaseInfo()
+        public SendFleetPhase3Info()
         {
             AlreadySetedParameters = new Dictionary<string, string>();
         }

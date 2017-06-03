@@ -74,7 +74,7 @@
     <Compile Include="Dto\MissionType.cs" />
     <Compile Include="Dto\FleetSpeed.cs" />
     <Compile Include="Dto\MissionTarget.cs" />
-    <Compile Include="Dto\GoPhaseInfo.cs" />
+    <Compile Include="Dto\SendFleetPhase3Info.cs" />
     <Compile Include="Dto\Ship.cs" />
     <Compile Include="Dto\ShipCell.cs" />
     <Compile Include="Dto\ShipType.cs" />

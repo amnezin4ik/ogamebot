@@ -30,7 +30,7 @@ namespace OGame.Bot.Infrastructure.API.Tests
                 System = 279,
                 Position = 6
             };
-            await fleetClient.MoveToAttentionPhase(sessionData, availableFleet, coordinatesFrom);
+            await fleetClient.SendFleetPhase1(sessionData, availableFleet, coordinatesFrom);
 
             var coordinatesTo = new Coordinates
             {
@@ -38,13 +38,13 @@ namespace OGame.Bot.Infrastructure.API.Tests
                 System = 299,
                 Position = 9
             };
-            var moveToGoPhaseInfo = await fleetClient.MoveToGoPhase(sessionData, availableFleet, coordinatesTo, MissionTarget.Planet, MissionType.Leave, FleetSpeed.Percent10);
+            var moveToGoPhaseInfo = await fleetClient.SendFleetPhase2(sessionData, availableFleet, coordinatesTo, MissionTarget.Planet, MissionType.Leave, FleetSpeed.Percent10);
 
-            double metal = 300;
-            double crystal=500;
-            double deuterium=1000;
+            var metal = 300;
+            var crystal=500;
+            var deuterium=1000;
 
-            await fleetClient.Go(sessionData, moveToGoPhaseInfo, metal, crystal, deuterium);
+            await fleetClient.SendFleetPhase3(sessionData, moveToGoPhaseInfo, metal, crystal, deuterium);
         }
     }
 }
