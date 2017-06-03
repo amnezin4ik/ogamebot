@@ -21,7 +21,7 @@ namespace OGame.Bot.Infrastructure.API.Tests
         {
             var httpClientFactoryMock = new Mock<IHttpClientFactory>();
             httpClientFactoryMock
-                .Setup(m => m.GetHttpClient(It.IsAny<HttpClientHandler>()))
+                .Setup(m => m.GetHttpClient(It.IsAny<SessionData>()))
                 .Returns(new HttpClient());
 
             var testResponce = GetTransportTestResponce();

@@ -7,10 +7,10 @@ namespace OGame.Bot.Infrastructure.API.APIClients
     {
         Task<Fleet> GetFleetAvailableAsync(SessionData sessionData);
 
-        void Go(MissionType missionType, bool takeAllResources = false);
+        Task MoveToAttentionPhase(SessionData sessionData, Fleet fleet, Coordinates coordinatesFrom);
 
-        void MoveToAttentionPhase(Fleet fleet);
+        Task<GoPhaseInfo> MoveToGoPhase(SessionData sessionData, Fleet fleet, Coordinates coordinatesTo, MissionTarget target, MissionType missionType, FleetSpeed fleetSpeed);
 
-        void MoveToGoPhase(Coordinates missionCoordinates, MissionTarget target, FleetSpeed speed);
+        Task Go(SessionData sessionData, GoPhaseInfo goPhaseInfo, double metal, double crystal, double deuterium);
     }
 }

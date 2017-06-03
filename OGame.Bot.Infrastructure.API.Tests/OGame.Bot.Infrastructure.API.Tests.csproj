@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorizationClientTest.cs" />
+    <Compile Include="FleetClientTest.cs" />
     <Compile Include="FleetEventsClientTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

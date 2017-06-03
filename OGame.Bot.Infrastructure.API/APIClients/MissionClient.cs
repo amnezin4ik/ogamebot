@@ -37,11 +37,10 @@ namespace OGame.Bot.Infrastructure.API.APIClients
         private async Task<IEnumerable<Mission>> GetMissionsByTypeAsync(SessionData sessionData, MissionType? missionType)
         {
             var fleetEvents = new List<Mission>();
-            var handler = new HttpClientHandler { CookieContainer = sessionData.RequestCookies };
-            using (var httpClient = _httpClientFactory.GetHttpClient(handler))
+            using (var httpClient = _httpClientFactory.GetHttpClient(sessionData))
             {
                 httpClient.DefaultRequestHeaders.Add("Host", "s140-ru.ogame.gameforge.com");
-                var overviewContent = await _httpHelper.GetStringAsync(httpClient, "https://s140-ru.ogame.gameforge.com/game/index.php?page=eventList");
+                var overviewContent = await _httpHelper.GetStringAsync(httpClient, $"{Constants.OGameUrl}?page=eventList");
                 var document = _htmlParser.Parse(overviewContent);
                 var fleetEventElements = document.QuerySelectorAll("tr[class=eventFleet]").ToList();
                 if (fleetEventElements.Any())

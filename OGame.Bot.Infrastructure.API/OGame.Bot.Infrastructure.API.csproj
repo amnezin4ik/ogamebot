@@ -48,6 +48,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,18 +74,17 @@
     <Compile Include="Dto\MissionType.cs" />
     <Compile Include="Dto\FleetSpeed.cs" />
     <Compile Include="Dto\MissionTarget.cs" />
+    <Compile Include="Dto\GoPhaseInfo.cs" />
     <Compile Include="Dto\Ship.cs" />
     <Compile Include="Dto\ShipCell.cs" />
     <Compile Include="Dto\ShipType.cs" />
+    <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\IHttpHelper.cs" />
     <Compile Include="Dto\ResourcesOverview.cs" />
     <Compile Include="Dto\ResourceType.cs" />
     <Compile Include="Dto\SessionData.cs" />
     <Compile Include="InfrastructureDiModule.cs" />
-    <Compile Include="Models\ResourcesOverview.cs" />
-    <Compile Include="Models\ResourceType.cs" />
-    <Compile Include="Models\SessionData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
