@@ -52,12 +52,7 @@ namespace OGame.Bot.Infrastructure.API.APIClients
 
         public async Task SetActivePlanetAsync(SessionData sessionData, string planetId)
         {
-            var handler = new HttpClientHandler
-            {
-                CookieContainer = sessionData.RequestCookies
-            };
-            
-            using (var httpClient = _httpClientFactory.GetHttpClient(handler))
+            using (var httpClient = _httpClientFactory.GetHttpClient(sessionData))
             {
                 httpClient.DefaultRequestHeaders.Add("Host", "s140-ru.ogame.gameforge.com");
                 await _httpHelper.GetAsync(httpClient, $"{Constants.OGameUrl}?page=overview&cp={planetId}");
