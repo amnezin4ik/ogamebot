@@ -50,7 +50,7 @@ namespace OGame.Bot.Infrastructure.API.APIClients
             return userPlanets;
         }
 
-        public async Task SetActivePlanetAsync(SessionData sessionData, string planetId)
+        public async Task MakePlanetActiveAsync(SessionData sessionData, string planetId)
         {
             using (var httpClient = _httpClientFactory.GetHttpClient(sessionData))
             {

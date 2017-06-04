@@ -73,12 +73,17 @@ namespace OGame.Bot.Application.MessageProcessors
                 {
                     destinationPlanet = await _galaxyService.GetNearestInactivePlanetAsync();
                 }
-                var saveMission = await _fleetService.SaveFleetAndResourcesAsync(attackMessage.PlanetTo, destinationPlanet, FleetSpeed.Percent10);
+                var saveMission = await SaveFleetAndResourcesAsync(attackMessage.PlanetTo, destinationPlanet, FleetSpeed.Percent10);
                 var approximateStartOfReturn = GetApproximateStartOfReturn(attackMessage);
                 var returnFleetMessage = new ReturnFleetMessage(saveMission, approximateStartOfReturn);
                 resultMessages.Add(returnFleetMessage);
             }
             return resultMessages;
+        }
+
+        private async Task<Mission> SaveFleetAndResourcesAsync(MissionPlanet needSavePlanet, MissionPlanet destinationPlanet, FleetSpeed speed)
+        {
+            throw new NotImplementedException();
         }
 
         private TimeSpan GetApproximateStartOfReturn(AttackMessage attackMessage)

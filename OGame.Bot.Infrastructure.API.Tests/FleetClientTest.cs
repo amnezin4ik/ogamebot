@@ -23,7 +23,6 @@ namespace OGame.Bot.Infrastructure.API.Tests
 
             var availableFleet = await fleetClient.GetFleetAvailableAsync(sessionData);
 
-
             var coordinatesFrom = new Coordinates
             {
                 Galaxy = 1,

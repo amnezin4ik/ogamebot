@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DomainDiModule.cs" />
+    <Compile Include="DomainMappingProfile.cs" />
     <Compile Include="Implementations\FleetService.cs" />
     <Compile Include="Implementations\GalaxyService.cs" />
     <Compile Include="Implementations\MissionService.cs" />

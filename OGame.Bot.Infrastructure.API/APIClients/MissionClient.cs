@@ -35,6 +35,15 @@ namespace OGame.Bot.Infrastructure.API.APIClients
             return fleetEvents;
         }
 
+        public async Task ReturnMissionAsync(SessionData sessionData, string missionId)
+        {
+            using (var httpClient = _httpClientFactory.GetHttpClient(sessionData))
+            {
+                httpClient.DefaultRequestHeaders.Add("Host", "s140-ru.ogame.gameforge.com");
+                await _httpHelper.GetAsync(httpClient, $"{Constants.OGameUrl}?page=movement&return={missionId}");
+            }
+        }
+
         private async Task<IEnumerable<Mission>> GetMissionsByTypeAsync(SessionData sessionData, MissionType? missionType)
         {
             var fleetEvents = new List<Mission>();
