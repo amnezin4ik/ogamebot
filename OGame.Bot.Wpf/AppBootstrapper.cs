@@ -3,6 +3,7 @@ using Autofac;
 using AutoMapper;
 using Caliburn.Micro;
 using Caliburn.Micro.Autofac;
+using OGame.Bot.Application;
 using OGame.Bot.Domain.Services;
 using OGame.Bot.Infrastructure.API;
 using OGame.Bot.Modules.Common;
@@ -25,6 +26,7 @@ namespace OGame.Bot.Wpf
         protected override void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule<WpfDiModule>();
+            builder.RegisterModule<ApplicationDiModule>();
             builder.RegisterModule<InfrastructureDiModule>();
             builder.RegisterModule<DomainDiModule>();
             builder.RegisterModule<ModulesCommonDiModule>();

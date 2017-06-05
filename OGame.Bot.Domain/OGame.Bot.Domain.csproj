@@ -48,6 +48,7 @@
     <Compile Include="MissionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionData.cs" />
+    <Compile Include="UserCredentials.cs" />
     <Compile Include="UserPlanet.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

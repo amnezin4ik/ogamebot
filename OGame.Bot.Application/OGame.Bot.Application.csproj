@@ -69,8 +69,11 @@
     <Compile Include="Messages\MessageType.cs" />
     <Compile Include="Messages\AttackMessage.cs" />
     <Compile Include="Messages\ReturnFleetMessage.cs" />
+    <Compile Include="Models\UserCredentials.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BotService.cs" />
     <Compile Include="Services\GlobalStateUpdater.cs" />
+    <Compile Include="Services\IBotService.cs" />
     <Compile Include="Services\IGlobalStateUpdater.cs" />
     <Compile Include="Services\IMessagesProvider.cs" />
     <Compile Include="Services\MessagesProvider.cs" />

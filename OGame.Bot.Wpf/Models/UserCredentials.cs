@@ -4,7 +4,7 @@ using OGame.Bot.Wpf.Annotations;
 
 namespace OGame.Bot.Wpf.Models
 {
-    public class User : INotifyPropertyChanged
+    public class UserCredentials : INotifyPropertyChanged
     {
         private string _userName;
         public string UserName

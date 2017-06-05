@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using AngleSharp.Parser.Html;
+using Autofac;
 using OGame.Bot.Infrastructure.API.APIClients;
 using OGame.Bot.Infrastructure.API.Helpers;
 
@@ -15,6 +16,10 @@ namespace OGame.Bot.Infrastructure.API
             builder.RegisterType<MissionClient>().As<IMissionClient>();
             builder.RegisterType<ResourceBuildingsClient>().As<IResourceBuildingsClient>();
             builder.RegisterType<UserPlanetsClient>().As<IUserPlanetsClient>();
+            builder.RegisterType<HtmlParser>().AsSelf();
+            builder.RegisterType<CoordinatesParser>().AsSelf();
+
+
         }
     }
 }

@@ -4,6 +4,10 @@ namespace OGame.Bot.Domain.Services.Interfaces
 {
     public interface IUpdatableSessionDataProvider : ISessionDataProvider
     {
-        Task UpdateSessionDataAsync();
+        bool IsInitialized { get; }
+
+        Task InitializeAsync(UserCredentials credentials);
+
+        Task RefreshSessionDataAsync();
     }
 }

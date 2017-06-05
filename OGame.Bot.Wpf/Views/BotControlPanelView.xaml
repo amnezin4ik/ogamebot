@@ -11,7 +11,7 @@
             <TextBlock Text="UserName" 
                        Margin="10" 
                        />
-            <TextBox Text="{Binding CurrentUser.UserName, UpdateSourceTrigger=PropertyChanged}" 
+            <TextBox Text="{Binding CurrentUserCredentials.UserName, UpdateSourceTrigger=PropertyChanged}" 
                      Width="200"
                      Margin="10"
                      >
@@ -21,14 +21,18 @@
             <TextBlock Text="Password" 
                        Margin="10" 
                        />
-            <TextBox Text="{Binding CurrentUser.Password, UpdateSourceTrigger=PropertyChanged}" 
+            <TextBox Text="{Binding CurrentUserCredentials.Password, UpdateSourceTrigger=PropertyChanged}" 
                      Width="200"
                      Margin="10"
                      >
             </TextBox>
         </StackPanel>
-        <Button Name="RunBot" 
-                Content="RunBot"
+        <Button Name="Run" 
+                Content="Run"
+                Width="100" 
+                />
+        <Button Name="Stop" 
+                Content="Stop"
                 Width="100" 
                 />
     </StackPanel>

@@ -39,7 +39,7 @@ namespace OGame.Bot.Application.MessageProcessors
                 throw new NotSupportedException($"Can't process message with \"{message.MessageType}\" message type");
             }
 
-            await _updatableSessionDataProvider.UpdateSessionDataAsync();
+            await _updatableSessionDataProvider.RefreshSessionDataAsync();
             return new List<Message>();
         }
     }

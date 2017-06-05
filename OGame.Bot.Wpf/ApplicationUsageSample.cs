@@ -15,7 +15,7 @@ namespace OGame.Bot.Wpf
             _globalStateUpdater = globalStateUpdater;
         }
 
-        public void Run(CancellationToken cancellationToken)
+        public void Run()
         {
             //TODO: I think it should be done otherwise, but right now I don't know how XD
             _messageServiceBus.Run();

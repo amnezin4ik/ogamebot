@@ -48,7 +48,7 @@ namespace OGame.Bot.Application.MessageBus
         {
             if (IsRunning)
             {
-                throw new InvalidOperationException("Run method was already called");
+                throw new InvalidOperationException("RunAsync method was already called");
             }
             IsRunning = true;
 

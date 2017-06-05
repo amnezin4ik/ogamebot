@@ -27,7 +27,7 @@ namespace OGame.Bot.Application.Services
         {
             if (IsRunning)
             {
-                throw new InvalidOperationException("Run method was already called");
+                throw new InvalidOperationException("RunAsync method was already called");
             }
             IsRunning = true;
 
