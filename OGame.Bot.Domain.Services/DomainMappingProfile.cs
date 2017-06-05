@@ -7,6 +7,7 @@ namespace OGame.Bot.Domain.Services
     {
         public DomainMappingProfile()
         {
+            CreateMap<Coordinates, Dto.Coordinates>();
             CreateMap<Dto.Coordinates, Coordinates>();
             CreateMap<SessionData, Dto.SessionData>();
             CreateMap<Dto.SessionData, SessionData>();
