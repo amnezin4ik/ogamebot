@@ -90,7 +90,5 @@ namespace OGame.Bot.Infrastructure.API.APIClients
             }
             return fleetEvents;
         }
-
-        
     }
 }

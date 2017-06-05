@@ -83,7 +83,9 @@ namespace OGame.Bot.Application.MessageProcessors
 
         private async Task<Mission> SaveFleetAndResourcesAsync(MissionPlanet needSavePlanet, MissionPlanet destinationPlanet)
         {
+            //TODO: specify MakePlanetActiveAsync method with more predictable parameters
             //await _userPlanetsService.MakePlanetActiveAsync(needSavePlanet.Coordinates);
+
             throw new NotImplementedException();
         }
 
