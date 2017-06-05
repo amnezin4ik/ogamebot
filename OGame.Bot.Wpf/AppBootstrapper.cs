@@ -38,6 +38,8 @@ namespace OGame.Bot.Wpf
             builder.Register(ctx => new MapperConfiguration(cfg =>
             {
                 cfg.ConstructServicesUsing(Container.Resolve);
+                cfg.AddProfile(typeof(WpfMappingProfile));
+                cfg.AddProfile(typeof(ApplicationMappingProfile));
                 cfg.AddProfile(typeof(DomainMappingProfile));
             }));
             builder.Register(ctx => ctx.Resolve<MapperConfiguration>().CreateMapper()).As<IMapper>();

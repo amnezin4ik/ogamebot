@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDiModule.cs" />
+    <Compile Include="ApplicationMappingProfile.cs" />
     <Compile Include="MessageBus\IMessageServiceBus.cs" />
     <Compile Include="MessageProcessors\IUpdateSessionDataMessageProcessor.cs" />
     <Compile Include="MessageProcessors\UpdateSessionDataMessageProcessor.cs" />

@@ -146,6 +146,7 @@ namespace OGame.Bot.UnitTests.Application.MessageBus
 
             messageServiceBus.AddMessage(new AttackMessage(new Mission("2134")));
             messageServiceBus.AddMessage(new AttackMessage(new Mission("2134")));
+            messageServiceBus.AddMessage(new AttackMessage(new Mission("2134")));
             messageServiceBus.AddMessage(new UpdateSessionDataMessage());
             messageServiceBus.AddMessage(new UpdateSessionDataMessage());
             messageServiceBus.AddMessage(new UpdateSessionDataMessage());
