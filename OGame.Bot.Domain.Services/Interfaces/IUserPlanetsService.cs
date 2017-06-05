@@ -8,5 +8,9 @@ namespace OGame.Bot.Domain.Services.Interfaces
         Task<IEnumerable<UserPlanet>> GetAllUserPlanetsAsync();
 
         Task<bool> IsItUserPlanetAsync(MissionPlanet planet);
+
+        Task MakePlanetActiveAsync(string planetId);
+
+        Task MakePlanetActiveAsync(Coordinates planetCoordinates);
     }
 }

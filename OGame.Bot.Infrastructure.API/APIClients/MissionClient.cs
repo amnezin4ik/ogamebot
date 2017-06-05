@@ -69,12 +69,12 @@ namespace OGame.Bot.Infrastructure.API.APIClients
                         var originPlanetName = fleetEventElement.QuerySelector("td[class=originFleet]").TextContent.Trim();
                         var originCoordsString = fleetEventElement.QuerySelector("td[class=coordsOrigin]").TextContent.Trim();
                         var originCoordinates = _coordinatesParser.ParseCoordinatesFromString(originCoordsString);
-                        var planetFrom = new MissionPlanet { PlanetName = originPlanetName, PlanetCoordinates = originCoordinates };
+                        var planetFrom = new MissionPlanet { Name = originPlanetName, Coordinates = originCoordinates };
 
                         var destPlanetName = fleetEventElement.QuerySelector("td[class=destFleet]").TextContent.Trim();
                         var destCoordsString = fleetEventElement.QuerySelector("td[class=destCoords]").TextContent.Trim();
                         var destCoordinates = _coordinatesParser.ParseCoordinatesFromString(destCoordsString);
-                        var planetTo = new MissionPlanet { PlanetName = destPlanetName, PlanetCoordinates = destCoordinates };
+                        var planetTo = new MissionPlanet { Name = destPlanetName, Coordinates = destCoordinates };
 
                         var fleetEvent = new Mission
                         {

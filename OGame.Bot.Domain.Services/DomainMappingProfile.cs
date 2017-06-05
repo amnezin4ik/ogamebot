@@ -12,6 +12,9 @@ namespace OGame.Bot.Domain.Services
             CreateMap<Dto.SessionData, SessionData>();
             CreateMap<Dto.Mission, Mission>();
             CreateMap<UserPlanet, MissionPlanet>();
+            CreateMap<Dto.UserPlanet, UserPlanet>();
+            CreateMap<Dto.MissionPlanet, MissionPlanet>();
+            CreateMap<MissionPlanet, Dto.MissionPlanet>();
         }
     }
 }

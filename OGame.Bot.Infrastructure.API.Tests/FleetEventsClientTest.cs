@@ -45,27 +45,27 @@ namespace OGame.Bot.Infrastructure.API.Tests
             Assert.AreEqual("eventRow-1336655", firstEvent.Id);
             Assert.AreEqual(MissionType.Transport, firstEvent.MissionType);
             Assert.AreEqual(1494962729, firstEvent.ArrivalTimeUtc.TotalSeconds);
-            Assert.AreEqual("p1", firstEvent.PlanetFrom.PlanetName);
-            Assert.AreEqual(1, firstEvent.PlanetFrom.PlanetCoordinates.Galaxy);
-            Assert.AreEqual(279, firstEvent.PlanetFrom.PlanetCoordinates.System);
-            Assert.AreEqual(6, firstEvent.PlanetFrom.PlanetCoordinates.Position);
-            Assert.AreEqual("Главная планета", firstEvent.PlanetTo.PlanetName);
-            Assert.AreEqual(1, firstEvent.PlanetTo.PlanetCoordinates.Galaxy);
-            Assert.AreEqual(279, firstEvent.PlanetTo.PlanetCoordinates.System);
-            Assert.AreEqual(10, firstEvent.PlanetTo.PlanetCoordinates.Position);
+            Assert.AreEqual("p1", firstEvent.PlanetFrom.Name);
+            Assert.AreEqual(1, firstEvent.PlanetFrom.Coordinates.Galaxy);
+            Assert.AreEqual(279, firstEvent.PlanetFrom.Coordinates.System);
+            Assert.AreEqual(6, firstEvent.PlanetFrom.Coordinates.Position);
+            Assert.AreEqual("Главная планета", firstEvent.PlanetTo.Name);
+            Assert.AreEqual(1, firstEvent.PlanetTo.Coordinates.Galaxy);
+            Assert.AreEqual(279, firstEvent.PlanetTo.Coordinates.System);
+            Assert.AreEqual(10, firstEvent.PlanetTo.Coordinates.Position);
 
             var secondEvent = fleetEvents.ElementAt(1);
             Assert.AreEqual("eventRow-1336656", secondEvent.Id);
             Assert.AreEqual(MissionType.Transport, secondEvent.MissionType);
             Assert.AreEqual(1494963376, secondEvent.ArrivalTimeUtc.TotalSeconds);
-            Assert.AreEqual("p1", secondEvent.PlanetFrom.PlanetName);
-            Assert.AreEqual(1, secondEvent.PlanetFrom.PlanetCoordinates.Galaxy);
-            Assert.AreEqual(279, secondEvent.PlanetFrom.PlanetCoordinates.System);
-            Assert.AreEqual(6, secondEvent.PlanetFrom.PlanetCoordinates.Position);
-            Assert.AreEqual("Главная планета", secondEvent.PlanetTo.PlanetName);
-            Assert.AreEqual(1, secondEvent.PlanetTo.PlanetCoordinates.Galaxy);
-            Assert.AreEqual(279, secondEvent.PlanetTo.PlanetCoordinates.System);
-            Assert.AreEqual(10, secondEvent.PlanetTo.PlanetCoordinates.Position);
+            Assert.AreEqual("p1", secondEvent.PlanetFrom.Name);
+            Assert.AreEqual(1, secondEvent.PlanetFrom.Coordinates.Galaxy);
+            Assert.AreEqual(279, secondEvent.PlanetFrom.Coordinates.System);
+            Assert.AreEqual(6, secondEvent.PlanetFrom.Coordinates.Position);
+            Assert.AreEqual("Главная планета", secondEvent.PlanetTo.Name);
+            Assert.AreEqual(1, secondEvent.PlanetTo.Coordinates.Galaxy);
+            Assert.AreEqual(279, secondEvent.PlanetTo.Coordinates.System);
+            Assert.AreEqual(10, secondEvent.PlanetTo.Coordinates.Position);
         }
 
         private string GetTransportTestResponce()

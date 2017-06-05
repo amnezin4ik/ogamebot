@@ -73,7 +73,7 @@ namespace OGame.Bot.Application.MessageProcessors
                 {
                     destinationPlanet = await _galaxyService.GetNearestInactivePlanetAsync();
                 }
-                var saveMission = await SaveFleetAndResourcesAsync(attackMessage.PlanetTo, destinationPlanet, FleetSpeed.Percent10);
+                var saveMission = await SaveFleetAndResourcesAsync(attackMessage.PlanetTo, destinationPlanet);
                 var approximateStartOfReturn = GetApproximateStartOfReturn(attackMessage);
                 var returnFleetMessage = new ReturnFleetMessage(saveMission, approximateStartOfReturn);
                 resultMessages.Add(returnFleetMessage);
@@ -81,8 +81,9 @@ namespace OGame.Bot.Application.MessageProcessors
             return resultMessages;
         }
 
-        private async Task<Mission> SaveFleetAndResourcesAsync(MissionPlanet needSavePlanet, MissionPlanet destinationPlanet, FleetSpeed speed)
+        private async Task<Mission> SaveFleetAndResourcesAsync(MissionPlanet needSavePlanet, MissionPlanet destinationPlanet)
         {
+            //await _userPlanetsService.MakePlanetActiveAsync(needSavePlanet.Coordinates);
             throw new NotImplementedException();
         }
 

@@ -23,6 +23,9 @@ namespace OGame.Bot.Application.Services
             var attackMessages = await GetAttackMessagesAsync();
             newMessages.AddRange(attackMessages);
 
+            var updateSessionDataMessage = new UpdateSessionDataMessage();
+            newMessages.Add(updateSessionDataMessage);
+
             return newMessages;
         }
 

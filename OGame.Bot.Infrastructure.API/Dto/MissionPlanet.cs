@@ -2,8 +2,8 @@
 {
     public class MissionPlanet
     {
-        public Coordinates PlanetCoordinates { get; set; }
+        public Coordinates Coordinates { get; set; }
 
-        public string PlanetName { get; set; }
+        public string Name { get; set; }
     }
 }
