@@ -17,6 +17,7 @@ namespace OGame.Bot.Application.MessageProcessors
         private readonly IGalaxyService _galaxyService;
         private readonly IUserPlanetsService _userPlanetsService;
         private readonly IMissionService _missionService;
+        private readonly IPlanetOverviewService _planetOverviewService;
         private readonly IMapper _mapper;
 
         public AttackMessageProcessor(
@@ -25,6 +26,7 @@ namespace OGame.Bot.Application.MessageProcessors
             IGalaxyService galaxyService,
             IUserPlanetsService userPlanetsService,
             IMissionService missionService,
+            IPlanetOverviewService planetOverviewService,
             IMapper mapper)
         {
             _dateTimeProvider = dateTimeProvider;
@@ -32,6 +34,7 @@ namespace OGame.Bot.Application.MessageProcessors
             _galaxyService = galaxyService;
             _userPlanetsService = userPlanetsService;
             _missionService = missionService;
+            _planetOverviewService = planetOverviewService;
             _mapper = mapper;
         }
 
@@ -81,9 +84,12 @@ namespace OGame.Bot.Application.MessageProcessors
                     }
                     var userPlanetToSave = await _userPlanetsService.GetUserPlanetAsync(attackMessage.PlanetTo.Coordinates);
                     var saveMission = await SaveFleetAndResourcesAsync(userPlanetToSave, destinationPlanet);
-                    var approximateStartOfReturn = GetApproximateStartOfReturn(attackMessage);
-                    var returnFleetMessage = new ReturnFleetMessage(saveMission, approximateStartOfReturn);
-                    resultMessages.Add(returnFleetMessage);
+                    if (saveMission != null)
+                    {
+                        var approximateStartOfReturn = GetApproximateStartOfReturn(attackMessage);
+                        var returnFleetMessage = new ReturnFleetMessage(saveMission, approximateStartOfReturn);
+                        resultMessages.Add(returnFleetMessage);
+                    }
                 }
             }
             return resultMessages;
@@ -91,11 +97,36 @@ namespace OGame.Bot.Application.MessageProcessors
 
         private async Task<Mission> SaveFleetAndResourcesAsync(UserPlanet needSavePlanet, MissionPlanet destinationPlanet)
         {
+            Mission saveMission = null;
             await _userPlanetsService.MakePlanetActiveAsync(needSavePlanet);
             var availableFleet = await _fleetService.GetActivePlanetFleetAsync();
+            var hasAnyShip = availableFleet.Ships.Any(s => s.Count > 0);
+            if (hasAnyShip)
+            {
+                var needSavePlanetOverview = await _planetOverviewService.GetPlanetOverviewAsync(needSavePlanet);
+                var resourcesToSave = GetResourcesToSave(needSavePlanetOverview.Resources, availableFleet);
+                saveMission = await _fleetService.SendFleetAsync(availableFleet, needSavePlanet.Coordinates, destinationPlanet.Coordinates, MissionTarget.Planet, MissionType.Transport, FleetSpeed.Percent10, resourcesToSave);
+            }
+            return saveMission;
+        }
 
+        private Resources GetResourcesToSave(Resources resourcesAvailable, Fleet fleetAvailable)
+        {
+            return resourcesAvailable;
+            //var resourcesToSave = new Resources();
 
-            throw new NotImplementedException();
+            //var fleetCapacity = _fleetService.CalculateFleetCapacity(fleetAvailable);
+            //var resourcesAmount = resourcesAvailable.Metal + resourcesAvailable.Crystal + resourcesAvailable.Deuterium;
+            //if (fleetCapacity >= resourcesAmount)
+            //{
+            //    resourcesToSave = resourcesAvailable;
+            //}
+            //else
+            //{
+
+            //}
+
+            //return resourcesToSave;
         }
 
         private TimeSpan GetApproximateStartOfReturn(AttackMessage attackMessage)

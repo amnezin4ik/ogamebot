@@ -52,6 +52,11 @@
             }
         }
 
+        public override string ToString()
+        {
+            return $"[{Galaxy}:{System}:{Position}]";
+        }
+
         protected bool Equals(Coordinates other)
         {
             return Galaxy == other.Galaxy && System == other.System && Position == other.Position;

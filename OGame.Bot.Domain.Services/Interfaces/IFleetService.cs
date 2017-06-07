@@ -6,6 +6,8 @@ namespace OGame.Bot.Domain.Services.Interfaces
     {
         Task<Fleet> GetActivePlanetFleetAsync();
 
+        int CalculateFleetCapacity(Fleet fleet);
+
         Task<Mission> SendFleetAsync(Fleet fleet, Coordinates coordinatesFrom, Coordinates coordinatesTo, MissionTarget missionTarget, MissionType missionType, FleetSpeed fleetSpeed, Resources resources);
     }
 }

@@ -60,6 +60,7 @@
     <Compile Include="APIClients\AuthorizationClient.cs" />
     <Compile Include="APIClients\FleetClient.cs" />
     <Compile Include="APIClients\IFleetClient.cs" />
+    <Compile Include="APIClients\IPlanetOverviewClient.cs" />
     <Compile Include="APIClients\IUserPlanetsClient.cs" />
     <Compile Include="APIClients\MissionClient.cs" />
     <Compile Include="APIClients\HttpClientFactory.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Dto\MissionType.cs" />
     <Compile Include="Dto\FleetSpeed.cs" />
     <Compile Include="Dto\MissionTarget.cs" />
+    <Compile Include="Dto\PlanetOverview.cs" />
     <Compile Include="Dto\Resources.cs" />
     <Compile Include="Dto\SendFleetPhase3Info.cs" />
     <Compile Include="Dto\Ship.cs" />

@@ -26,6 +26,8 @@ namespace OGame.Bot.Domain.Services
             CreateMap<Dto.ShipType, ShipType>();
             CreateMap<Resources, Dto.Resources>();
             CreateMap<Dto.Resources, Resources>();
+            CreateMap<PlanetOverview, Dto.PlanetOverview>();
+            CreateMap<Dto.PlanetOverview, PlanetOverview>();
         }
     }
 }

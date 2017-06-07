@@ -63,6 +63,7 @@
     <Compile Include="AuthorizationClientTest.cs" />
     <Compile Include="FleetClientTest.cs" />
     <Compile Include="FleetEventsClientTest.cs" />
+    <Compile Include="PlanetOverviewClientTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +81,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Resources\PlanetOverview.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\EventList_TransportEvents.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
