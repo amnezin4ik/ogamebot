@@ -37,7 +37,7 @@ namespace OGame.Bot.Domain.Services.Implementations
         public int CalculateFleetCapacity(Fleet fleet)
         {
             var capacity = 0;
-            foreach (var shipCell in fleet.Ships)
+            foreach (var shipCell in fleet.ShipCells)
             {
                 var shipCapacity = shipCell.Ship.GetCapacity();
                 var shipCellCapacity = shipCapacity * shipCell.Count;
@@ -69,9 +69,9 @@ namespace OGame.Bot.Domain.Services.Implementations
             return currentlyCreatedMission;
         }
 
-        private Mission GetCurrentlyCreatedMission(IEnumerable<Mission> currentMissions, Coordinates coordinatesToDto, List<string> existingMissionsIds)
+        private Mission GetCurrentlyCreatedMission(IEnumerable<Mission> currentMissions, Coordinates coordinatesTo, List<string> existingMissionsIds)
         {
-            var newMissions = currentMissions.Where(m => m.PlanetTo.Coordinates == coordinatesToDto && !existingMissionsIds.Contains(m.Id)).ToList();
+            var newMissions = currentMissions.Where(m => m.PlanetTo.Coordinates == coordinatesTo && !existingMissionsIds.Contains(m.Id)).ToList();
             if (newMissions.Count != 1)
             {
                 var errorMessageBuilder = new StringBuilder("Can't recognize save mission, available missions:");

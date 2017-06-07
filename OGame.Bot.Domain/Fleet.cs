@@ -4,6 +4,6 @@ namespace OGame.Bot.Domain
 {
     public class Fleet
     {
-        public IEnumerable<ShipCell> Ships { get; set; }
+        public IEnumerable<ShipCell> ShipCells { get; set; }
     }
 }

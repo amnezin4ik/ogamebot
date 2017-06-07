@@ -100,33 +100,13 @@ namespace OGame.Bot.Application.MessageProcessors
             Mission saveMission = null;
             await _userPlanetsService.MakePlanetActiveAsync(needSavePlanet);
             var availableFleet = await _fleetService.GetActivePlanetFleetAsync();
-            var hasAnyShip = availableFleet.Ships.Any(s => s.Count > 0);
+            var hasAnyShip = availableFleet.ShipCells.Any(s => s.Count > 0);
             if (hasAnyShip)
             {
                 var needSavePlanetOverview = await _planetOverviewService.GetPlanetOverviewAsync(needSavePlanet);
-                var resourcesToSave = GetResourcesToSave(needSavePlanetOverview.Resources, availableFleet);
-                saveMission = await _fleetService.SendFleetAsync(availableFleet, needSavePlanet.Coordinates, destinationPlanet.Coordinates, MissionTarget.Planet, MissionType.Transport, FleetSpeed.Percent10, resourcesToSave);
+                saveMission = await _fleetService.SendFleetAsync(availableFleet, needSavePlanet.Coordinates, destinationPlanet.Coordinates, MissionTarget.Planet, MissionType.Transport, FleetSpeed.Percent10, needSavePlanetOverview.Resources);
             }
             return saveMission;
-        }
-
-        private Resources GetResourcesToSave(Resources resourcesAvailable, Fleet fleetAvailable)
-        {
-            return resourcesAvailable;
-            //var resourcesToSave = new Resources();
-
-            //var fleetCapacity = _fleetService.CalculateFleetCapacity(fleetAvailable);
-            //var resourcesAmount = resourcesAvailable.Metal + resourcesAvailable.Crystal + resourcesAvailable.Deuterium;
-            //if (fleetCapacity >= resourcesAmount)
-            //{
-            //    resourcesToSave = resourcesAvailable;
-            //}
-            //else
-            //{
-
-            //}
-
-            //return resourcesToSave;
         }
 
         private TimeSpan GetApproximateStartOfReturn(AttackMessage attackMessage)

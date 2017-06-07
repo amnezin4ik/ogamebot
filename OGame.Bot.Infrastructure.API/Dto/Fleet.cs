@@ -4,6 +4,6 @@ namespace OGame.Bot.Infrastructure.API.Dto
 {
     public class Fleet
     {
-        public IEnumerable<ShipCell> Ships { get; set; } 
+        public IEnumerable<ShipCell> ShipCells { get; set; } 
     }
 }

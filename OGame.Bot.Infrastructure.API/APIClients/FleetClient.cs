@@ -49,7 +49,7 @@ namespace OGame.Bot.Infrastructure.API.APIClients
             }
             var fleet = new Fleet
             {
-                Ships = shipCells
+                ShipCells = shipCells
             };
             return fleet;
         }
@@ -69,7 +69,7 @@ namespace OGame.Bot.Infrastructure.API.APIClients
                     ["mission"] = "0",
                     ["speed"] = "10"
                 };
-                foreach (var shipCell in fleet.Ships)
+                foreach (var shipCell in fleet.ShipCells)
                 {
                     var shipTypeInt = (int)shipCell.Ship.ShipType;
                     contentParams[$"am{shipTypeInt}"] = shipCell.Count.ToString();
@@ -96,7 +96,7 @@ namespace OGame.Bot.Infrastructure.API.APIClients
                     ["acsValues"] = "-",
                     ["speed"] = $"{(int) fleetSpeed}"
                 };
-                foreach (var shipCell in fleet.Ships)
+                foreach (var shipCell in fleet.ShipCells)
                 {
                     var shipTypeInt = (int)shipCell.Ship.ShipType;
                     contentParams[$"am{shipTypeInt}"] = shipCell.Count.ToString();
