@@ -13,5 +13,7 @@ namespace OGame.Bot.Infrastructure.API.Dto
         public MissionPlanet PlanetFrom { get; set; }
 
         public MissionPlanet PlanetTo { get; set; }
+
+        public bool IsReturn { get; set; }
     }
 }

@@ -31,6 +31,8 @@ namespace OGame.Bot.Infrastructure.API.Tests
                 .Setup(m => m.GetStringAsync(It.IsAny<HttpClient>(), It.IsAny<string>()))
                 .ReturnsAsync(testResponce);
 
+            var systemDateTimeProvider = new SystemDateTimeProvider();
+
             var htmlParser = new HtmlParser();
             var coordinatesParser = new CoordinatesParser();
             var dateTimeProvider = new SystemDateTimeProvider();
@@ -40,13 +42,14 @@ namespace OGame.Bot.Infrastructure.API.Tests
 
 
             var fleetEvents = await fleetEventsClient.GetAllMissionsAsync(sessionData);
-
+            
 
             Assert.AreEqual(2, fleetEvents.Count());
             var firstEvent = fleetEvents.ElementAt(0);
             Assert.AreEqual("eventRow-1336655", firstEvent.Id);
             Assert.AreEqual(MissionType.Transport, firstEvent.MissionType);
-            Assert.AreEqual(1494962729, firstEvent.ArrivalTimeUtc.TotalSeconds);
+            var arrivalTimeUtc1 = systemDateTimeProvider.GetOGameUtcOffset() + TimeSpan.FromSeconds(1494962729);
+            Assert.AreEqual(arrivalTimeUtc1.TotalSeconds, firstEvent.ArrivalTimeUtc.TotalSeconds);
             Assert.AreEqual("p1", firstEvent.PlanetFrom.Name);
             Assert.AreEqual(1, firstEvent.PlanetFrom.Coordinates.Galaxy);
             Assert.AreEqual(279, firstEvent.PlanetFrom.Coordinates.System);
@@ -55,11 +58,13 @@ namespace OGame.Bot.Infrastructure.API.Tests
             Assert.AreEqual(1, firstEvent.PlanetTo.Coordinates.Galaxy);
             Assert.AreEqual(279, firstEvent.PlanetTo.Coordinates.System);
             Assert.AreEqual(10, firstEvent.PlanetTo.Coordinates.Position);
+            Assert.IsFalse(firstEvent.IsReturn);
 
             var secondEvent = fleetEvents.ElementAt(1);
             Assert.AreEqual("eventRow-1336656", secondEvent.Id);
             Assert.AreEqual(MissionType.Transport, secondEvent.MissionType);
-            Assert.AreEqual(1494963376, secondEvent.ArrivalTimeUtc.TotalSeconds);
+            var arrivalTimeUtc2 = systemDateTimeProvider.GetOGameUtcOffset() + TimeSpan.FromSeconds(1494963376);
+            Assert.AreEqual(arrivalTimeUtc2.TotalSeconds, secondEvent.ArrivalTimeUtc.TotalSeconds);
             Assert.AreEqual("p1", secondEvent.PlanetFrom.Name);
             Assert.AreEqual(1, secondEvent.PlanetFrom.Coordinates.Galaxy);
             Assert.AreEqual(279, secondEvent.PlanetFrom.Coordinates.System);
@@ -68,6 +73,7 @@ namespace OGame.Bot.Infrastructure.API.Tests
             Assert.AreEqual(1, secondEvent.PlanetTo.Coordinates.Galaxy);
             Assert.AreEqual(279, secondEvent.PlanetTo.Coordinates.System);
             Assert.AreEqual(10, secondEvent.PlanetTo.Coordinates.Position);
+            Assert.IsTrue(secondEvent.IsReturn);
         }
 
         private string GetTransportTestResponce()

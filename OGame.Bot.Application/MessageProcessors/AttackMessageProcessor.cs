@@ -52,7 +52,7 @@ namespace OGame.Bot.Application.MessageProcessors
             }
 
             var timeToAttack = attackMessage.ArrivalTimeUtc - _dateTimeProvider.GetUtcNow();
-            var shouldProcess = timeToAttack.TotalSeconds < 30;
+            var shouldProcess = timeToAttack.TotalSeconds < 60;
             return shouldProcess;
         }
 
@@ -104,7 +104,7 @@ namespace OGame.Bot.Application.MessageProcessors
             if (hasAnyShip)
             {
                 var needSavePlanetOverview = await _planetOverviewService.GetPlanetOverviewAsync(needSavePlanet);
-                saveMission = await _fleetService.SendFleetAsync(availableFleet, needSavePlanet.Coordinates, destinationPlanet.Coordinates, MissionTarget.Planet, MissionType.Transport, FleetSpeed.Percent10, needSavePlanetOverview.Resources);
+                saveMission = await _fleetService.SendFleetAsync(availableFleet, needSavePlanet.Coordinates, destinationPlanet.Coordinates, MissionTarget.Planet, MissionType.Leave, FleetSpeed.Percent10, needSavePlanetOverview.Resources);
             }
             return saveMission;
         }

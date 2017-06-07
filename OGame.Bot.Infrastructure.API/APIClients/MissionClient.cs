@@ -53,7 +53,7 @@ namespace OGame.Bot.Infrastructure.API.APIClients
 
         private async Task<IEnumerable<Mission>> GetMissionsByTypeAsync(SessionData sessionData, MissionType? missionType)
         {
-            var fleetEvents = new List<Mission>();
+            var missions = new List<Mission>();
             using (var httpClient = _httpClientFactory.GetHttpClient(sessionData))
             {
                 httpClient.DefaultRequestHeaders.Add("Host", "s140-ru.ogame.gameforge.com");
@@ -84,19 +84,22 @@ namespace OGame.Bot.Infrastructure.API.APIClients
                         var destCoordinates = _coordinatesParser.ParseCoordinatesFromString(destCoordsString);
                         var planetTo = new MissionPlanet { Name = destPlanetName, Coordinates = destCoordinates };
 
-                        var fleetEvent = new Mission
+                        var isReturn = bool.Parse(fleetEventElement.GetAttribute("data-return-flight"));
+
+                        var mission = new Mission
                         {
                             Id = eventId,
                             MissionType = currentMissionType,
                             ArrivalTimeUtc = arrivalTimeUtc,
                             PlanetFrom = planetFrom,
-                            PlanetTo = planetTo
+                            PlanetTo = planetTo,
+                            IsReturn = isReturn
                         };
-                        fleetEvents.Add(fleetEvent);
+                        missions.Add(mission);
                     }
                 }
             }
-            return fleetEvents;
+            return missions;
         }
     }
 }

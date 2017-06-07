@@ -71,7 +71,11 @@ namespace OGame.Bot.Domain.Services.Implementations
 
         private Mission GetCurrentlyCreatedMission(IEnumerable<Mission> currentMissions, Coordinates coordinatesTo, List<string> existingMissionsIds)
         {
-            var newMissions = currentMissions.Where(m => m.PlanetTo.Coordinates == coordinatesTo && !existingMissionsIds.Contains(m.Id)).ToList();
+            var newMissions = currentMissions
+                .Where(m => m.IsReturn == false &&
+                            m.PlanetTo.Coordinates == coordinatesTo && 
+                            !existingMissionsIds.Contains(m.Id))
+                .ToList();
             if (newMissions.Count != 1)
             {
                 var errorMessageBuilder = new StringBuilder("Can't recognize save mission, available missions:");

@@ -18,5 +18,7 @@ namespace OGame.Bot.Domain
         public MissionPlanet PlanetFrom { get; set; }
 
         public MissionPlanet PlanetTo { get; set; }
+
+        public bool IsReturn { get; set; }
     }
 }
