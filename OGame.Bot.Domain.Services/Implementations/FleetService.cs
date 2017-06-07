@@ -83,7 +83,7 @@ namespace OGame.Bot.Domain.Services.Implementations
                 {
                     errorMessageBuilder.AppendLine($"{mission.Id} ({mission.MissionType}): from {mission.PlanetFrom.Coordinates} to {mission.PlanetTo.Coordinates}. Arrival Time {mission.ArrivalTimeUtc}");
                 }
-                throw new AmbiguousMatchException("Can't recognize save mission, available missions:");
+                throw new AmbiguousMatchException(errorMessageBuilder.ToString());
             }
             var saveMission = newMissions.Single();
             return saveMission;

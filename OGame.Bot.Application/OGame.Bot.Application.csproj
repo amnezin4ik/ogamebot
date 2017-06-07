@@ -55,7 +55,9 @@
     <Compile Include="ApplicationDiModule.cs" />
     <Compile Include="ApplicationMappingProfile.cs" />
     <Compile Include="MessageBus\IMessageServiceBus.cs" />
+    <Compile Include="MessageProcessors\IReturnFleetMessageProcessor.cs" />
     <Compile Include="MessageProcessors\IUpdateSessionDataMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\ReturnFleetMessageProcessor.cs" />
     <Compile Include="MessageProcessors\UpdateSessionDataMessageProcessor.cs" />
     <Compile Include="MessageProcessors\IAttackMessageProcessor.cs" />
     <Compile Include="MessageProcessors\IMessageProcessor.cs" />

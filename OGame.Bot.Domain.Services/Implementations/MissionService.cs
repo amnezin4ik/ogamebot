@@ -48,5 +48,12 @@ namespace OGame.Bot.Domain.Services.Implementations
             var isMissionStillExists = allMissionsDtos.Any(m => m.Id == missionId);
             return isMissionStillExists;
         }
+
+        public async Task ReturnMissionAsync(string missionId)
+        {
+            var sessionData = _sessionDataProvider.GetSessionData();
+            var sessionDataDto = _mapper.Map<SessionData, Dto.SessionData>(sessionData);
+            await _missionClient.ReturnMissionAsync(sessionDataDto, missionId);
+        }
     }
 }

@@ -25,6 +25,7 @@ namespace OGame.Bot.Application
             builder.RegisterType<MessageProcessorFactory>().As<IMessageProcessorFactory>();
             builder.RegisterType<AttackMessageProcessor>().As<IAttackMessageProcessor>();
             builder.RegisterType<UpdateSessionDataMessageProcessor>().As<IUpdateSessionDataMessageProcessor>();
+            builder.RegisterType<ReturnFleetMessageProcessor>().As<IReturnFleetMessageProcessor>();
         }
     }
 }
