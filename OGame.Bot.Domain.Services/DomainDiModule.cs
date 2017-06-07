@@ -11,11 +11,12 @@ namespace OGame.Bot.Domain.Services
             builder.RegisterType<MissionService>().As<IMissionService>();
             builder.RegisterType<GalaxyService>().As<IGalaxyService>();
             builder.RegisterType<FleetService>().As<IFleetService>();
+            builder.RegisterType<PlanetOverviewService>().As<IPlanetOverviewService>();
+            builder.RegisterType<UserPlanetsService>().As<IUserPlanetsService>();
             builder.RegisterType<UpdatableSessionDataProvider>()
                 .As<IUpdatableSessionDataProvider>()
                 .As<ISessionDataProvider>()
                 .SingleInstance();
-            builder.RegisterType<UserPlanetsService>().As<IUserPlanetsService>();
         }
     }
 }

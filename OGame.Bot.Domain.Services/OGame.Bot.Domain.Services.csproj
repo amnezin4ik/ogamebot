@@ -53,11 +53,13 @@
     <Compile Include="Implementations\FleetService.cs" />
     <Compile Include="Implementations\GalaxyService.cs" />
     <Compile Include="Implementations\MissionService.cs" />
+    <Compile Include="Implementations\PlanetOverviewService.cs" />
     <Compile Include="Implementations\UpdatableSessionDataProvider.cs" />
     <Compile Include="Implementations\UserPlanetsService.cs" />
     <Compile Include="Interfaces\IFleetService.cs" />
     <Compile Include="Interfaces\IGalaxyService.cs" />
     <Compile Include="Interfaces\IMissionService.cs" />
+    <Compile Include="Interfaces\IPlanetOverviewService.cs" />
     <Compile Include="Interfaces\ISessionDataProvider.cs" />
     <Compile Include="Interfaces\IUpdatableSessionDataProvider.cs" />
     <Compile Include="Interfaces\IUserPlanetsService.cs" />
