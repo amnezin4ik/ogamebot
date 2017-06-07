@@ -5,5 +5,7 @@ namespace OGame.Bot.Modules.Common
     public interface IDateTimeProvider
     {
         TimeSpan GetUtcNow();
+
+        TimeSpan GetOGameUtcOffset();
     }
 }

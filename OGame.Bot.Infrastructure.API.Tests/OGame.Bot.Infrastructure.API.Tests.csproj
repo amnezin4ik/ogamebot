@@ -73,6 +73,10 @@
       <Project>{725ef847-15c3-47dc-b0e1-9375620a5a47}</Project>
       <Name>OGame.Bot.Infrastructure.API</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OGame.Bot.Modules.Common\OGame.Bot.Modules.Common.csproj">
+      <Project>{297F176E-6159-453A-944F-0CE70771385B}</Project>
+      <Name>OGame.Bot.Modules.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

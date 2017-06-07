@@ -23,6 +23,7 @@ namespace OGame.Bot.Application.Services
 
         public bool IsRunning { get; private set; }
 
+        //TODO: It should generate messages for update only (without any API calls), but new message processors should provide necessary messages
         public void Run()
         {
             if (IsRunning)

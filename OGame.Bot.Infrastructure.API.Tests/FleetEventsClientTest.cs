@@ -10,6 +10,7 @@ using NUnit.Framework;
 using OGame.Bot.Infrastructure.API.APIClients;
 using OGame.Bot.Infrastructure.API.Dto;
 using OGame.Bot.Infrastructure.API.Helpers;
+using OGame.Bot.Modules.Common;
 
 namespace OGame.Bot.Infrastructure.API.Tests
 {
@@ -32,7 +33,8 @@ namespace OGame.Bot.Infrastructure.API.Tests
 
             var htmlParser = new HtmlParser();
             var coordinatesParser = new CoordinatesParser();
-            var fleetEventsClient = new MissionClient(httpClientFactoryMock.Object, httpHelperMock.Object, htmlParser, coordinatesParser);
+            var dateTimeProvider = new SystemDateTimeProvider();
+            var fleetEventsClient = new MissionClient(httpClientFactoryMock.Object, httpHelperMock.Object, htmlParser, coordinatesParser, dateTimeProvider);
             var cookieContainer = new CookieContainer();
             var sessionData = new SessionData(cookieContainer);
 

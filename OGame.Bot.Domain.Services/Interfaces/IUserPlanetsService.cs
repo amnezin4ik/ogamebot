@@ -7,10 +7,10 @@ namespace OGame.Bot.Domain.Services.Interfaces
     {
         Task<IEnumerable<UserPlanet>> GetAllUserPlanetsAsync();
 
-        Task<bool> IsItUserPlanetAsync(MissionPlanet planet);
+        Task MakePlanetActiveAsync(UserPlanet planetToActivate);
 
-        Task MakePlanetActiveAsync(string planetId);
+        Task<bool> IsItUserPlanetAsync(Coordinates coordinates);
 
-        Task MakePlanetActiveAsync(Coordinates planetCoordinates);
+        Task<UserPlanet> GetUserPlanetAsync(Coordinates coordinates);
     }
 }

@@ -21,7 +21,7 @@ namespace OGame.Bot.Infrastructure.API.Tests
 
             var sessionData = await authorizationClient.LogInAsync();
 
-            var availableFleet = await fleetClient.GetFleetAvailableAsync(sessionData);
+            var availableFleet = await fleetClient.GetActivePlanetFleetAsync(sessionData);
 
             var coordinatesFrom = new Coordinates
             {
@@ -43,7 +43,7 @@ namespace OGame.Bot.Infrastructure.API.Tests
             var crystal=500;
             var deuterium=1000;
 
-            await fleetClient.SendFleetPhase3(sessionData, moveToGoPhaseInfo, metal, crystal, deuterium);
+            //await fleetClient.SendFleetPhase3(sessionData, moveToGoPhaseInfo, new );
 
 
         }

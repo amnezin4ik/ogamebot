@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AngleSharp.Parser.Html;
 using OGame.Bot.Infrastructure.API.Dto;
 using OGame.Bot.Infrastructure.API.Helpers;
+using OGame.Bot.Modules.Common;
 
 namespace OGame.Bot.Infrastructure.API.APIClients
 {
@@ -14,13 +15,19 @@ namespace OGame.Bot.Infrastructure.API.APIClients
         private readonly IHttpHelper _httpHelper;
         private readonly HtmlParser _htmlParser;
         private readonly CoordinatesParser _coordinatesParser;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
-        public MissionClient(IHttpClientFactory httpClientFactory, IHttpHelper httpHelper, HtmlParser htmlParser, CoordinatesParser coordinatesParser)
+        public MissionClient(IHttpClientFactory httpClientFactory, 
+            IHttpHelper httpHelper, 
+            HtmlParser htmlParser, 
+            CoordinatesParser coordinatesParser,
+            IDateTimeProvider dateTimeProvider)
         {
             _httpClientFactory = httpClientFactory;
             _httpHelper = httpHelper;
             _htmlParser = htmlParser;
             _coordinatesParser = coordinatesParser;
+            _dateTimeProvider = dateTimeProvider;
         }
 
         public async Task<IEnumerable<Mission>> GetAllMissionsAsync(SessionData sessionData)
@@ -65,6 +72,7 @@ namespace OGame.Bot.Infrastructure.API.APIClients
                         }
                         var eventId = fleetEventElement.GetAttribute("id");
                         var arrivalTimeSeconds = double.Parse(fleetEventElement.GetAttribute("data-arrival-time"));
+                        var arrivalTimeUtc = _dateTimeProvider.GetOGameUtcOffset() + TimeSpan.FromSeconds(arrivalTimeSeconds);
 
                         var originPlanetName = fleetEventElement.QuerySelector("td[class=originFleet]").TextContent.Trim();
                         var originCoordsString = fleetEventElement.QuerySelector("td[class=coordsOrigin]").TextContent.Trim();
@@ -80,7 +88,7 @@ namespace OGame.Bot.Infrastructure.API.APIClients
                         {
                             Id = eventId,
                             MissionType = currentMissionType,
-                            ArrivalTimeUtc = TimeSpan.FromSeconds(arrivalTimeSeconds),
+                            ArrivalTimeUtc = arrivalTimeUtc,
                             PlanetFrom = planetFrom,
                             PlanetTo = planetTo
                         };

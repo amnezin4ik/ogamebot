@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using OGame.Bot.Domain.Services.Interfaces;
@@ -37,6 +38,15 @@ namespace OGame.Bot.Domain.Services.Implementations
             var missionsDtos = await _missionClient.GetMissionsAsync(sessionDataDto, missionTypeDto);
             var missions = _mapper.Map<IEnumerable<Dto.Mission>, IEnumerable<Mission>>(missionsDtos);
             return missions;
+        }
+
+        public async Task<bool> IsMissionStillExistsAsync(string missionId)
+        {
+            var sessionData = _sessionDataProvider.GetSessionData();
+            var sessionDataDto = _mapper.Map<SessionData, Dto.SessionData>(sessionData);
+            var allMissionsDtos = await _missionClient.GetAllMissionsAsync(sessionDataDto);
+            var isMissionStillExists = allMissionsDtos.Any(m => m.Id == missionId);
+            return isMissionStillExists;
         }
     }
 }

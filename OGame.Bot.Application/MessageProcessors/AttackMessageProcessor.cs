@@ -16,6 +16,7 @@ namespace OGame.Bot.Application.MessageProcessors
         private readonly IFleetService _fleetService;
         private readonly IGalaxyService _galaxyService;
         private readonly IUserPlanetsService _userPlanetsService;
+        private readonly IMissionService _missionService;
         private readonly IMapper _mapper;
 
         public AttackMessageProcessor(
@@ -23,12 +24,14 @@ namespace OGame.Bot.Application.MessageProcessors
             IFleetService fleetService, 
             IGalaxyService galaxyService,
             IUserPlanetsService userPlanetsService,
+            IMissionService missionService,
             IMapper mapper)
         {
             _dateTimeProvider = dateTimeProvider;
             _fleetService = fleetService;
             _galaxyService = galaxyService;
             _userPlanetsService = userPlanetsService;
+            _missionService = missionService;
             _mapper = mapper;
         }
 
@@ -46,7 +49,7 @@ namespace OGame.Bot.Application.MessageProcessors
             }
 
             var timeToAttack = attackMessage.ArrivalTimeUtc - _dateTimeProvider.GetUtcNow();
-            var shouldProcess = timeToAttack.TotalSeconds < 100;
+            var shouldProcess = timeToAttack.TotalSeconds < 30;
             return shouldProcess;
         }
 
@@ -59,32 +62,38 @@ namespace OGame.Bot.Application.MessageProcessors
             }
 
             var resultMessages = new List<Message>();
-            var weAttaked = await _userPlanetsService.IsItUserPlanetAsync(attackMessage.PlanetTo);
+            var weAttaked = await _userPlanetsService.IsItUserPlanetAsync(attackMessage.PlanetTo.Coordinates);
             if (weAttaked)
             {
-                MissionPlanet destinationPlanet;
-                var userPlanets = await _userPlanetsService.GetAllUserPlanetsAsync();
-                if (userPlanets.Count() > 1)
+                var isMissionStillExists = await _missionService.IsMissionStillExistsAsync(attackMessage.MissionId);
+                if (isMissionStillExists)
                 {
-                    var anotherUserPlanet = userPlanets.First(p => p.Coordinates != attackMessage.PlanetTo.Coordinates);
-                    destinationPlanet = _mapper.Map<UserPlanet, MissionPlanet>(anotherUserPlanet);
+                    MissionPlanet destinationPlanet;
+                    var userPlanets = await _userPlanetsService.GetAllUserPlanetsAsync();
+                    if (userPlanets.Count() > 1)
+                    {
+                        var anotherUserPlanet = userPlanets.First(p => p.Coordinates != attackMessage.PlanetTo.Coordinates);
+                        destinationPlanet = _mapper.Map<UserPlanet, MissionPlanet>(anotherUserPlanet);
+                    }
+                    else
+                    {
+                        destinationPlanet = await _galaxyService.GetNearestInactivePlanetAsync();
+                    }
+                    var userPlanetToSave = await _userPlanetsService.GetUserPlanetAsync(attackMessage.PlanetTo.Coordinates);
+                    var saveMission = await SaveFleetAndResourcesAsync(userPlanetToSave, destinationPlanet);
+                    var approximateStartOfReturn = GetApproximateStartOfReturn(attackMessage);
+                    var returnFleetMessage = new ReturnFleetMessage(saveMission, approximateStartOfReturn);
+                    resultMessages.Add(returnFleetMessage);
                 }
-                else
-                {
-                    destinationPlanet = await _galaxyService.GetNearestInactivePlanetAsync();
-                }
-                var saveMission = await SaveFleetAndResourcesAsync(attackMessage.PlanetTo, destinationPlanet);
-                var approximateStartOfReturn = GetApproximateStartOfReturn(attackMessage);
-                var returnFleetMessage = new ReturnFleetMessage(saveMission, approximateStartOfReturn);
-                resultMessages.Add(returnFleetMessage);
             }
             return resultMessages;
         }
 
-        private async Task<Mission> SaveFleetAndResourcesAsync(MissionPlanet needSavePlanet, MissionPlanet destinationPlanet)
+        private async Task<Mission> SaveFleetAndResourcesAsync(UserPlanet needSavePlanet, MissionPlanet destinationPlanet)
         {
-            //TODO: specify MakePlanetActiveAsync method with more predictable parameters
-            //await _userPlanetsService.MakePlanetActiveAsync(needSavePlanet.Coordinates);
+            await _userPlanetsService.MakePlanetActiveAsync(needSavePlanet);
+            var availableFleet = await _fleetService.GetActivePlanetFleetAsync();
+
 
             throw new NotImplementedException();
         }

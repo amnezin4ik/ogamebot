@@ -31,26 +31,24 @@ namespace OGame.Bot.Domain.Services.Implementations
             return userPlanets;
         }
 
-        public async Task<bool> IsItUserPlanetAsync(MissionPlanet planet)
+        public async Task<bool> IsItUserPlanetAsync(Coordinates coordinates)
         {
             var userPlanets = await GetAllUserPlanetsAsync();
-            var isItUserPlanet = userPlanets.Any(p => p.Coordinates == planet.Coordinates);
+            var isItUserPlanet = userPlanets.Any(p => p.Coordinates == coordinates);
             return isItUserPlanet;
         }
 
-        public async Task MakePlanetActiveAsync(string planetId)
+        public async Task<UserPlanet> GetUserPlanetAsync(Coordinates coordinates)
         {
-            var sessionData = _sessionDataProvider.GetSessionData();
-            var sessionDataDto = _mapper.Map<SessionData, Dto.SessionData>(sessionData);
-            await _userPlanetsClient.MakePlanetActiveAsync(sessionDataDto, planetId);
+            var userPlanets = await GetAllUserPlanetsAsync();
+            var findedPlanet = userPlanets.Single(p => p.Coordinates == coordinates);
+            return findedPlanet;
         }
 
-        public async Task MakePlanetActiveAsync(Coordinates planetCoordinates)
+        public async Task MakePlanetActiveAsync(UserPlanet planetToActivate)
         {
             var sessionData = _sessionDataProvider.GetSessionData();
             var sessionDataDto = _mapper.Map<SessionData, Dto.SessionData>(sessionData);
-            var userPlanets = await GetAllUserPlanetsAsync();
-            var planetToActivate = userPlanets.Single(p => p.Coordinates == planetCoordinates);
             await _userPlanetsClient.MakePlanetActiveAsync(sessionDataDto, planetToActivate.PlanetId);
         }
     }

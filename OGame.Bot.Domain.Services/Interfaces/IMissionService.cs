@@ -8,5 +8,7 @@ namespace OGame.Bot.Domain.Services.Interfaces
         Task<IEnumerable<Mission>> GetAllMissionsAsync();
 
         Task<IEnumerable<Mission>> GetMissionsAsync(MissionType missionType);
+
+        Task<bool> IsMissionStillExistsAsync(string missionId);
     }
 }

@@ -22,7 +22,7 @@ namespace OGame.Bot.Infrastructure.API.APIClients
             _htmlParser = htmlParser;
         }
 
-        public async Task<Fleet> GetFleetAvailableAsync(SessionData sessionData)
+        public async Task<Fleet> GetActivePlanetFleetAsync(SessionData sessionData)
         {
             var shipCells = new List<ShipCell>();
             using (var httpClient = _httpClientFactory.GetHttpClient(sessionData))
@@ -110,7 +110,7 @@ namespace OGame.Bot.Infrastructure.API.APIClients
             }
         }
 
-        public async Task SendFleetPhase3(SessionData sessionData, SendFleetPhase3Info sendFleetPhase3Info, int metal, int crystal, int deuterium)
+        public async Task SendFleetPhase3(SessionData sessionData, SendFleetPhase3Info sendFleetPhase3Info, Resources resources)
         {
             using (var httpClient = _httpClientFactory.GetHttpClient(sessionData))
             {
@@ -119,9 +119,9 @@ namespace OGame.Bot.Infrastructure.API.APIClients
                 {
                     {"holdingtime", "1"},
                     {"expeditiontime", "1"},
-                    {"metal", metal.ToString()},
-                    {"crystal", crystal.ToString()},
-                    {"deuterium", deuterium.ToString()}
+                    {"metal", resources.Metal.ToString()},
+                    {"crystal", resources.Crystal.ToString()},
+                    {"deuterium", resources.Deuterium.ToString()}
                 };
                 var content = new FormUrlEncodedContent(contentParams);
                 var requestUri = $"{Constants.OGameUrl}?page=movement";

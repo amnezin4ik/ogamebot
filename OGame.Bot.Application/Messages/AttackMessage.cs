@@ -13,7 +13,7 @@ namespace OGame.Bot.Application.Messages
             _attackMission = attackMission;
         }
 
-        public string Id => _attackMission.Id;
+        public string MissionId => _attackMission.Id;
 
         public TimeSpan ArrivalTimeUtc => _attackMission.ArrivalTimeUtc;
 

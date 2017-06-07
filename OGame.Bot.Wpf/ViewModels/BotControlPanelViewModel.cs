@@ -9,6 +9,7 @@ namespace OGame.Bot.Wpf.ViewModels
     {
         private readonly IBotService _bot;
         private readonly IMapper _mapper;
+        private UserCredentials _currentUserCredentials;
 
         public BotControlPanelViewModel(IBotService bot, IMapper mapper)
         {
@@ -20,8 +21,6 @@ namespace OGame.Bot.Wpf.ViewModels
                 Password = "2016895"
             };
         }
-
-        private UserCredentials _currentUserCredentials;
 
         public UserCredentials CurrentUserCredentials
         {

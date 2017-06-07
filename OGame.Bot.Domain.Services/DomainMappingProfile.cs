@@ -16,6 +16,16 @@ namespace OGame.Bot.Domain.Services
             CreateMap<Dto.UserPlanet, UserPlanet>();
             CreateMap<Dto.MissionPlanet, MissionPlanet>();
             CreateMap<MissionPlanet, Dto.MissionPlanet>();
+            CreateMap<Fleet, Dto.Fleet>();
+            CreateMap<Dto.Fleet, Fleet>();
+            CreateMap<Ship, Dto.Ship>();
+            CreateMap<Dto.Ship, Ship>();
+            CreateMap<ShipCell, Dto.ShipCell>();
+            CreateMap<Dto.ShipCell, ShipCell>();
+            CreateMap<ShipType, Dto.ShipType>();
+            CreateMap<Dto.ShipType, ShipType>();
+            CreateMap<Resources, Dto.Resources>();
+            CreateMap<Dto.Resources, Resources>();
         }
     }
 }

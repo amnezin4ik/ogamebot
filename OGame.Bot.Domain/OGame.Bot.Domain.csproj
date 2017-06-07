@@ -41,13 +41,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Coordinates.cs" />
+    <Compile Include="Fleet.cs" />
     <Compile Include="FleetSpeed.cs" />
     <Compile Include="Mission.cs" />
     <Compile Include="MissionPlanet.cs" />
     <Compile Include="MissionTarget.cs" />
     <Compile Include="MissionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.cs" />
     <Compile Include="SessionData.cs" />
+    <Compile Include="Ship.cs" />
+    <Compile Include="ShipCell.cs" />
+    <Compile Include="ShipType.cs" />
     <Compile Include="UserCredentials.cs" />
     <Compile Include="UserPlanet.cs" />
   </ItemGroup>
