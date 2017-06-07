@@ -73,6 +73,11 @@ namespace OGame.Bot.Application.MessageBus
                         {
                             AddMessage(message);
                         }
+                        await Task.Delay(TimeSpan.FromMilliseconds(10));
+                    }
+                    else
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(1));
                     }
                 }
             }, _runTaskCancellationTokenSource.Token);
