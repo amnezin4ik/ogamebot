@@ -8,6 +8,6 @@ namespace OGame.Bot.Domain.Services.Interfaces
 
         int CalculateFleetCapacity(Fleet fleet);
 
-        Task<Mission> SendFleetAsync(Fleet fleet, Coordinates coordinatesFrom, Coordinates coordinatesTo, MissionTarget missionTarget, MissionType missionType, FleetSpeed fleetSpeed, Resources resources);
+        Task<FleetMovement> SendFleetAsync(Fleet fleet, Coordinates coordinatesFrom, Coordinates coordinatesTo, MissionTarget missionTarget, MissionType missionType, FleetSpeed fleetSpeed, Resources resources);
     }
 }

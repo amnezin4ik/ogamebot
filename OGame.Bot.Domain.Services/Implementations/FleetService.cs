@@ -14,15 +14,15 @@ namespace OGame.Bot.Domain.Services.Implementations
     public class FleetService : IFleetService
     {
         private readonly IFleetClient _fleetClient;
-        private readonly IMissionClient _missionClient;
         private readonly ISessionDataProvider _sessionDataProvider;
+        private readonly IFleetMovementClient _fleetMovementClient;
         private readonly IMapper _mapper;
 
-        public FleetService(IFleetClient fleetClient, IMissionClient missionClient, ISessionDataProvider sessionDataProvider, IMapper mapper)
+        public FleetService(IFleetClient fleetClient, ISessionDataProvider sessionDataProvider, IFleetMovementClient fleetMovementClient, IMapper mapper)
         {
             _fleetClient = fleetClient;
-            _missionClient = missionClient;
             _sessionDataProvider = sessionDataProvider;
+            _fleetMovementClient = fleetMovementClient;
             _mapper = mapper;
         }
 
@@ -47,7 +47,7 @@ namespace OGame.Bot.Domain.Services.Implementations
             return capacity;
         }
 
-        public async Task<Mission> SendFleetAsync(Fleet fleet, Coordinates coordinatesFrom, Coordinates coordinatesTo, MissionTarget missionTarget, MissionType missionType, FleetSpeed fleetSpeed, Resources resources)
+        public async Task<FleetMovement> SendFleetAsync(Fleet fleet, Coordinates coordinatesFrom, Coordinates coordinatesTo, MissionTarget missionTarget, MissionType missionType, FleetSpeed fleetSpeed, Resources resources)
         {
             var sessionData = _sessionDataProvider.GetSessionData();
             var sessionDataDto = _mapper.Map<SessionData, Dto.SessionData>(sessionData);
@@ -59,36 +59,35 @@ namespace OGame.Bot.Domain.Services.Implementations
             var fleetSpeedDto = _mapper.Map<FleetSpeed, Dto.FleetSpeed>(fleetSpeed);
             var resourcesDto = _mapper.Map<Resources, Dto.Resources>(resources);
 
-            var oldMissionsDtos = await _missionClient.GetMissionsAsync(sessionDataDto, missionTypeDto);
-            var oldMissionsIds = oldMissionsDtos.Select(m => m.Id).ToList();
+            var oldFleetMovementsDtos = await _fleetMovementClient.GetFleetMovementsAsync(sessionDataDto, missionTypeDto);
+            var oldFleetMovementsIds = oldFleetMovementsDtos.Select(m => m.Id).ToList();
 
             await SendFleet(sessionDataDto, fleetDto, coordinatesFromDto, coordinatesToDto, missionTargetDto, missionTypeDto, fleetSpeedDto, resourcesDto);
 
-            var currentMissionsDtos = await _missionClient.GetMissionsAsync(sessionDataDto, missionTypeDto);
-            var currentMissions = _mapper.Map<IEnumerable<Dto.Mission>, IEnumerable<Mission>>(currentMissionsDtos);
-            var currentlyCreatedMission = GetCurrentlyCreatedMission(currentMissions, coordinatesTo, oldMissionsIds);
-            return currentlyCreatedMission;
+            var currentFleetMovementsDtos = await _fleetMovementClient.GetFleetMovementsAsync(sessionDataDto, missionTypeDto);
+            var currentFleetMovements = _mapper.Map<IEnumerable<Dto.FleetMovement>, IEnumerable<FleetMovement>>(currentFleetMovementsDtos);
+            var currentlyCreatedMovement = GetCurrentlyCreatedMission(currentFleetMovements, coordinatesTo, oldFleetMovementsIds);
+            return currentlyCreatedMovement;
         }
 
-        private Mission GetCurrentlyCreatedMission(IEnumerable<Mission> currentMissions, Coordinates coordinatesTo, List<string> existingMissionsIds)
+        private FleetMovement GetCurrentlyCreatedMission(IEnumerable<FleetMovement> currentFleetMovements, Coordinates coordinatesTo, List<string> existingFleetMovementsIds)
         {
-            throw new NotImplementedException();
-            //var newMissions = currentMissions
-            //    .Where(m => m.IsReturn == false &&
-            //                m.PlanetTo.Coordinates == coordinatesTo &&
-            //                !existingMissionsIds.Contains(m.Id))
-            //    .ToList();
-            //if (newMissions.Count != 1)
-            //{
-            //    var errorMessageBuilder = new StringBuilder("Can't recognize save mission, available missions:");
-            //    foreach (var mission in newMissions)
-            //    {
-            //        errorMessageBuilder.AppendLine($"{mission.Id} ({mission.MissionType}): from {mission.PlanetFrom.Coordinates} to {mission.PlanetTo.Coordinates}. Arrival Time {mission.ArrivalTimeUtc}");
-            //    }
-            //    throw new AmbiguousMatchException(errorMessageBuilder.ToString());
-            //}
-            //var saveMission = newMissions.Single();
-            //return saveMission;
+            var newFleetMovements = currentFleetMovements
+                .Where(m => m.IsReturn == false &&
+                            m.PlanetTo.Coordinates == coordinatesTo &&
+                            !existingFleetMovementsIds.Contains(m.Id))
+                .ToList();
+            if (newFleetMovements.Count != 1)
+            {
+                var errorMessageBuilder = new StringBuilder("Can't recognize save fleet movement, available movements:");
+                foreach (var mission in newFleetMovements)
+                {
+                    errorMessageBuilder.AppendLine($"{mission.Id} ({mission.MissionType}): from {mission.PlanetFrom.Coordinates} to {mission.PlanetTo.Coordinates}. Arrival Time {mission.ArrivalTimeUtc}");
+                }
+                throw new AmbiguousMatchException(errorMessageBuilder.ToString());
+            }
+            var saveMovement = newFleetMovements.Single();
+            return saveMovement;
         }
 
         private async Task SendFleet(Dto.SessionData sessionDataDto, Dto.Fleet fleetDto, Dto.Coordinates coordinatesFromDto,

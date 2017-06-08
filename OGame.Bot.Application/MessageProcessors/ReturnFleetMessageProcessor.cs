@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using OGame.Bot.Application.Messages;
-using OGame.Bot.Domain;
 using OGame.Bot.Domain.Services.Interfaces;
 using OGame.Bot.Modules.Common;
 
@@ -11,12 +9,12 @@ namespace OGame.Bot.Application.MessageProcessors
 {
     public class ReturnFleetMessageProcessor : IReturnFleetMessageProcessor
     {
-        private readonly IMissionService _missionService;
+        private readonly IFleetMovementService _fleetMovementService;
         private readonly IDateTimeProvider _dateTimeProvider;
 
-        public ReturnFleetMessageProcessor(IMissionService missionService, IDateTimeProvider dateTimeProvider)
+        public ReturnFleetMessageProcessor(IFleetMovementService fleetMovementService, IDateTimeProvider dateTimeProvider)
         {
-            _missionService = missionService;
+            _fleetMovementService = fleetMovementService;
             _dateTimeProvider = dateTimeProvider;
         }
 
@@ -46,18 +44,20 @@ namespace OGame.Bot.Application.MessageProcessors
                 throw new NotSupportedException($"Can't process message with \"{message.MessageType}\" message type");
             }
 
-
+            //TODO: add logic to protect returning under second or another enemy fleet wave.
             //var allMissions = await _missionService.GetAllMissionsAsync();
             //var attacsToCurrentPlanet = allMissions
             //    .Where(m => m.IsReturn == false && 
             //                m.MissionType == MissionType.Attak &&
-            //                m.PlanetTo.Coordinates == returnFleetMessage.SaveMission.PlanetFrom.Coordinates)
+            //                m.PlanetTo.Coordinates == returnFleetMessage.SaveMovement.PlanetFrom.Coordinates)
             //    .ToList();
 
-            //var timeToReturn = returnFleetMessage.SaveMission.
+            //var timeToReturn = returnFleetMessage.SaveMovement.
 
-            ////TODO: move this method to another service (FleetMovementService)
-            //await _missionService.ReturnFleetAsync(returnFleetMessage.SaveMission.Id);
+            //TODO: it should return arrival time
+            await _fleetMovementService.ReturnFleetAsync(returnFleetMessage.SaveMovement.Id);
+
+            //TODO: return new message with arrivalTime, then process it by new message processor to be sure, that after arrival we do not meet another wave of enemy fleet
             return new List<Message>();
         }
     }

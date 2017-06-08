@@ -5,20 +5,20 @@ namespace OGame.Bot.Application.Messages
 {
     public class ReturnFleetMessage : Message
     {
-        public ReturnFleetMessage(Mission saveMission, TimeSpan approximateStartOfReturn) 
+        public ReturnFleetMessage(FleetMovement saveMovement, TimeSpan approximateStartOfReturn) 
             : base(MessageType.ReturnFleet)
         {
-            SaveMission = saveMission;
+            SaveMovement = saveMovement;
             ApproximateStartOfReturn = approximateStartOfReturn;
         }
 
-        public Mission SaveMission { get; }
+        public FleetMovement SaveMovement { get; }
 
         public TimeSpan ApproximateStartOfReturn { get; }
 
         public override int GetHashCode()
         {
-            return SaveMission.Id.GetHashCode();
+            return SaveMovement.Id.GetHashCode();
         }
     }
 }

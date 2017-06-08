@@ -83,11 +83,11 @@ namespace OGame.Bot.Application.MessageProcessors
                         destinationPlanet = await _galaxyService.GetNearestInactivePlanetAsync();
                     }
                     var userPlanetToSave = await _userPlanetsService.GetUserPlanetAsync(attackMessage.PlanetTo.Coordinates);
-                    var saveMission = await SaveFleetAndResourcesAsync(userPlanetToSave, destinationPlanet);
-                    if (saveMission != null)
+                    var saveMovement = await SaveFleetAndResourcesAsync(userPlanetToSave, destinationPlanet);
+                    if (saveMovement != null)
                     {
                         var approximateStartOfReturn = GetApproximateStartOfReturn(attackMessage);
-                        var returnFleetMessage = new ReturnFleetMessage(saveMission, approximateStartOfReturn);
+                        var returnFleetMessage = new ReturnFleetMessage(saveMovement, approximateStartOfReturn);
                         resultMessages.Add(returnFleetMessage);
                     }
                 }
@@ -95,18 +95,18 @@ namespace OGame.Bot.Application.MessageProcessors
             return resultMessages;
         }
 
-        private async Task<Mission> SaveFleetAndResourcesAsync(UserPlanet needSavePlanet, MissionPlanet destinationPlanet)
+        private async Task<FleetMovement> SaveFleetAndResourcesAsync(UserPlanet needSavePlanet, MissionPlanet destinationPlanet)
         {
-            Mission saveMission = null;
+            FleetMovement saveFleetMovement = null;
             await _userPlanetsService.MakePlanetActiveAsync(needSavePlanet);
             var availableFleet = await _fleetService.GetActivePlanetFleetAsync();
             var hasAnyShip = availableFleet.ShipCells.Any(s => s.Count > 0);
             if (hasAnyShip)
             {
                 var needSavePlanetOverview = await _planetOverviewService.GetPlanetOverviewAsync(needSavePlanet);
-                saveMission = await _fleetService.SendFleetAsync(availableFleet, needSavePlanet.Coordinates, destinationPlanet.Coordinates, MissionTarget.Planet, MissionType.Leave, FleetSpeed.Percent10, needSavePlanetOverview.Resources);
+                saveFleetMovement = await _fleetService.SendFleetAsync(availableFleet, needSavePlanet.Coordinates, destinationPlanet.Coordinates, MissionTarget.Planet, MissionType.Leave, FleetSpeed.Percent10, needSavePlanetOverview.Resources);
             }
-            return saveMission;
+            return saveFleetMovement;
         }
 
         private TimeSpan GetApproximateStartOfReturn(AttackMessage attackMessage)
@@ -114,7 +114,7 @@ namespace OGame.Bot.Application.MessageProcessors
             var utcNow = _dateTimeProvider.GetUtcNow();
             var timeToAttack = attackMessage.ArrivalTimeUtc - utcNow;
             var halfTimeToAttack = timeToAttack.Ticks / 2;
-            var approximateStartOfReturn = utcNow + TimeSpan.FromTicks(halfTimeToAttack) + TimeSpan.FromSeconds(5);
+            var approximateStartOfReturn = utcNow + TimeSpan.FromTicks(halfTimeToAttack) + TimeSpan.FromSeconds(2);
             return approximateStartOfReturn;
         }
     }
