@@ -40,20 +40,13 @@ namespace OGame.Bot.Domain.Services.Implementations
             return missions;
         }
 
-        public async Task<bool> IsMissionStillExistsAsync(string missionId)
+        public async Task<bool> IsFleetMovementStillExistsAsync(string fleetMovementId)
         {
             var sessionData = _sessionDataProvider.GetSessionData();
             var sessionDataDto = _mapper.Map<SessionData, Dto.SessionData>(sessionData);
             var allMissionsDtos = await _missionClient.GetAllMissionsAsync(sessionDataDto);
-            var isMissionStillExists = allMissionsDtos.Any(m => m.Id == missionId);
+            var isMissionStillExists = allMissionsDtos.Any(m => m.Id == fleetMovementId);
             return isMissionStillExists;
-        }
-
-        public async Task ReturnMissionAsync(string missionId)
-        {
-            var sessionData = _sessionDataProvider.GetSessionData();
-            var sessionDataDto = _mapper.Map<SessionData, Dto.SessionData>(sessionData);
-            await _missionClient.ReturnMissionAsync(sessionDataDto, missionId);
         }
     }
 }

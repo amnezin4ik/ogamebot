@@ -13,6 +13,7 @@ namespace OGame.Bot.Domain.Services
             builder.RegisterType<FleetService>().As<IFleetService>();
             builder.RegisterType<PlanetOverviewService>().As<IPlanetOverviewService>();
             builder.RegisterType<UserPlanetsService>().As<IUserPlanetsService>();
+            builder.RegisterType<FleetMovementService>().As<IFleetMovementService>();
             builder.RegisterType<UpdatableSessionDataProvider>()
                 .As<IUpdatableSessionDataProvider>()
                 .As<ISessionDataProvider>()

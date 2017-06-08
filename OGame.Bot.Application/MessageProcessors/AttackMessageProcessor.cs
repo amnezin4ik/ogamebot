@@ -68,7 +68,7 @@ namespace OGame.Bot.Application.MessageProcessors
             var weAttaked = await _userPlanetsService.IsItUserPlanetAsync(attackMessage.PlanetTo.Coordinates);
             if (weAttaked)
             {
-                var isMissionStillExists = await _missionService.IsMissionStillExistsAsync(attackMessage.MissionId);
+                var isMissionStillExists = await _missionService.IsFleetMovementStillExistsAsync(attackMessage.MissionId);
                 if (isMissionStillExists)
                 {
                     MissionPlanet destinationPlanet;

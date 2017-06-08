@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Coordinates.cs" />
     <Compile Include="Fleet.cs" />
+    <Compile Include="FleetMovement.cs" />
     <Compile Include="FleetSpeed.cs" />
     <Compile Include="Mission.cs" />
     <Compile Include="MissionPlanet.cs" />

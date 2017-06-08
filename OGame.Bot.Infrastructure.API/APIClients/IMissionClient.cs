@@ -9,7 +9,5 @@ namespace OGame.Bot.Infrastructure.API.APIClients
         Task<IEnumerable<Mission>> GetAllMissionsAsync(SessionData sessionData);
 
         Task<IEnumerable<Mission>> GetMissionsAsync(SessionData sessionData, MissionType missionType);
-
-        Task ReturnMissionAsync(SessionData sessionData, string missionId);
     }
 }

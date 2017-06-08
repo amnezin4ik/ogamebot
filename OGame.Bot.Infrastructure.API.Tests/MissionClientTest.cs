@@ -15,7 +15,7 @@ using OGame.Bot.Modules.Common;
 namespace OGame.Bot.Infrastructure.API.Tests
 {
     [TestFixture]
-    public class FleetEventsClientTest
+    public class MissionClientTest
     {
         [Test]
         public async Task ShouldReturnTransportFleetEvent()
@@ -36,12 +36,12 @@ namespace OGame.Bot.Infrastructure.API.Tests
             var htmlParser = new HtmlParser();
             var coordinatesParser = new CoordinatesParser();
             var dateTimeProvider = new SystemDateTimeProvider();
-            var fleetEventsClient = new MissionClient(httpClientFactoryMock.Object, httpHelperMock.Object, htmlParser, coordinatesParser, dateTimeProvider);
+            var missionClient = new MissionClient(httpClientFactoryMock.Object, httpHelperMock.Object, htmlParser, coordinatesParser, dateTimeProvider);
             var cookieContainer = new CookieContainer();
             var sessionData = new SessionData(cookieContainer);
 
 
-            var fleetEvents = await fleetEventsClient.GetAllMissionsAsync(sessionData);
+            var fleetEvents = await missionClient.GetAllMissionsAsync(sessionData);
             
 
             Assert.AreEqual(2, fleetEvents.Count());
@@ -78,7 +78,7 @@ namespace OGame.Bot.Infrastructure.API.Tests
 
         private string GetTransportTestResponce()
         {
-            var testResponceFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "EventList_TransportEvents.txt");
+            var testResponceFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "FleetEvents.txt");
             var testResponce = File.ReadAllText(testResponceFilePath);
             return testResponce;
         }

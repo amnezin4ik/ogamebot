@@ -52,6 +52,8 @@
     <Compile Include="DomainMappingProfile.cs" />
     <Compile Include="Implementations\FleetService.cs" />
     <Compile Include="Implementations\GalaxyService.cs" />
+    <Compile Include="Implementations\FleetMovementService.cs" />
+    <Compile Include="Interfaces\IFleetMovementService.cs" />
     <Compile Include="Implementations\MissionService.cs" />
     <Compile Include="Implementations\PlanetOverviewService.cs" />
     <Compile Include="Implementations\UpdatableSessionDataProvider.cs" />

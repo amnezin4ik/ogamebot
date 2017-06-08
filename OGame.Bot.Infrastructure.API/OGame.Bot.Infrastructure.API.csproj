@@ -60,6 +60,7 @@
     <Compile Include="APIClients\AuthorizationClient.cs" />
     <Compile Include="APIClients\FleetClient.cs" />
     <Compile Include="APIClients\IFleetClient.cs" />
+    <Compile Include="APIClients\IFleetMovementClient.cs" />
     <Compile Include="APIClients\IPlanetOverviewClient.cs" />
     <Compile Include="APIClients\IUserPlanetsClient.cs" />
     <Compile Include="APIClients\MissionClient.cs" />
@@ -68,11 +69,13 @@
     <Compile Include="APIClients\IMissionClient.cs" />
     <Compile Include="APIClients\IHttpClientFactory.cs" />
     <Compile Include="APIClients\IResourceBuildingsClient.cs" />
+    <Compile Include="APIClients\FleetMovementClient.cs" />
     <Compile Include="APIClients\PlanetOverviewClient.cs" />
     <Compile Include="APIClients\ResourceBuildingsClient.cs" />
     <Compile Include="APIClients\UserPlanetsClient.cs" />
     <Compile Include="Dto\Coordinates.cs" />
     <Compile Include="Dto\Fleet.cs" />
+    <Compile Include="Dto\FleetMovement.cs" />
     <Compile Include="Dto\Mission.cs" />
     <Compile Include="Dto\MissionPlanet.cs" />
     <Compile Include="Dto\MissionType.cs" />

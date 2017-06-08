@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -71,22 +72,23 @@ namespace OGame.Bot.Domain.Services.Implementations
 
         private Mission GetCurrentlyCreatedMission(IEnumerable<Mission> currentMissions, Coordinates coordinatesTo, List<string> existingMissionsIds)
         {
-            var newMissions = currentMissions
-                .Where(m => m.IsReturn == false &&
-                            m.PlanetTo.Coordinates == coordinatesTo && 
-                            !existingMissionsIds.Contains(m.Id))
-                .ToList();
-            if (newMissions.Count != 1)
-            {
-                var errorMessageBuilder = new StringBuilder("Can't recognize save mission, available missions:");
-                foreach (var mission in newMissions)
-                {
-                    errorMessageBuilder.AppendLine($"{mission.Id} ({mission.MissionType}): from {mission.PlanetFrom.Coordinates} to {mission.PlanetTo.Coordinates}. Arrival Time {mission.ArrivalTimeUtc}");
-                }
-                throw new AmbiguousMatchException(errorMessageBuilder.ToString());
-            }
-            var saveMission = newMissions.Single();
-            return saveMission;
+            throw new NotImplementedException();
+            //var newMissions = currentMissions
+            //    .Where(m => m.IsReturn == false &&
+            //                m.PlanetTo.Coordinates == coordinatesTo &&
+            //                !existingMissionsIds.Contains(m.Id))
+            //    .ToList();
+            //if (newMissions.Count != 1)
+            //{
+            //    var errorMessageBuilder = new StringBuilder("Can't recognize save mission, available missions:");
+            //    foreach (var mission in newMissions)
+            //    {
+            //        errorMessageBuilder.AppendLine($"{mission.Id} ({mission.MissionType}): from {mission.PlanetFrom.Coordinates} to {mission.PlanetTo.Coordinates}. Arrival Time {mission.ArrivalTimeUtc}");
+            //    }
+            //    throw new AmbiguousMatchException(errorMessageBuilder.ToString());
+            //}
+            //var saveMission = newMissions.Single();
+            //return saveMission;
         }
 
         private async Task SendFleet(Dto.SessionData sessionDataDto, Dto.Fleet fleetDto, Dto.Coordinates coordinatesFromDto,

@@ -17,6 +17,7 @@ namespace OGame.Bot.Infrastructure.API
             builder.RegisterType<ResourceBuildingsClient>().As<IResourceBuildingsClient>();
             builder.RegisterType<UserPlanetsClient>().As<IUserPlanetsClient>();
             builder.RegisterType<PlanetOverviewClient>().As<IPlanetOverviewClient>();
+            builder.RegisterType<FleetMovementClient>().As<IFleetMovementClient>();
             builder.RegisterType<HtmlParser>().AsSelf();
             builder.RegisterType<CoordinatesParser>().AsSelf();
         }

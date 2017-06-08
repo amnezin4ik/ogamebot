@@ -62,7 +62,8 @@
   <ItemGroup>
     <Compile Include="AuthorizationClientTest.cs" />
     <Compile Include="FleetClientTest.cs" />
-    <Compile Include="FleetEventsClientTest.cs" />
+    <Compile Include="FleetMovementClientTest.cs" />
+    <Compile Include="MissionClientTest.cs" />
     <Compile Include="PlanetOverviewClientTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -81,10 +82,13 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Resources\FleetMovement.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\PlanetOverview.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\EventList_TransportEvents.txt">
+    <Content Include="Resources\FleetEvents.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
