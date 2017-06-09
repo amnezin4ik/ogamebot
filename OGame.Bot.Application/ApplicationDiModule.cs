@@ -22,11 +22,13 @@ namespace OGame.Bot.Application
         private void RegisterMessageProcessors(ContainerBuilder builder)
         {
             builder.RegisterType<MessageProcessorFactory>().As<IMessageProcessorFactory>();
+
             builder.RegisterType<AttackMessageProcessor>().As<IAttackMessageProcessor>();
             builder.RegisterType<UpdateSessionDataMessageProcessor>().As<IUpdateSessionDataMessageProcessor>();
             builder.RegisterType<ReturnFleetMessageProcessor>().As<IReturnFleetMessageProcessor>();
             builder.RegisterType<FleetArrivedMessageProcessor>().As<IFleetArrivedMessageProcessor>();
             builder.RegisterType<UpdateStateMessageProcessor>().As<IUpdateStateMessageProcessor>();
+            builder.RegisterType<TransportMessageProcessor>().As<ITransportMessageProcessor>();
         }
     }
 }

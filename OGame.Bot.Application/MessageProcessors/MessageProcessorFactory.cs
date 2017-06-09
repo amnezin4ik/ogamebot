@@ -14,7 +14,8 @@ namespace OGame.Bot.Application.MessageProcessors
                                        IUpdateSessionDataMessageProcessor updateSessionDataMessageProcessor,
                                        IReturnFleetMessageProcessor returnFleetMessageProcessor,
                                        IFleetArrivedMessageProcessor fleetArrivedMessageProcessor,
-                                       IUpdateStateMessageProcessor updateStateMessageProcessor)
+                                       IUpdateStateMessageProcessor updateStateMessageProcessor,
+                                       ITransportMessageProcessor transportMessageProcessor)
         {
             _messageProcessors = new List<IMessageProcessor>
             {
@@ -22,7 +23,8 @@ namespace OGame.Bot.Application.MessageProcessors
                 updateSessionDataMessageProcessor,
                 returnFleetMessageProcessor,
                 fleetArrivedMessageProcessor,
-                updateStateMessageProcessor
+                updateStateMessageProcessor,
+                transportMessageProcessor
             };
         }
 

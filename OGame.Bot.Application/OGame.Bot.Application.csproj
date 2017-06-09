@@ -56,8 +56,10 @@
     <Compile Include="ApplicationMappingProfile.cs" />
     <Compile Include="MessageBus\IMessageServiceBus.cs" />
     <Compile Include="MessageProcessors\Implementations\FleetArrivedMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\Implementations\TransportMessageProcessor.cs" />
     <Compile Include="MessageProcessors\Interfaces\IFleetArrivedMessageProcessor.cs" />
     <Compile Include="MessageProcessors\Interfaces\IReturnFleetMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\Interfaces\ITransportMessageProcessor.cs" />
     <Compile Include="MessageProcessors\Interfaces\IUpdateSessionDataMessageProcessor.cs" />
     <Compile Include="MessageProcessors\Interfaces\IUpdateStateMessageProcessor.cs" />
     <Compile Include="MessageProcessors\Implementations\ReturnFleetMessageProcessor.cs" />

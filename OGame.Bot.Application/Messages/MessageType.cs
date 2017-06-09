@@ -7,6 +7,6 @@
         Attack,
         UpdateSessionData,
         FleetArrived,
-        UpdateState,
+        UpdateState
     }
 }
