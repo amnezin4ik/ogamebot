@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NLog;
 using OGame.Bot.Application.MessageBus;
+using OGame.Bot.Application.Messages;
 
 namespace OGame.Bot.Application.Services
 {
@@ -10,14 +12,12 @@ namespace OGame.Bot.Application.Services
     {
         private readonly Logger _logger = LogManager.GetLogger(nameof(GlobalStateUpdater));
         private readonly IMessageServiceBus _messageServiceBus;
-        private readonly IMessagesProvider _messagesProvider;
         private Task _runTask;
         private CancellationTokenSource _runCancellationTokenSource;
 
-        public GlobalStateUpdater(IMessageServiceBus messageServiceBus, IMessagesProvider messagesProvider)
+        public GlobalStateUpdater(IMessageServiceBus messageServiceBus)
         {
             _messageServiceBus = messageServiceBus;
-            _messagesProvider = messagesProvider;
             IsRunning = false;
         }
 
@@ -37,13 +37,12 @@ namespace OGame.Bot.Application.Services
             {
                 while (!_runCancellationTokenSource.IsCancellationRequested)
                 {
-                    var messages = await _messagesProvider.GetNewMessagesAsync();
-                    foreach (var message in messages)
-                    {
-                        _messageServiceBus.AddMessage(message);
-                    }
-                    var delayInMinutes = new Random().Next(5, 10);
-                    await Task.Delay(TimeSpan.FromMinutes(delayInMinutes), _runCancellationTokenSource.Token);
+                    var allMessageTypes = Enum.GetValues(typeof(MessageType)).Cast<MessageType>().ToList();
+                    var updateMessage = new UpdateStateMessage(allMessageTypes);
+                    _messageServiceBus.AddMessage(updateMessage);
+                    
+                    var delay = GetRandomDelay();
+                    await Task.Delay(delay, _runCancellationTokenSource.Token);
                 }
             }, _runCancellationTokenSource.Token);
         }
@@ -72,6 +71,15 @@ namespace OGame.Bot.Application.Services
                 }
             }
             IsRunning = false;
+        }
+
+        private TimeSpan GetRandomDelay()
+        {
+            const int minDelaySeconds = 5 * 60;
+            const int maxDelaySeconds = 7 * 60;
+            var delayInSeconds = new Random().Next(minDelaySeconds, maxDelaySeconds);
+            var delay = TimeSpan.FromSeconds(delayInSeconds);
+            return delay;
         }
     }
 }

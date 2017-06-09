@@ -58,6 +58,12 @@
     <Compile Include="UserCredentials.cs" />
     <Compile Include="UserPlanet.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OGame.Bot.Modules.Common\OGame.Bot.Modules.Common.csproj">
+      <Project>{297F176E-6159-453A-944F-0CE70771385B}</Project>
+      <Name>OGame.Bot.Modules.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

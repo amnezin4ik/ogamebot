@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using OGame.Bot.Application.MessageProcessors.Interfaces;
 using OGame.Bot.Application.Messages;
 using OGame.Bot.Domain.Services.Interfaces;
 
-namespace OGame.Bot.Application.MessageProcessors
+namespace OGame.Bot.Application.MessageProcessors.Implementations
 {
     public class UpdateSessionDataMessageProcessor : IUpdateSessionDataMessageProcessor
     {

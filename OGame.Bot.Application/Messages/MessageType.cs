@@ -5,6 +5,8 @@
         ReturnFleet,
         Transport,
         Attack,
-        UpdateSessionData
+        UpdateSessionData,
+        FleetArrived,
+        UpdateState,
     }
 }

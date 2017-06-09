@@ -49,11 +49,13 @@ namespace OGame.Bot.Domain.Services.Implementations
             return isFleetMovementStillExists;
         }
 
-        public async Task ReturnFleetAsync(string fleetMovementId)
+        public async Task<FleetMovement> ReturnFleetAsync(string fleetMovementId)
         {
             var sessionData = _sessionDataProvider.GetSessionData();
             var sessionDataDto = _mapper.Map<SessionData, Dto.SessionData>(sessionData);
-            await _fleetMovementClient.ReturnFleetAsync(sessionDataDto, fleetMovementId);
+            var fleetMovementDto = await _fleetMovementClient.ReturnFleetAsync(sessionDataDto, fleetMovementId);
+            var fleetMovement = _mapper.Map<Dto.FleetMovement, FleetMovement>(fleetMovementDto);
+            return fleetMovement;
         }
     }
 }

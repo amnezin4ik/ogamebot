@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using OGame.Bot.Application.MessageBus;
 using OGame.Bot.Application.MessageProcessors;
+using OGame.Bot.Application.MessageProcessors.Implementations;
+using OGame.Bot.Application.MessageProcessors.Interfaces;
 using OGame.Bot.Application.Messages;
 using OGame.Bot.Application.Services;
 
@@ -13,10 +15,7 @@ namespace OGame.Bot.Application
             builder.RegisterType<BotService>().As<IBotService>();
             builder.RegisterType<GlobalStateUpdater>().As<IGlobalStateUpdater>().SingleInstance();
             builder.RegisterType<MessageServiceBus>().As<IMessageServiceBus>().SingleInstance();
-            builder.RegisterType<MessagesProvider>().As<IMessagesProvider>();
-            
             builder.RegisterType<MessagesComparer>().As<IMessagesComparer>();
-
             RegisterMessageProcessors(builder);
         }
 
@@ -26,6 +25,8 @@ namespace OGame.Bot.Application
             builder.RegisterType<AttackMessageProcessor>().As<IAttackMessageProcessor>();
             builder.RegisterType<UpdateSessionDataMessageProcessor>().As<IUpdateSessionDataMessageProcessor>();
             builder.RegisterType<ReturnFleetMessageProcessor>().As<IReturnFleetMessageProcessor>();
+            builder.RegisterType<FleetArrivedMessageProcessor>().As<IFleetArrivedMessageProcessor>();
+            builder.RegisterType<UpdateStateMessageProcessor>().As<IUpdateStateMessageProcessor>();
         }
     }
 }

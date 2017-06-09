@@ -17,5 +17,13 @@ namespace OGame.Bot.Domain
         public MissionPlanet PlanetTo { get; set; }
 
         public bool IsReturn { get; set; }
+
+        public TimeSpan GetTimeToReturn(TimeSpan utcNow)
+        {
+            var oneWayTime = ReturnTimeUtc - ArrivalTimeUtc;
+            var timeToArrival = ArrivalTimeUtc - utcNow;
+            var timeToReturn = oneWayTime - timeToArrival;
+            return timeToReturn;
+        }
     }
 }

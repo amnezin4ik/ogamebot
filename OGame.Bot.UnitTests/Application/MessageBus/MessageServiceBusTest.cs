@@ -5,8 +5,10 @@ using Moq;
 using NUnit.Framework;
 using OGame.Bot.Application.MessageBus;
 using OGame.Bot.Application.MessageProcessors;
+using OGame.Bot.Application.MessageProcessors.Interfaces;
 using OGame.Bot.Application.Messages;
 using OGame.Bot.Domain;
+using OGame.Bot.Modules.Common;
 
 namespace OGame.Bot.UnitTests.Application.MessageBus
 {
@@ -115,7 +117,7 @@ namespace OGame.Bot.UnitTests.Application.MessageBus
 
 
             messageServiceBus.AddMessage(new AttackMessage(new Mission("")));
-            messageServiceBus.AddMessage(new ReturnFleetMessage(new Mission(""), TimeSpan.MinValue));
+            messageServiceBus.AddMessage(new ReturnFleetMessage(new FleetMovement(), TimeSpan.MinValue));
             messageServiceBus.AddMessage(new UpdateSessionDataMessage());
             await Task.Delay(TimeSpan.FromMilliseconds(50));
 

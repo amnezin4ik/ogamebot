@@ -55,16 +55,21 @@
     <Compile Include="ApplicationDiModule.cs" />
     <Compile Include="ApplicationMappingProfile.cs" />
     <Compile Include="MessageBus\IMessageServiceBus.cs" />
-    <Compile Include="MessageProcessors\IReturnFleetMessageProcessor.cs" />
-    <Compile Include="MessageProcessors\IUpdateSessionDataMessageProcessor.cs" />
-    <Compile Include="MessageProcessors\ReturnFleetMessageProcessor.cs" />
-    <Compile Include="MessageProcessors\UpdateSessionDataMessageProcessor.cs" />
-    <Compile Include="MessageProcessors\IAttackMessageProcessor.cs" />
-    <Compile Include="MessageProcessors\IMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\Implementations\FleetArrivedMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\Interfaces\IFleetArrivedMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\Interfaces\IReturnFleetMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\Interfaces\IUpdateSessionDataMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\Interfaces\IUpdateStateMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\Implementations\ReturnFleetMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\Implementations\UpdateSessionDataMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\Interfaces\IAttackMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\Interfaces\IMessageProcessor.cs" />
     <Compile Include="MessageBus\MessageServiceBus.cs" />
-    <Compile Include="MessageProcessors\AttackMessageProcessor.cs" />
+    <Compile Include="MessageProcessors\Implementations\AttackMessageProcessor.cs" />
     <Compile Include="MessageProcessors\IMessageProcessorFactory.cs" />
     <Compile Include="MessageProcessors\MessageProcessorFactory.cs" />
+    <Compile Include="MessageProcessors\Implementations\UpdateStateMessageProcessor.cs" />
+    <Compile Include="Messages\FleetArrivedMessage.cs" />
     <Compile Include="Messages\UpdateSessionDataMessage.cs" />
     <Compile Include="Messages\IMessagesComparer.cs" />
     <Compile Include="Messages\Message.cs" />
@@ -72,14 +77,13 @@
     <Compile Include="Messages\MessageType.cs" />
     <Compile Include="Messages\AttackMessage.cs" />
     <Compile Include="Messages\ReturnFleetMessage.cs" />
+    <Compile Include="Messages\UpdateStateMessage.cs" />
     <Compile Include="Models\UserCredentials.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BotService.cs" />
     <Compile Include="Services\GlobalStateUpdater.cs" />
     <Compile Include="Services\IBotService.cs" />
     <Compile Include="Services\IGlobalStateUpdater.cs" />
-    <Compile Include="Services\IMessagesProvider.cs" />
-    <Compile Include="Services\MessagesProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OGame.Bot.Domain.Services\OGame.Bot.Domain.Services.csproj">
@@ -98,6 +102,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

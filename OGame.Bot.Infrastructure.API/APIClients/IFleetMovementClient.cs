@@ -10,6 +10,6 @@ namespace OGame.Bot.Infrastructure.API.APIClients
 
         Task<IEnumerable<FleetMovement>> GetFleetMovementsAsync(SessionData sessionData, MissionType missionType);
 
-        Task ReturnFleetAsync(SessionData sessionData, string fleetMovementId);
+        Task<FleetMovement> ReturnFleetAsync(SessionData sessionData, string fleetMovementId);
     }
 }

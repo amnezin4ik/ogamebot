@@ -5,7 +5,6 @@ using NUnit.Framework;
 using OGame.Bot.Application.MessageBus;
 using OGame.Bot.Application.Messages;
 using OGame.Bot.Application.Services;
-using OGame.Bot.Domain;
 
 namespace OGame.Bot.UnitTests.Application.Services
 {
@@ -17,32 +16,21 @@ namespace OGame.Bot.UnitTests.Application.Services
         {
             var messageServiceBusMock = new Mock<IMessageServiceBus>();
 
-            var mission = new Mission("") {MissionType = MissionType.Attak};
-            var newMissions = new[]
-            {
-                new AttackMessage(mission),
-                new AttackMessage(mission)
-            };
-
-            var messagesProviderMock = new Mock<IMessagesProvider>();
-            messagesProviderMock
-                .Setup(m => m.GetNewMessagesAsync())
-                .ReturnsAsync(newMissions);
-
-            var globalStateUpdater = new GlobalStateUpdater(messageServiceBusMock.Object, messagesProviderMock.Object);
+            var globalStateUpdater = new GlobalStateUpdater(messageServiceBusMock.Object);
 
 
             globalStateUpdater.Run();
             await Task.Delay(TimeSpan.FromMilliseconds(30));
 
 
-            messageServiceBusMock.Verify(m => m.AddMessage(It.IsAny<Message>()), Times.Exactly(2));
+            messageServiceBusMock.Verify(m => m.AddMessage(It.IsAny<UpdateStateMessage>()), Times.AtLeast(1));
+            messageServiceBusMock.Verify(m => m.AddMessage(It.IsAny<Message>()), Times.AtLeast(1));
         }
 
         [Test]
         public void Run_ShouldThrowExceptionWhenCalledTwice()
         {
-            var globalStateUpdater = new GlobalStateUpdater(null, null);
+            var globalStateUpdater = new GlobalStateUpdater(null);
             globalStateUpdater.Run();
             Assert.Throws<InvalidOperationException>(() => globalStateUpdater.Run());
         }
@@ -52,8 +40,7 @@ namespace OGame.Bot.UnitTests.Application.Services
         public async Task StopAsync_ShouldStopProcessing()
         {
             var messageServiceBusMock = new Mock<IMessageServiceBus>();
-            var messagesProviderMock = new Mock<IMessagesProvider>();
-            var globalStateUpdater = new GlobalStateUpdater(messageServiceBusMock.Object, messagesProviderMock.Object);
+            var globalStateUpdater = new GlobalStateUpdater(messageServiceBusMock.Object);
 
             globalStateUpdater.Run();
 

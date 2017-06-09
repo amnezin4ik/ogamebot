@@ -82,6 +82,10 @@
       <Project>{DCD85D68-0311-4038-BCB8-8144A1A3B12F}</Project>
       <Name>OGame.Bot.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OGame.Bot.Modules.Common\OGame.Bot.Modules.Common.csproj">
+      <Project>{297F176E-6159-453A-944F-0CE70771385B}</Project>
+      <Name>OGame.Bot.Modules.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OGame.Bot.Wpf\OGame.Bot.Wpf.csproj">
       <Project>{DBD8F7A8-1EAD-4873-BF25-2BB3EA3EC0EA}</Project>
       <Name>OGame.Bot.Wpf</Name>

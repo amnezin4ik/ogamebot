@@ -31,12 +31,15 @@ namespace OGame.Bot.Infrastructure.API.APIClients
             _dateTimeProvider = dateTimeProvider;
         }
 
-        public async Task ReturnFleetAsync(SessionData sessionData, string fleetMovementId)
+        public async Task<FleetMovement> ReturnFleetAsync(SessionData sessionData, string fleetMovementId)
         {
             using (var httpClient = _httpClientFactory.GetHttpClient(sessionData))
             {
                 httpClient.DefaultRequestHeaders.Add("Host", "s140-ru.ogame.gameforge.com");
                 await _httpHelper.GetAsync(httpClient, $"{Constants.OGameUrl}?page=movement&return={fleetMovementId}");
+                var allMovements = await GetAllFleetMovementsAsync(sessionData);
+                var returnMovement = allMovements.Single(m => m.Id == fleetMovementId);
+                return returnMovement;
             }
         }
 

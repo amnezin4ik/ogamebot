@@ -8,6 +8,6 @@ namespace OGame.Bot.Domain.Services.Interfaces
         Task<IEnumerable<FleetMovement>> GetAllFleetMovementsAsync();
         Task<IEnumerable<FleetMovement>> GetFleetMovementsAsync(MissionType missionType);
         Task<bool> IsFleetMovementStillExistsAsync(string fleetMovementId);
-        Task ReturnFleetAsync(string fleetMovementId);
+        Task<FleetMovement> ReturnFleetAsync(string fleetMovementId);
     }
 }

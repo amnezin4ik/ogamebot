@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using OGame.Bot.Application.Messages;
 
-namespace OGame.Bot.Application.MessageProcessors
+namespace OGame.Bot.Application.MessageProcessors.Interfaces
 {
     public interface IMessageProcessor
     {

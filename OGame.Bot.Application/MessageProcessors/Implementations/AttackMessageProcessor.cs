@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using OGame.Bot.Application.MessageProcessors.Interfaces;
 using OGame.Bot.Application.Messages;
 using OGame.Bot.Domain;
 using OGame.Bot.Domain.Services.Interfaces;
 using OGame.Bot.Modules.Common;
 
-namespace OGame.Bot.Application.MessageProcessors
+namespace OGame.Bot.Application.MessageProcessors.Implementations
 {
     public class AttackMessageProcessor : IAttackMessageProcessor
     {
