@@ -15,5 +15,10 @@ namespace OGame.Bot.Application.Messages
         {
             return ArrivalTimeUtc.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return $"{MessageType}. ArrivalTimeUtc: {ArrivalTimeUtc}";
+        }
     }
 }

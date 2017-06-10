@@ -1,9 +1,5 @@
-﻿using System.Reflection;
-using System.Windows;
-using Autofac;
+﻿using Autofac;
 using AutoMapper;
-using Caliburn.Micro;
-using Caliburn.Micro.Autofac;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -11,23 +7,36 @@ using OGame.Bot.Application;
 using OGame.Bot.Domain.Services;
 using OGame.Bot.Infrastructure.API;
 using OGame.Bot.Modules.Common;
-using OGame.Bot.Wpf.ViewModels;
 
-namespace OGame.Bot.Wpf
+namespace OGame.Bot.SimpleWpf
 {
-    public class AppBootstrapper : AutofacBootstrapper<MainWindowViewModel>
+    public class SubjectProvider
     {
-        public AppBootstrapper()
+        private readonly IContainer _container;
+
+        public SubjectProvider()
         {
-            Initialize();
+            var builder = new ContainerBuilder();
+            ConfigureContainer(builder);
+            _container = builder.Build();
         }
 
-        protected override void OnStartup(object sender, StartupEventArgs e)
+        public T Create<T>()
         {
-            DisplayRootViewFor<MainWindowViewModel>();
+            return _container.Resolve<T>();
         }
 
-        protected override void ConfigureContainer(ContainerBuilder builder)
+        public T Create<T>(string propertyName, object value)
+        {
+            return _container.Resolve<T>(new NamedParameter(propertyName, value));
+        }
+
+        public T Create<T>(string propertyName1, object value1, string propertyName2, object value2)
+        {
+            return _container.Resolve<T>(new NamedParameter(propertyName1, value1), new NamedParameter(propertyName2, value2));
+        }
+
+        private void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule<WpfDiModule>();
             builder.RegisterModule<ApplicationDiModule>();
@@ -42,7 +51,6 @@ namespace OGame.Bot.Wpf
         {
             builder.Register(ctx => new MapperConfiguration(cfg =>
             {
-                cfg.ConstructServicesUsing(Container.Resolve);
                 cfg.AddProfile(typeof(WpfMappingProfile));
                 cfg.AddProfile(typeof(ApplicationMappingProfile));
                 cfg.AddProfile(typeof(DomainMappingProfile));
@@ -50,19 +58,7 @@ namespace OGame.Bot.Wpf
             builder.Register(ctx => ctx.Resolve<MapperConfiguration>().CreateMapper()).As<IMapper>();
         }
 
-        protected override void ConfigureBootstrapper()
-        {
-            base.ConfigureBootstrapper();
-            var config = new TypeMappingConfiguration
-            {
-                DefaultSubNamespaceForViews = "OGame.Bot.Wpf.Views",
-                DefaultSubNamespaceForViewModels = "OGame.Bot.Wpf.ViewModels"
-            };
-            ViewLocator.ConfigureTypeMappings(config);
-            ViewModelLocator.ConfigureTypeMappings(config);
-        }
-
-        public void ConfigureLogging()
+        private void ConfigureLogging()
         {
             LoggingConfiguration config = new LoggingConfiguration();
 
@@ -71,7 +67,7 @@ namespace OGame.Bot.Wpf
 
             var fileTarget = new FileTarget();
             config.AddTarget("file", fileTarget);
-            
+
             fileTarget.FileName = "${basedir}/log123.txt";
             fileTarget.Layout = @"${date:format=HH\:mm\:ss} ${level:uppercase=true} ${logger} ${message} ${exception:format=toString}";
 
@@ -81,7 +77,7 @@ namespace OGame.Bot.Wpf
             var rule2 = new LoggingRule("*", LogLevel.Debug, fileTarget);
             config.LoggingRules.Add(rule2);
 
-            NLog.LogManager.Configuration = config;
+            LogManager.Configuration = config;
         }
     }
 }

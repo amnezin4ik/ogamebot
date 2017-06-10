@@ -7,5 +7,10 @@
         public string Name { get; set; }
 
         public Coordinates Coordinates { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Name}-{PlanetId}{Coordinates}";
+        }
     }
 }

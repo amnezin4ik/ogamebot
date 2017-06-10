@@ -9,6 +9,11 @@ namespace OGame.Bot.Modules.Common
             return new TimeSpan(DateTime.UtcNow.Ticks);
         }
 
+        public DateTime GetUtcDateNow()
+        {
+            return DateTime.UtcNow;
+        }
+
         public TimeSpan GetOGameUtcOffset()
         {
             var oGameStartDate = new DateTime(1970, 1, 1);

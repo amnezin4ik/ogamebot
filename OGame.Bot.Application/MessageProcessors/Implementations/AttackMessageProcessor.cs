@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using NLog;
 using OGame.Bot.Application.MessageProcessors.Interfaces;
 using OGame.Bot.Application.Messages;
 using OGame.Bot.Domain;
@@ -13,6 +14,7 @@ namespace OGame.Bot.Application.MessageProcessors.Implementations
 {
     public class AttackMessageProcessor : IAttackMessageProcessor
     {
+        private readonly Logger _logger = LogManager.GetLogger(nameof(AttackMessageProcessor));
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IFleetService _fleetService;
         private readonly IGalaxyService _galaxyService;
@@ -65,31 +67,46 @@ namespace OGame.Bot.Application.MessageProcessors.Implementations
                 throw new NotSupportedException($"Can't process message with \"{message.MessageType}\" message type");
             }
 
+            _logger.Info($"Processing {attackMessage.MissionId} mission.");
             var resultMessages = new List<Message>();
             var weAttaked = await _userPlanetsService.IsItUserPlanetAsync(attackMessage.PlanetTo.Coordinates);
             if (weAttaked)
             {
+                _logger.Info("We attacked.");
                 var isMissionStillExists = await _missionService.IsFleetMovementStillExistsAsync(attackMessage.MissionId);
                 if (isMissionStillExists)
                 {
+                    _logger.Info("attack mission still exists");
                     MissionPlanet destinationPlanet;
                     var userPlanets = await _userPlanetsService.GetAllUserPlanetsAsync();
                     if (userPlanets.Count() > 1)
                     {
                         var anotherUserPlanet = userPlanets.First(p => p.Coordinates != attackMessage.PlanetTo.Coordinates);
+                        _logger.Info($"have another user planet - {anotherUserPlanet.Name} {anotherUserPlanet.Coordinates}");
                         destinationPlanet = _mapper.Map<UserPlanet, MissionPlanet>(anotherUserPlanet);
                     }
                     else
                     {
+                        _logger.Info($"have mo another user planets, find nearest inactive planet");
                         destinationPlanet = await _galaxyService.GetNearestInactivePlanetAsync();
+                        _logger.Info($"nearest inactive planet - {destinationPlanet.Name} {destinationPlanet.Coordinates}");
                     }
+
                     var userPlanetToSave = await _userPlanetsService.GetUserPlanetAsync(attackMessage.PlanetTo.Coordinates);
+                    _logger.Info($"current user planet to save - {userPlanetToSave.Name} {userPlanetToSave.Coordinates}");
+
                     var saveMovement = await SaveFleetAndResourcesAsync(userPlanetToSave, destinationPlanet);
                     if (saveMovement != null)
                     {
+                        _logger.Warn($"have save movement - {saveMovement}");
                         var approximateStartOfReturn = GetApproximateStartOfReturn(attackMessage);
+                        _logger.Warn($"approximateStartOfReturn - {approximateStartOfReturn}");
                         var returnFleetMessage = new ReturnFleetMessage(saveMovement, approximateStartOfReturn);
                         resultMessages.Add(returnFleetMessage);
+                    }
+                    else
+                    {
+                        _logger.Warn("have NO save movement");
                     }
                 }
             }
@@ -101,11 +118,15 @@ namespace OGame.Bot.Application.MessageProcessors.Implementations
             FleetMovement saveFleetMovement = null;
             await _userPlanetsService.MakePlanetActiveAsync(needSavePlanet);
             var availableFleet = await _fleetService.GetActivePlanetFleetAsync();
+            _logger.Info($"availableFleet: {availableFleet}");
             var hasAnyShip = availableFleet.ShipCells.Any(s => s.Count > 0);
             if (hasAnyShip)
             {
                 var needSavePlanetOverview = await _planetOverviewService.GetPlanetOverviewAsync(needSavePlanet);
+                _logger.Info($"Save planet overview: {needSavePlanetOverview}");
                 saveFleetMovement = await _fleetService.SendFleetAsync(availableFleet, needSavePlanet.Coordinates, destinationPlanet.Coordinates, MissionTarget.Planet, MissionType.Leave, FleetSpeed.Percent10, needSavePlanetOverview.Resources);
+                _logger.Info("Fleet sended.");
+                _logger.Info($"Fleet movement: {saveFleetMovement}");
             }
             return saveFleetMovement;
         }

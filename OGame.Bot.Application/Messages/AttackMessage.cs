@@ -25,5 +25,10 @@ namespace OGame.Bot.Application.Messages
         {
             return _attackMission.Id.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return $"{MessageType}. MissionId: {MissionId}, {PlanetFrom} -> {PlanetTo}. ArrivalTimeUtc {ArrivalTimeUtc}";
+        }
     }
 }

@@ -10,5 +10,7 @@
         public MessageType MessageType { get; }
 
         public abstract override int GetHashCode();
+
+        public abstract override string ToString();
     }
 }

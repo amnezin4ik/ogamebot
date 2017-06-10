@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace OGame.Bot.Domain
 {
@@ -24,6 +25,12 @@ namespace OGame.Bot.Domain
             var timeToArrival = ArrivalTimeUtc - utcNow;
             var timeToReturn = oneWayTime - timeToArrival;
             return timeToReturn;
+        }
+
+        public override string ToString()
+        {
+            var result = $"Id:{Id}, {PlanetFrom} -> {PlanetTo}. ArrivalTimeUtc:({ArrivalTimeUtc}), {MissionType}. Return time: ReturnTimeUtc:{ReturnTimeUtc}, is return: {IsReturn}";
+            return result;
         }
     }
 }

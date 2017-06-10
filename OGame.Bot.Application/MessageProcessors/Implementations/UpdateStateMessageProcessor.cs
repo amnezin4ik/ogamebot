@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NLog;
 using OGame.Bot.Application.MessageProcessors.Interfaces;
 using OGame.Bot.Application.Messages;
 using OGame.Bot.Domain;
@@ -11,6 +12,7 @@ namespace OGame.Bot.Application.MessageProcessors.Implementations
 {
     public class UpdateStateMessageProcessor : IUpdateStateMessageProcessor
     {
+        private readonly ILogger _logger = LogManager.GetLogger(nameof(UpdateStateMessageProcessor));
         private readonly IMissionService _missionService;
 
         public UpdateStateMessageProcessor(IMissionService missionService)
@@ -36,6 +38,7 @@ namespace OGame.Bot.Application.MessageProcessors.Implementations
 
         public async Task<IEnumerable<Message>> ProcessAsync(Message message)
         {
+            _logger.Info("44");
             var updateStateMessage = message as UpdateStateMessage;
             if (updateStateMessage == null)
             {

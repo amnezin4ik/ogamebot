@@ -27,5 +27,10 @@ namespace OGame.Bot.Application.Messages
             var hashCode = stringBuilder.ToString().GetHashCode();
             return hashCode;
         }
+
+        public override string ToString()
+        {
+            return $"{MessageType}. MessageTypesToUpdate: {string.Join(";", MessageTypesToUpdate)}";
+        }
     }
 }

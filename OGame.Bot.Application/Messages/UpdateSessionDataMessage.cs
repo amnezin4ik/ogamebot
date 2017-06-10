@@ -11,5 +11,10 @@
         {
             return typeof(UpdateSessionDataMessage).GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return $"{MessageType}.";
+        }
     }
 }

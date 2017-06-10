@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OGame.Bot.Wpf.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             Name="asdf">
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="UserName" 
@@ -35,5 +36,12 @@
                 Content="Stop"
                 Width="100" 
                 />
+
+        <RichTextBox ></RichTextBox>
+        <TextBox Text="{Binding LogOutput, UpdateSourceTrigger=PropertyChanged}"
+                 Height="400"
+                 IsReadOnly="True"
+                 VerticalScrollBarVisibility="Auto">
+        </TextBox>
     </StackPanel>
 </UserControl>

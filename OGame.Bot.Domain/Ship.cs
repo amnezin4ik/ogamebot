@@ -59,5 +59,10 @@ namespace OGame.Bot.Domain
             }
             return capacity;
         }
+
+        public override string ToString()
+        {
+            return ShipType.ToString();
+        }
     }
 }

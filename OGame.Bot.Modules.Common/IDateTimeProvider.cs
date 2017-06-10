@@ -6,6 +6,8 @@ namespace OGame.Bot.Modules.Common
     {
         TimeSpan GetUtcNow();
 
+        DateTime GetUtcDateNow();
+
         TimeSpan GetOGameUtcOffset();
     }
 }

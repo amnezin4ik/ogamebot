@@ -52,6 +52,7 @@ namespace OGame.Bot.Application.MessageBus
             }
             IsRunning = true;
 
+            _logger.Info("RUN");
             _runTaskCancellationTokenSource = new CancellationTokenSource();
             _runTask = Task.Run(async () =>
             {
@@ -63,6 +64,7 @@ namespace OGame.Bot.Application.MessageBus
                         var messageProcessor = _messageProcessorFactory.GetMessageProcessor(message);
                         if (messageProcessor.ShouldProcessRightNow(message))
                         {
+                            _logger.Info($"Processing message: {message}");
                             var postProcessMessages = await messageProcessor.ProcessAsync(message);
                             foreach (var postProcessMessage in postProcessMessages)
                             {
@@ -85,6 +87,7 @@ namespace OGame.Bot.Application.MessageBus
 
         public async Task StopAsync()
         {
+            _logger.Info("STOP");
             if (IsRunning)
             {
                 _runTaskCancellationTokenSource.Cancel();

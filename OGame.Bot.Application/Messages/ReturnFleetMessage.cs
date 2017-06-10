@@ -20,5 +20,10 @@ namespace OGame.Bot.Application.Messages
         {
             return SaveMovement.Id.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return $"{MessageType}. SaveMovement: {SaveMovement}. ApproximateStartOfReturn {ApproximateStartOfReturn}";
+        }
     }
 }
