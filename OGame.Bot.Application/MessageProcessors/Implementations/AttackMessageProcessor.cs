@@ -87,7 +87,7 @@ namespace OGame.Bot.Application.MessageProcessors.Implementations
                     }
                     else
                     {
-                        _logger.Info($"have mo another user planets, find nearest inactive planet");
+                        _logger.Info("have mo another user planets, find nearest inactive planet");
                         destinationPlanet = await _galaxyService.GetNearestInactivePlanetAsync();
                         _logger.Info($"nearest inactive planet - {destinationPlanet.Name} {destinationPlanet.Coordinates}");
                     }

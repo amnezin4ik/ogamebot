@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NLog;
 using OGame.Bot.Application.MessageProcessors.Interfaces;
 using OGame.Bot.Application.Messages;
 using OGame.Bot.Domain;
@@ -12,6 +13,7 @@ namespace OGame.Bot.Application.MessageProcessors.Implementations
 {
     public class ReturnFleetMessageProcessor : IReturnFleetMessageProcessor
     {
+        private readonly Logger _logger = LogManager.GetLogger(nameof(ReturnFleetMessageProcessor));
         private readonly IFleetMovementService _fleetMovementService;
         private readonly IMissionService _missionService;
         private readonly IDateTimeProvider _dateTimeProvider;
@@ -49,6 +51,7 @@ namespace OGame.Bot.Application.MessageProcessors.Implementations
                 throw new NotSupportedException($"Can't process message with \"{message.MessageType}\" message type");
             }
 
+            _logger.Info($"Processing {returnFleetMessage} mission.");
             var allMissions = await _missionService.GetAllMissionsAsync();
             var attacksToCurrentPlanet = allMissions
                 .Where(m => m.IsReturn == false &&

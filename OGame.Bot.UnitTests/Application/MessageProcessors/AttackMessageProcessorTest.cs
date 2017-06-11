@@ -1,9 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using Moq;
 using NUnit.Framework;
+using OGame.Bot.Application;
 using OGame.Bot.Application.MessageProcessors.Implementations;
 using OGame.Bot.Application.Messages;
+using OGame.Bot.Domain;
+using OGame.Bot.Domain.Services;
+using OGame.Bot.Domain.Services.Interfaces;
+using OGame.Bot.Modules.Common;
+using OGame.Bot.Wpf;
 
 namespace OGame.Bot.UnitTests.Application.MessageProcessors
 {
@@ -22,7 +32,7 @@ namespace OGame.Bot.UnitTests.Application.MessageProcessors
         }
 
         [Test]
-        public void CanProcess_ShouldTrturnFalseWithOtherMessageType()
+        public void CanProcess_ShouldReturnFalseWithOtherMessageType()
         {
             var attackMessageProcessor = new AttackMessageProcessor(null, null, null, null, null, null, null);
 
@@ -37,6 +47,179 @@ namespace OGame.Bot.UnitTests.Application.MessageProcessors
 
                 Assert.False(canProcess);
             }
+        }
+
+        [Test]
+        public void ShouldProcessRightNow_ShouldNotProcessMessagesCommingLessThenAMinute()
+        {
+            var utcNow = new TimeSpan(10, 1, 1, 1);
+
+            var dateTimeProviderMock = new Mock<IDateTimeProvider>();
+            dateTimeProviderMock
+                .Setup(m => m.GetUtcNow())
+                .Returns(utcNow);
+
+            var attackMessageProcessor = new AttackMessageProcessor(dateTimeProviderMock.Object, null, null, null, null, null, null);
+
+            var missions = new[]
+            {
+                new Mission("") {ArrivalTimeUtc = utcNow.Add(new TimeSpan(-99, 0, 0, 0))},
+                new Mission("") {ArrivalTimeUtc = utcNow},
+                new Mission("") {ArrivalTimeUtc = utcNow.Add(new TimeSpan(0, 0, 0, 59))}
+            };
+
+            foreach (var mission in missions)
+            {
+                var attackMessage = new AttackMessage(mission);
+
+                var shouldProcessRightNow = attackMessageProcessor.ShouldProcessRightNow(attackMessage);
+
+                Assert.True(shouldProcessRightNow);
+            }
+        }
+
+        [Test]
+        public void ShouldProcessRightNow_ShouldNotProcessMessagesCommingInAMinuteOrMore()
+        {
+            var utcNow = new TimeSpan(10, 1, 1, 1);
+
+            var dateTimeProviderMock = new Mock<IDateTimeProvider>();
+            dateTimeProviderMock
+                .Setup(m => m.GetUtcNow())
+                .Returns(utcNow);
+
+            var attackMessageProcessor = new AttackMessageProcessor(dateTimeProviderMock.Object, null, null, null, null, null, null);
+
+            var missions = new[]
+            {
+                new Mission("") {ArrivalTimeUtc = utcNow.Add(new TimeSpan(0, 0, 0, 60))},
+                new Mission("") {ArrivalTimeUtc = utcNow.Add(new TimeSpan(99, 0, 0, 0))}
+            };
+
+            foreach (var mission in missions)
+            {
+                var attackMessage = new AttackMessage(mission);
+
+                var shouldProcessRightNow = attackMessageProcessor.ShouldProcessRightNow(attackMessage);
+
+                Assert.False(shouldProcessRightNow);
+            }
+        }
+
+        [Test]
+        public async Task ProcessAsync_ShouldNotGenerateAnyMessagesIfWeAreNotAttaked()
+        {
+            var userPlanetsServiceMock = new Mock<IUserPlanetsService>();
+            userPlanetsServiceMock
+                .Setup(m => m.IsItUserPlanetAsync(It.IsAny<Coordinates>()))
+                .ReturnsAsync(false);
+
+            var attackMessageProcessor = new AttackMessageProcessor(null, null, null, userPlanetsServiceMock.Object, null, null, null);
+
+            var attackMessage = new AttackMessage(new Mission("")
+            {
+                PlanetTo = new MissionPlanet()
+            });
+
+
+            var messages = await attackMessageProcessor.ProcessAsync(attackMessage);
+
+
+            userPlanetsServiceMock.Verify(m => m.IsItUserPlanetAsync(It.IsAny<Coordinates>()), Times.Once);
+            Assert.AreEqual(0, messages.Count());
+        }
+
+        [Test]
+        public async Task ProcessAsync_ShouldNotGenerateAnyMessagesIfAttackAlreadyNotExists()
+        {
+            var userPlanetsServiceMock = new Mock<IUserPlanetsService>();
+            userPlanetsServiceMock
+                .Setup(m => m.IsItUserPlanetAsync(It.IsAny<Coordinates>()))
+                .ReturnsAsync(true);
+            
+            var missionServiceMock = new Mock<IMissionService>();
+            missionServiceMock
+                .Setup(m => m.IsFleetMovementStillExistsAsync(It.IsAny<string>()))
+                .ReturnsAsync(false);
+
+            var attackMessageProcessor = new AttackMessageProcessor(null, null, null, userPlanetsServiceMock.Object, missionServiceMock.Object, null, null);
+
+            var attackMessage = new AttackMessage(new Mission("")
+            {
+                PlanetTo = new MissionPlanet()
+            });
+
+
+            var messages = await attackMessageProcessor.ProcessAsync(attackMessage);
+
+
+            userPlanetsServiceMock.Verify(m => m.IsItUserPlanetAsync(It.IsAny<Coordinates>()), Times.Once);
+            missionServiceMock.Verify(m => m.IsFleetMovementStillExistsAsync(It.IsAny<string>()), Times.Once);
+            Assert.AreEqual(0, messages.Count());
+        }
+
+        [Test]
+        public async Task ProcessAsync_ShouldGetUserPlanetAsSaveDestinationPlanet()
+        {
+            var firstUserPlanet = new UserPlanet { Coordinates = new Coordinates(1, 1, 1) };
+            var secondUserPlanet = new UserPlanet { Coordinates = new Coordinates(2, 2, 2) };
+
+            var userPlanetsServiceMock = new Mock<IUserPlanetsService>();
+            userPlanetsServiceMock
+                .Setup(m => m.IsItUserPlanetAsync(It.IsAny<Coordinates>()))
+                .ReturnsAsync(true);
+            userPlanetsServiceMock
+                .Setup(m => m.GetAllUserPlanetsAsync())
+                .ReturnsAsync(new[] { firstUserPlanet, secondUserPlanet });
+
+            Coordinates coordinates = null; 
+            userPlanetsServiceMock
+                .Setup(m => m.GetUserPlanetAsync(It.IsAny<Coordinates>()))
+                .Callback<Coordinates>(c => coordinates = c)
+                .ReturnsAsync(firstUserPlanet);
+
+            var missionServiceMock = new Mock<IMissionService>();
+            missionServiceMock
+                .Setup(m => m.IsFleetMovementStillExistsAsync(It.IsAny<string>()))
+                .ReturnsAsync(true);
+            
+            var fleetServiceMock = new Mock<IFleetService>();
+            fleetServiceMock
+                .Setup(m => m.GetActivePlanetFleetAsync())
+                .ReturnsAsync(new Fleet {ShipCells = new List<ShipCell>()});
+
+            var galaxyServiceMock = new Mock<IGalaxyService>();
+            
+            var mapper = GetMapper();
+
+            var attackMessageProcessor = new AttackMessageProcessor(null, fleetServiceMock.Object, galaxyServiceMock.Object, userPlanetsServiceMock.Object, missionServiceMock.Object, null, mapper);
+
+
+            var attackMessage = new AttackMessage(new Mission("")
+            {
+                PlanetTo = new MissionPlanet() { Coordinates = firstUserPlanet.Coordinates }
+            });
+
+
+            await attackMessageProcessor.ProcessAsync(attackMessage);
+
+            
+            userPlanetsServiceMock.Verify(m => m.GetAllUserPlanetsAsync(), Times.Once);
+            galaxyServiceMock.Verify(m => m.GetNearestInactivePlanetAsync(It.IsAny<int>()), Times.Never);
+            userPlanetsServiceMock.Verify(m => m.GetUserPlanetAsync(It.IsAny<Coordinates>()), Times.Once);
+            Assert.True(coordinates == firstUserPlanet.Coordinates);
+        }
+
+        private IMapper GetMapper()
+        {
+            var mapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(typeof(WpfMappingProfile));
+                cfg.AddProfile(typeof(ApplicationMappingProfile));
+                cfg.AddProfile(typeof(DomainMappingProfile));
+            });
+            var mapper = mapperConfiguration.CreateMapper();
+            return mapper;
         }
     }
 }

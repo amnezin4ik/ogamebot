@@ -38,13 +38,12 @@ namespace OGame.Bot.Application.MessageProcessors.Implementations
 
         public async Task<IEnumerable<Message>> ProcessAsync(Message message)
         {
-            _logger.Info("44");
             var updateStateMessage = message as UpdateStateMessage;
             if (updateStateMessage == null)
             {
                 throw new NotSupportedException($"Can't process message with \"{message.MessageType}\" message type");
             }
-
+            _logger.Info($"message: {updateStateMessage}");
             var newMessages = await GetNewMessagesAsync(updateStateMessage.MessageTypesToUpdate);
             return newMessages;
         }
@@ -53,16 +52,19 @@ namespace OGame.Bot.Application.MessageProcessors.Implementations
         {
             var newMessages = new List<Message>();
 
+            _logger.Info("Getting new messages");
             if (messageTypes.Contains(MessageType.Attack))
             {
                 var attackMessages = await GetAttackMessagesAsync();
                 newMessages.AddRange(attackMessages);
+                _logger.Info($"Added {attackMessages.Count()} {MessageType.Attack} messages");
             }
 
             if (messageTypes.Contains(MessageType.UpdateSessionData))
             {
                 var updateSessionDataMessage = new UpdateSessionDataMessage();
                 newMessages.Add(updateSessionDataMessage);
+                _logger.Info($"Added {MessageType.UpdateSessionData} message");
             }
 
             return newMessages;

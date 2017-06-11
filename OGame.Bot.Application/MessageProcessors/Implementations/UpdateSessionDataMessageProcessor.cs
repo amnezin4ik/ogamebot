@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NLog;
 using OGame.Bot.Application.MessageProcessors.Interfaces;
 using OGame.Bot.Application.Messages;
 using OGame.Bot.Domain.Services.Interfaces;
@@ -9,6 +10,7 @@ namespace OGame.Bot.Application.MessageProcessors.Implementations
 {
     public class UpdateSessionDataMessageProcessor : IUpdateSessionDataMessageProcessor
     {
+        private readonly Logger _logger = LogManager.GetLogger(nameof(UpdateSessionDataMessageProcessor));
         private readonly IUpdatableSessionDataProvider _updatableSessionDataProvider;
 
         public UpdateSessionDataMessageProcessor(IUpdatableSessionDataProvider updatableSessionDataProvider)
