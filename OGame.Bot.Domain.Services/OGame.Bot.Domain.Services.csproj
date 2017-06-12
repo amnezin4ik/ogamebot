@@ -84,15 +84,6 @@
     <Compile Include="MessageProcessors\Interfaces\IUpdateSessionDataMessageProcessor.cs" />
     <Compile Include="MessageProcessors\Interfaces\IUpdateStateMessageProcessor.cs" />
     <Compile Include="MessageProcessors\MessageProcessorFactory.cs" />
-    <Compile Include="Messages\AttackMessage.cs" />
-    <Compile Include="Messages\FleetArrivedMessage.cs" />
-    <Compile Include="Messages\IMessagesComparer.cs" />
-    <Compile Include="Messages\Message.cs" />
-    <Compile Include="Messages\MessagesComparer.cs" />
-    <Compile Include="Messages\MessageType.cs" />
-    <Compile Include="Messages\ReturnFleetMessage.cs" />
-    <Compile Include="Messages\UpdateSessionDataMessage.cs" />
-    <Compile Include="Messages\UpdateStateMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

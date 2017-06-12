@@ -2,9 +2,9 @@
 using System.Linq;
 using Moq;
 using NUnit.Framework;
+using OGame.Bot.Domain.Messages;
 using OGame.Bot.Domain.Services.MessageProcessors;
 using OGame.Bot.Domain.Services.MessageProcessors.Implementations;
-using OGame.Bot.Domain.Services.Messages;
 
 namespace OGame.Bot.UnitTests.Domain.Services.MessageProcessors
 {

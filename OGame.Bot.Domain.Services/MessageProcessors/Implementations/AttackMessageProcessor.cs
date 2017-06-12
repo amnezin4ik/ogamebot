@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using NLog;
+using OGame.Bot.Domain.Messages;
 using OGame.Bot.Domain.Services.Interfaces;
 using OGame.Bot.Domain.Services.MessageProcessors.Interfaces;
-using OGame.Bot.Domain.Services.Messages;
 using OGame.Bot.Modules.Common;
 
 namespace OGame.Bot.Domain.Services.MessageProcessors.Implementations

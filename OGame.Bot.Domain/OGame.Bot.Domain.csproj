@@ -44,6 +44,15 @@
     <Compile Include="Fleet.cs" />
     <Compile Include="FleetMovement.cs" />
     <Compile Include="FleetSpeed.cs" />
+    <Compile Include="Messages\AttackMessage.cs" />
+    <Compile Include="Messages\FleetArrivedMessage.cs" />
+    <Compile Include="Messages\IMessagesComparer.cs" />
+    <Compile Include="Messages\Message.cs" />
+    <Compile Include="Messages\MessagesComparer.cs" />
+    <Compile Include="Messages\MessageType.cs" />
+    <Compile Include="Messages\ReturnFleetMessage.cs" />
+    <Compile Include="Messages\UpdateSessionDataMessage.cs" />
+    <Compile Include="Messages\UpdateStateMessage.cs" />
     <Compile Include="Mission.cs" />
     <Compile Include="MissionPlanet.cs" />
     <Compile Include="MissionTarget.cs" />

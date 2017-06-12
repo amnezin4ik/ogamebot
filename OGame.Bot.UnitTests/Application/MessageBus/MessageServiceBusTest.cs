@@ -5,9 +5,9 @@ using Moq;
 using NUnit.Framework;
 using OGame.Bot.Application.MessageBus;
 using OGame.Bot.Domain;
+using OGame.Bot.Domain.Messages;
 using OGame.Bot.Domain.Services.MessageProcessors;
 using OGame.Bot.Domain.Services.MessageProcessors.Interfaces;
-using OGame.Bot.Domain.Services.Messages;
 using OGame.Bot.Modules.Common;
 
 namespace OGame.Bot.UnitTests.Application.MessageBus

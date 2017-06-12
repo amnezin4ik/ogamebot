@@ -7,10 +7,10 @@ using Moq;
 using NUnit.Framework;
 using OGame.Bot.Application;
 using OGame.Bot.Domain;
+using OGame.Bot.Domain.Messages;
 using OGame.Bot.Domain.Services;
 using OGame.Bot.Domain.Services.Interfaces;
 using OGame.Bot.Domain.Services.MessageProcessors.Implementations;
-using OGame.Bot.Domain.Services.Messages;
 using OGame.Bot.Modules.Common;
 using OGame.Bot.Wpf;
 

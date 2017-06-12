@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using OGame.Bot.Domain.Services.Messages;
+using OGame.Bot.Domain.Messages;
 
 namespace OGame.Bot.Application.MessageBus
 {

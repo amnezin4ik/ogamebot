@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NLog;
+using OGame.Bot.Domain.Messages;
 using OGame.Bot.Domain.Services.MessageProcessors;
-using OGame.Bot.Domain.Services.Messages;
 
 namespace OGame.Bot.Application.MessageBus
 {

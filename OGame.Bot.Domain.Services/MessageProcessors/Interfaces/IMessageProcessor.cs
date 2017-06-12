@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using OGame.Bot.Domain.Services.Messages;
+using OGame.Bot.Domain.Messages;
 
 namespace OGame.Bot.Domain.Services.MessageProcessors.Interfaces
 {
