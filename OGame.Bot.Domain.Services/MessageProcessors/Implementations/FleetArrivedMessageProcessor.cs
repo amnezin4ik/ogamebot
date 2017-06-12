@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NLog;
-using OGame.Bot.Application.MessageProcessors.Interfaces;
-using OGame.Bot.Application.Messages;
+using OGame.Bot.Domain.Services.MessageProcessors.Interfaces;
+using OGame.Bot.Domain.Services.Messages;
 using OGame.Bot.Modules.Common;
 
-namespace OGame.Bot.Application.MessageProcessors.Implementations
+namespace OGame.Bot.Domain.Services.MessageProcessors.Implementations
 {
     public class FleetArrivedMessageProcessor : IFleetArrivedMessageProcessor
     {
-        private readonly Logger _logger = LogManager.GetLogger(nameof(FleetArrivedMessageProcessor));
+        private readonly ILogger _logger = LogManager.GetLogger(nameof(FleetArrivedMessageProcessor));
         private readonly IDateTimeProvider _dateTimeProvider;
 
         public FleetArrivedMessageProcessor(IDateTimeProvider dateTimeProvider)

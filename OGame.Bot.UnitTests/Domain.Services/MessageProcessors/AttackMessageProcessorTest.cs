@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Moq;
 using NUnit.Framework;
 using OGame.Bot.Application;
-using OGame.Bot.Application.MessageProcessors.Implementations;
-using OGame.Bot.Application.Messages;
 using OGame.Bot.Domain;
 using OGame.Bot.Domain.Services;
 using OGame.Bot.Domain.Services.Interfaces;
+using OGame.Bot.Domain.Services.MessageProcessors.Implementations;
+using OGame.Bot.Domain.Services.Messages;
 using OGame.Bot.Modules.Common;
 using OGame.Bot.Wpf;
 
-namespace OGame.Bot.UnitTests.Application.MessageProcessors
+namespace OGame.Bot.UnitTests.Domain.Services.MessageProcessors
 {
     [TestFixture]
     public class AttackMessageProcessorTest
@@ -295,7 +294,7 @@ namespace OGame.Bot.UnitTests.Application.MessageProcessors
 
             var mapper = GetMapper();
 
-            var attackMessageProcessor = new AttackMessageProcessor(null, fleetServiceMock.Object, galaxyServiceMock.Object, userPlanetsServiceMock.Object, missionServiceMock.Object, planetOverviewServiceMock.Object, mapper);
+            var attackMessageProcessor = new Bot.Domain.Services.MessageProcessors.Implementations.AttackMessageProcessor(null, fleetServiceMock.Object, galaxyServiceMock.Object, userPlanetsServiceMock.Object, missionServiceMock.Object, planetOverviewServiceMock.Object, mapper);
 
             var attackMessage = new AttackMessage(new Mission("")
             {

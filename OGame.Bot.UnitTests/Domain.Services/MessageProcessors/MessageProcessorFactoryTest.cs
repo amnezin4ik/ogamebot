@@ -2,11 +2,11 @@
 using System.Linq;
 using Moq;
 using NUnit.Framework;
-using OGame.Bot.Application.MessageProcessors;
-using OGame.Bot.Application.MessageProcessors.Implementations;
-using OGame.Bot.Application.Messages;
+using OGame.Bot.Domain.Services.MessageProcessors;
+using OGame.Bot.Domain.Services.MessageProcessors.Implementations;
+using OGame.Bot.Domain.Services.Messages;
 
-namespace OGame.Bot.UnitTests.Application.MessageProcessors
+namespace OGame.Bot.UnitTests.Domain.Services.MessageProcessors
 {
     [TestFixture]
     public class MessageProcessorFactoryTest

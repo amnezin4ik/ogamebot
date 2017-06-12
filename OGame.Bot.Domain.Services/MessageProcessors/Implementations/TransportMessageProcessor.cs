@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NLog;
-using OGame.Bot.Application.MessageProcessors.Interfaces;
-using OGame.Bot.Application.Messages;
+using OGame.Bot.Domain.Services.MessageProcessors.Interfaces;
+using OGame.Bot.Domain.Services.Messages;
 
-namespace OGame.Bot.Application.MessageProcessors.Implementations
+namespace OGame.Bot.Domain.Services.MessageProcessors.Implementations
 {
     public class TransportMessageProcessor : ITransportMessageProcessor
     {
-        private readonly Logger _logger = LogManager.GetLogger(nameof(TransportMessageProcessor));
+        private readonly ILogger _logger = LogManager.GetLogger(nameof(TransportMessageProcessor));
 
         public bool CanProcess(Message message)
         {

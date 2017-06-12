@@ -61,8 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\MessageBus\MessageServiceBusTest.cs" />
-    <Compile Include="Application\MessageProcessors\AttackMessageProcessorTest.cs" />
-    <Compile Include="Application\MessageProcessors\MessageProcessorFactoryTest.cs" />
+    <Compile Include="Domain.Services\MessageProcessors\AttackMessageProcessorTest.cs" />
+    <Compile Include="Domain.Services\MessageProcessors\MessageProcessorFactoryTest.cs" />
     <Compile Include="Application\Services\GlobalStateUpdaterTest.cs" />
     <Compile Include="MappingProfilesTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -93,7 +93,9 @@
       <Name>OGame.Bot.Wpf</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Application\MessageProcessors\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

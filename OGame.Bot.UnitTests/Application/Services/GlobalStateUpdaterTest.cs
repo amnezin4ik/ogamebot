@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using OGame.Bot.Application.MessageBus;
-using OGame.Bot.Application.Messages;
 using OGame.Bot.Application.Services;
+using OGame.Bot.Domain.Services.Messages;
 
 namespace OGame.Bot.UnitTests.Application.Services
 {

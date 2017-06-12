@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using OGame.Bot.Application.MessageBus;
-using OGame.Bot.Application.MessageProcessors;
-using OGame.Bot.Application.MessageProcessors.Implementations;
-using OGame.Bot.Application.MessageProcessors.Interfaces;
-using OGame.Bot.Application.Messages;
 using OGame.Bot.Application.Services;
+using OGame.Bot.Domain.Services.MessageProcessors;
+using OGame.Bot.Domain.Services.MessageProcessors.Implementations;
+using OGame.Bot.Domain.Services.MessageProcessors.Interfaces;
+using OGame.Bot.Domain.Services.Messages;
 
 namespace OGame.Bot.Application
 {

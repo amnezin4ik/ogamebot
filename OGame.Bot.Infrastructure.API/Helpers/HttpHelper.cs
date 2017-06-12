@@ -8,7 +8,7 @@ namespace OGame.Bot.Infrastructure.API.Helpers
 {
     public class HttpHelper : IHttpHelper
     {
-        private static readonly Logger Logger = LogManager.GetLogger(nameof(HttpHelper));
+        private readonly ILogger _logger = LogManager.GetLogger(nameof(HttpHelper));
 
         public async Task<HttpResponseMessage> GetAsync(HttpClient httpClient, string requestUri)
         {
@@ -25,7 +25,7 @@ namespace OGame.Bot.Infrastructure.API.Helpers
                 .Handle<TimeoutException>()
                 .WaitAndRetryAsync(sleepDurationsBetweenAttempts, (exception, timeSpan, attempt) =>
                 {
-                    Logger.Warn("Exception while sending message. " +
+                    _logger.Warn("Exception while sending message. " +
                                 $"Attempt {attempt} of {sleepDurationsBetweenAttempts.Length}. " +
                                 $"Exception details: {exception}");
                 }).ExecuteAsync(async () => await httpClient.GetAsync(requestUri));
@@ -48,7 +48,7 @@ namespace OGame.Bot.Infrastructure.API.Helpers
                 .Handle<TimeoutException>()
                 .WaitAndRetryAsync(sleepDurationsBetweenAttempts, (exception, timeSpan, attempt) =>
                 {
-                    Logger.Warn("Exception while sending message. " +
+                    _logger.Warn("Exception while sending message. " +
                                 $"Attempt {attempt} of {sleepDurationsBetweenAttempts.Length}. " +
                                 $"Exception details: {exception}");
                 }).ExecuteAsync(async () => await httpClient.GetStringAsync(requestUri));
@@ -71,7 +71,7 @@ namespace OGame.Bot.Infrastructure.API.Helpers
                 .Handle<TimeoutException>()
                 .WaitAndRetryAsync(sleepDurationsBetweenAttempts, (exception, timeSpan, attempt) =>
                 {
-                    Logger.Warn("Exception while sending message. " +
+                    _logger.Warn("Exception while sending message. " +
                                 $"Attempt {attempt} of {sleepDurationsBetweenAttempts.Length}. " +
                                 $"Exception details: {exception}");
                 }).ExecuteAsync(async () => await httpClient.PostAsync(requestUri, content));

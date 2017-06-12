@@ -1,7 +1,6 @@
 ﻿using System;
-using OGame.Bot.Domain;
 
-namespace OGame.Bot.Application.Messages
+namespace OGame.Bot.Domain.Services.Messages
 {
     public sealed class AttackMessage : Message
     {

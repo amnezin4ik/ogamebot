@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NLog;
-using OGame.Bot.Application.MessageProcessors.Interfaces;
-using OGame.Bot.Application.Messages;
-using OGame.Bot.Domain;
 using OGame.Bot.Domain.Services.Interfaces;
+using OGame.Bot.Domain.Services.MessageProcessors.Interfaces;
+using OGame.Bot.Domain.Services.Messages;
 using OGame.Bot.Modules.Common;
 
-namespace OGame.Bot.Application.MessageProcessors.Implementations
+namespace OGame.Bot.Domain.Services.MessageProcessors.Implementations
 {
     public class ReturnFleetMessageProcessor : IReturnFleetMessageProcessor
     {
-        private readonly Logger _logger = LogManager.GetLogger(nameof(ReturnFleetMessageProcessor));
+        private readonly ILogger _logger = LogManager.GetLogger(nameof(ReturnFleetMessageProcessor));
         private readonly IFleetMovementService _fleetMovementService;
         private readonly IMissionService _missionService;
         private readonly IDateTimeProvider _dateTimeProvider;

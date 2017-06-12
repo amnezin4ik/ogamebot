@@ -1,4 +1,4 @@
-﻿namespace OGame.Bot.Application.Messages
+﻿namespace OGame.Bot.Domain.Services.Messages
 {
     public abstract class Message
     {

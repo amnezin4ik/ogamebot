@@ -1,4 +1,4 @@
-﻿namespace OGame.Bot.Application.Messages
+﻿namespace OGame.Bot.Domain.Services.Messages
 {
     public sealed class UpdateSessionDataMessage : Message
     {

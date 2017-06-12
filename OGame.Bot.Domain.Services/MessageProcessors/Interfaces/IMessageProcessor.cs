@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using OGame.Bot.Application.Messages;
+using OGame.Bot.Domain.Services.Messages;
 
-namespace OGame.Bot.Application.MessageProcessors.Interfaces
+namespace OGame.Bot.Domain.Services.MessageProcessors.Interfaces
 {
     public interface IMessageProcessor
     {

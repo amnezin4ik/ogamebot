@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OGame.Bot.Application.Messages
+namespace OGame.Bot.Domain.Services.Messages
 {
     public class FleetArrivedMessage : Message
     {

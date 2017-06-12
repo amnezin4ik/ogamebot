@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using OGame.Bot.Application.MessageProcessors.Interfaces;
-using OGame.Bot.Application.Messages;
+using OGame.Bot.Domain.Services.MessageProcessors.Interfaces;
+using OGame.Bot.Domain.Services.Messages;
 
-namespace OGame.Bot.Application.MessageProcessors
+namespace OGame.Bot.Domain.Services.MessageProcessors
 {
     public class MessageProcessorFactory : IMessageProcessorFactory
     {

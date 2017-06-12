@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace OGame.Bot.Application.Messages
+namespace OGame.Bot.Domain.Services.Messages
 {
     public class UpdateStateMessage : Message
     {

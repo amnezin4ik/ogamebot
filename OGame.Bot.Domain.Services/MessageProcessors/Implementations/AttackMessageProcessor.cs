@@ -4,17 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using NLog;
-using OGame.Bot.Application.MessageProcessors.Interfaces;
-using OGame.Bot.Application.Messages;
-using OGame.Bot.Domain;
 using OGame.Bot.Domain.Services.Interfaces;
+using OGame.Bot.Domain.Services.MessageProcessors.Interfaces;
+using OGame.Bot.Domain.Services.Messages;
 using OGame.Bot.Modules.Common;
 
-namespace OGame.Bot.Application.MessageProcessors.Implementations
+namespace OGame.Bot.Domain.Services.MessageProcessors.Implementations
 {
     public class AttackMessageProcessor : IAttackMessageProcessor
     {
-        private readonly Logger _logger = LogManager.GetLogger(nameof(AttackMessageProcessor));
+        private readonly ILogger _logger = LogManager.GetLogger(nameof(AttackMessageProcessor));
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IFleetService _fleetService;
         private readonly IGalaxyService _galaxyService;

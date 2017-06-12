@@ -4,13 +4,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using NLog;
 using OGame.Bot.Application.MessageBus;
-using OGame.Bot.Application.Messages;
+using OGame.Bot.Domain.Services.Messages;
 
 namespace OGame.Bot.Application.Services
 {
     public class GlobalStateUpdater : IGlobalStateUpdater
     {
-        private readonly Logger _logger = LogManager.GetLogger(nameof(GlobalStateUpdater));
+        private readonly ILogger _logger = LogManager.GetLogger(nameof(GlobalStateUpdater));
         private readonly IMessageServiceBus _messageServiceBus;
         private Task _runTask;
         private CancellationTokenSource _runCancellationTokenSource;

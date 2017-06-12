@@ -4,14 +4,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NLog;
-using OGame.Bot.Application.MessageProcessors;
-using OGame.Bot.Application.Messages;
+using OGame.Bot.Domain.Services.MessageProcessors;
+using OGame.Bot.Domain.Services.Messages;
 
 namespace OGame.Bot.Application.MessageBus
 {
     public sealed class MessageServiceBus : IMessageServiceBus
     {
-        private readonly Logger _logger = LogManager.GetLogger(nameof(MessageServiceBus));
+        private readonly ILogger _logger = LogManager.GetLogger(nameof(MessageServiceBus));
         private readonly IMessageProcessorFactory _messageProcessorFactory;
         private readonly IMessagesComparer _messagesComparer;
         private readonly ConcurrentQueue<Message> _messagesQueue;
