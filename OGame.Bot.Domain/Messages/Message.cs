@@ -9,6 +9,7 @@
 
         public MessageType MessageType { get; }
 
+        //TODO: Maybe implement another method like "string GetMessageKey()" instead of GetHashCode(), and make messages compare by compare message keys
         public abstract override int GetHashCode();
 
         public abstract override string ToString();

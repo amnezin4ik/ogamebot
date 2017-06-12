@@ -21,6 +21,7 @@ namespace OGame.Bot.Infrastructure.API.APIClients
             _httpClientFactory = httpClientFactory;
         }
 
+        //TODO: remove default paramenters, add server parameter
         public async Task<SessionData> LogInAsync(string userName = "user7395496", string password = "2016895")
         {
             var values = new Dictionary<string, string>
