@@ -159,7 +159,7 @@ namespace OGame.Bot.UnitTests.Application.MessageProcessors
         }
 
         [Test]
-        public async Task ProcessAsync_ShouldGetUserPlanetAsSaveDestinationPlanet()
+        public async Task ProcessAsync_ShouldNotFindNearesnInactivePlanet()
         {
             var firstUserPlanet = new UserPlanet { Coordinates = new Coordinates(1, 1, 1) };
             var secondUserPlanet = new UserPlanet { Coordinates = new Coordinates(2, 2, 2) };
@@ -197,7 +197,7 @@ namespace OGame.Bot.UnitTests.Application.MessageProcessors
 
             var attackMessage = new AttackMessage(new Mission("")
             {
-                PlanetTo = new MissionPlanet() { Coordinates = firstUserPlanet.Coordinates }
+                PlanetTo = new MissionPlanet { Coordinates = firstUserPlanet.Coordinates }
             });
 
 
@@ -206,9 +206,246 @@ namespace OGame.Bot.UnitTests.Application.MessageProcessors
             
             userPlanetsServiceMock.Verify(m => m.GetAllUserPlanetsAsync(), Times.Once);
             galaxyServiceMock.Verify(m => m.GetNearestInactivePlanetAsync(It.IsAny<int>()), Times.Never);
-            userPlanetsServiceMock.Verify(m => m.GetUserPlanetAsync(It.IsAny<Coordinates>()), Times.Once);
-            Assert.True(coordinates == firstUserPlanet.Coordinates);
         }
+
+        [Test]
+        public async Task ProcessAsync_ShouldFindNearesnInactivePlanet()
+        {
+            var firstUserPlanet = new UserPlanet { Coordinates = new Coordinates(1, 1, 1) };
+
+            var userPlanetsServiceMock = new Mock<IUserPlanetsService>();
+            userPlanetsServiceMock
+                .Setup(m => m.IsItUserPlanetAsync(It.IsAny<Coordinates>()))
+                .ReturnsAsync(true);
+            userPlanetsServiceMock
+                .Setup(m => m.GetAllUserPlanetsAsync())
+                .ReturnsAsync(new[] { firstUserPlanet });
+
+            Coordinates coordinates = null;
+            userPlanetsServiceMock
+                .Setup(m => m.GetUserPlanetAsync(It.IsAny<Coordinates>()))
+                .Callback<Coordinates>(c => coordinates = c)
+                .ReturnsAsync(firstUserPlanet);
+
+            var missionServiceMock = new Mock<IMissionService>();
+            missionServiceMock
+                .Setup(m => m.IsFleetMovementStillExistsAsync(It.IsAny<string>()))
+                .ReturnsAsync(true);
+
+            var fleetServiceMock = new Mock<IFleetService>();
+            fleetServiceMock
+                .Setup(m => m.GetActivePlanetFleetAsync())
+                .ReturnsAsync(new Fleet { ShipCells = new List<ShipCell>() });
+
+            var nearestInactivePlanet = new MissionPlanet { Coordinates = new Coordinates(2, 2, 2) };
+            var galaxyServiceMock = new Mock<IGalaxyService>();
+            galaxyServiceMock
+                .Setup(m => m.GetNearestInactivePlanetAsync(It.IsAny<int>()))
+                .ReturnsAsync(nearestInactivePlanet);
+
+            var mapper = GetMapper();
+
+            var attackMessageProcessor = new AttackMessageProcessor(null, fleetServiceMock.Object, galaxyServiceMock.Object, userPlanetsServiceMock.Object, missionServiceMock.Object, null, mapper);
+
+
+            var attackMessage = new AttackMessage(new Mission("")
+            {
+                PlanetTo = new MissionPlanet { Coordinates = firstUserPlanet.Coordinates }
+            });
+
+
+            await attackMessageProcessor.ProcessAsync(attackMessage);
+
+
+            userPlanetsServiceMock.Verify(m => m.GetAllUserPlanetsAsync(), Times.Once);
+            galaxyServiceMock.Verify(m => m.GetNearestInactivePlanetAsync(It.IsAny<int>()), Times.Once);
+        }
+
+        [Test]
+        public async Task ProcessAsync_ShouldNotSendFleetWithoutShips()
+        {
+            var firstUserPlanet = new UserPlanet { Coordinates = new Coordinates(1, 1, 1) };
+
+            var userPlanetsServiceMock = new Mock<IUserPlanetsService>();
+            userPlanetsServiceMock
+                .Setup(m => m.IsItUserPlanetAsync(It.IsAny<Coordinates>()))
+                .ReturnsAsync(true);
+            
+            userPlanetsServiceMock
+                .Setup(m => m.GetUserPlanetAsync(It.IsAny<Coordinates>()))
+                .ReturnsAsync(firstUserPlanet);
+
+            var planetOverviewServiceMock = new Mock<IPlanetOverviewService>();
+
+            var missionServiceMock = new Mock<IMissionService>();
+            missionServiceMock
+                .Setup(m => m.IsFleetMovementStillExistsAsync(It.IsAny<string>()))
+                .ReturnsAsync(true);
+
+            var fleetServiceMock = new Mock<IFleetService>();
+            fleetServiceMock
+                .Setup(m => m.GetActivePlanetFleetAsync())
+                .ReturnsAsync(new Fleet { ShipCells = new List<ShipCell>() });
+
+            var nearestInactivePlanet = new MissionPlanet { Coordinates = new Coordinates(2, 2, 2) };
+            var galaxyServiceMock = new Mock<IGalaxyService>();
+            galaxyServiceMock
+                .Setup(m => m.GetNearestInactivePlanetAsync(It.IsAny<int>()))
+                .ReturnsAsync(nearestInactivePlanet);
+
+            var mapper = GetMapper();
+
+            var attackMessageProcessor = new AttackMessageProcessor(null, fleetServiceMock.Object, galaxyServiceMock.Object, userPlanetsServiceMock.Object, missionServiceMock.Object, planetOverviewServiceMock.Object, mapper);
+
+            var attackMessage = new AttackMessage(new Mission("")
+            {
+                PlanetTo = new MissionPlanet { Coordinates = firstUserPlanet.Coordinates }
+            });
+
+
+            await attackMessageProcessor.ProcessAsync(attackMessage);
+
+            
+            planetOverviewServiceMock.Verify(m => m.GetPlanetOverviewAsync(It.IsAny<UserPlanet>()), Times.Never);
+            fleetServiceMock.Verify(m => m.SendFleetAsync(It.IsAny<Fleet>(), It.IsAny<Coordinates>(), It.IsAny<Coordinates>(), It.IsAny<MissionTarget>(), It.IsAny<MissionType>(), It.IsAny<FleetSpeed>(), It.IsAny<Resources>()), Times.Never);
+        }
+
+        [Test]
+        public async Task ProcessAsync_ShouldSendFleetWithAllResources()
+        {
+            var firstUserPlanet = new UserPlanet { Coordinates = new Coordinates(1, 1, 1) };
+
+            var userPlanetsServiceMock = new Mock<IUserPlanetsService>();
+            userPlanetsServiceMock
+                .Setup(m => m.IsItUserPlanetAsync(It.IsAny<Coordinates>()))
+                .ReturnsAsync(true);
+
+            userPlanetsServiceMock
+                .Setup(m => m.GetUserPlanetAsync(It.IsAny<Coordinates>()))
+                .ReturnsAsync(firstUserPlanet);
+
+            var planetResources = new Resources { Crystal = 100, Deuterium = 200, Metal = 300 };
+            var planetOverviewServiceMock = new Mock<IPlanetOverviewService>();
+            planetOverviewServiceMock
+                .Setup(m => m.GetPlanetOverviewAsync(It.IsAny<UserPlanet>()))
+                .ReturnsAsync(new PlanetOverview { Resources = planetResources });
+
+            var missionServiceMock = new Mock<IMissionService>();
+            missionServiceMock
+                .Setup(m => m.IsFleetMovementStillExistsAsync(It.IsAny<string>()))
+                .ReturnsAsync(true);
+
+            var fleetServiceMock = new Mock<IFleetService>();
+            fleetServiceMock
+                .Setup(m => m.GetActivePlanetFleetAsync())
+                .ReturnsAsync(new Fleet
+                {
+                    ShipCells = new List<ShipCell>
+                    {
+                        new ShipCell
+                        {
+                            Count = 10,
+                            Ship = new Ship
+                            {
+                                ShipType = ShipType.LargeTransport
+                            }
+                        }
+                    }
+                });
+
+            var nearestInactivePlanet = new MissionPlanet { Coordinates = new Coordinates(2, 2, 2) };
+            var galaxyServiceMock = new Mock<IGalaxyService>();
+            galaxyServiceMock
+                .Setup(m => m.GetNearestInactivePlanetAsync(It.IsAny<int>()))
+                .ReturnsAsync(nearestInactivePlanet);
+
+            var mapper = GetMapper();
+
+            var attackMessageProcessor = new AttackMessageProcessor(null, fleetServiceMock.Object, galaxyServiceMock.Object, userPlanetsServiceMock.Object, missionServiceMock.Object, planetOverviewServiceMock.Object, mapper);
+
+            var attackMessage = new AttackMessage(new Mission("")
+            {
+                PlanetTo = new MissionPlanet { Coordinates = firstUserPlanet.Coordinates }
+            });
+
+
+            await attackMessageProcessor.ProcessAsync(attackMessage);
+
+
+            planetOverviewServiceMock.Verify(m => m.GetPlanetOverviewAsync(It.IsAny<UserPlanet>()), Times.Once);
+            fleetServiceMock.Verify(m => m.SendFleetAsync(It.IsAny<Fleet>(), It.IsAny<Coordinates>(), It.IsAny<Coordinates>(), It.IsAny<MissionTarget>(), It.IsAny<MissionType>(), It.IsAny<FleetSpeed>(), planetResources), Times.Once);
+        }
+
+        [Test]
+        public async Task ProcessAsync_ShouldReturnReturnFleetMessage()
+        {
+            var firstUserPlanet = new UserPlanet { Coordinates = new Coordinates(1, 1, 1) };
+
+            var userPlanetsServiceMock = new Mock<IUserPlanetsService>();
+            userPlanetsServiceMock
+                .Setup(m => m.IsItUserPlanetAsync(It.IsAny<Coordinates>()))
+                .ReturnsAsync(true);
+
+            userPlanetsServiceMock
+                .Setup(m => m.GetUserPlanetAsync(It.IsAny<Coordinates>()))
+                .ReturnsAsync(firstUserPlanet);
+
+            var planetResources = new Resources { Crystal = 100, Deuterium = 200, Metal = 300 };
+            var planetOverviewServiceMock = new Mock<IPlanetOverviewService>();
+            planetOverviewServiceMock
+                .Setup(m => m.GetPlanetOverviewAsync(It.IsAny<UserPlanet>()))
+                .ReturnsAsync(new PlanetOverview { Resources = planetResources });
+
+            var missionServiceMock = new Mock<IMissionService>();
+            missionServiceMock
+                .Setup(m => m.IsFleetMovementStillExistsAsync(It.IsAny<string>()))
+                .ReturnsAsync(true);
+
+            var fleetServiceMock = new Mock<IFleetService>();
+            fleetServiceMock
+                .Setup(m => m.GetActivePlanetFleetAsync())
+                .ReturnsAsync(new Fleet
+                {
+                    ShipCells = new List<ShipCell>
+                    {
+                        new ShipCell
+                        {
+                            Count = 10,
+                            Ship = new Ship
+                            {
+                                ShipType = ShipType.LargeTransport
+                            }
+                        }
+                    }
+                });
+            fleetServiceMock
+                .Setup(m => m.SendFleetAsync(It.IsAny<Fleet>(), It.IsAny<Coordinates>(), It.IsAny<Coordinates>(), It.IsAny<MissionTarget>(), It.IsAny<MissionType>(), It.IsAny<FleetSpeed>(), It.IsAny<Resources>()))
+                .ReturnsAsync(new FleetMovement());
+
+            var nearestInactivePlanet = new MissionPlanet { Coordinates = new Coordinates(2, 2, 2) };
+            var galaxyServiceMock = new Mock<IGalaxyService>();
+            galaxyServiceMock
+                .Setup(m => m.GetNearestInactivePlanetAsync(It.IsAny<int>()))
+                .ReturnsAsync(nearestInactivePlanet);
+
+            var mapper = GetMapper();
+
+            var attackMessageProcessor = new AttackMessageProcessor(null, fleetServiceMock.Object, galaxyServiceMock.Object, userPlanetsServiceMock.Object, missionServiceMock.Object, planetOverviewServiceMock.Object, mapper);
+
+            var attackMessage = new AttackMessage(new Mission("")
+            {
+                PlanetTo = new MissionPlanet { Coordinates = firstUserPlanet.Coordinates }
+            });
+
+
+            await attackMessageProcessor.ProcessAsync(attackMessage);
+
+
+            planetOverviewServiceMock.Verify(m => m.GetPlanetOverviewAsync(It.IsAny<UserPlanet>()), Times.Once);
+            fleetServiceMock.Verify(m => m.SendFleetAsync(It.IsAny<Fleet>(), It.IsAny<Coordinates>(), It.IsAny<Coordinates>(), It.IsAny<MissionTarget>(), It.IsAny<MissionType>(), It.IsAny<FleetSpeed>(), planetResources), Times.Once);
+        }
+
+
 
         private IMapper GetMapper()
         {
