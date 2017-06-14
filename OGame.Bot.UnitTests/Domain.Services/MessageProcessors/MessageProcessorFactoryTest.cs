@@ -35,7 +35,7 @@ namespace OGame.Bot.UnitTests.Domain.Services.MessageProcessors
             {
                 var message = new Mock<Message>(messageType);
 
-                messageProcessorFactory.GetMessageProcessor(message.Object);
+                messageProcessorFactory.GetMessageProcessors(message.Object);
             }
         }
     }

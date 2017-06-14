@@ -28,14 +28,14 @@ namespace OGame.Bot.Domain.Services.MessageProcessors
             };
         }
 
-        public IMessageProcessor GetMessageProcessor(Message message)
+        public IEnumerable<IMessageProcessor> GetMessageProcessors(Message message)
         {
-            var messageProcessor = _messageProcessors.FirstOrDefault(mp => mp.CanProcess(message));
-            if (messageProcessor == null)
+            var messageProcessors = _messageProcessors.Where(mp => mp.CanProcess(message)).ToList();
+            if (messageProcessors.Count == 0)
             {
                 throw new NotSupportedException($"Can't find MessageProcessor for \"{message.MessageType}\" message type");
             }
-            return messageProcessor;
+            return messageProcessors;
         }
     }
 }

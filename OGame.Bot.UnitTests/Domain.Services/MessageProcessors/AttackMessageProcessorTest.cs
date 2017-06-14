@@ -376,7 +376,7 @@ namespace OGame.Bot.UnitTests.Domain.Services.MessageProcessors
         }
 
         [Test]
-        public async Task ProcessAsync_ShouldReturnReturnFleetMessage()
+        public async Task ProcessAsync_ShouldReturn_ReturnFleetMessage()
         {
             var firstUserPlanet = new UserPlanet { Coordinates = new Coordinates(1, 1, 1) };
 
@@ -429,7 +429,9 @@ namespace OGame.Bot.UnitTests.Domain.Services.MessageProcessors
 
             var mapper = GetMapper();
 
-            var attackMessageProcessor = new AttackMessageProcessor(null, fleetServiceMock.Object, galaxyServiceMock.Object, userPlanetsServiceMock.Object, missionServiceMock.Object, planetOverviewServiceMock.Object, mapper);
+            var dateTimeProviderMock = new Mock<IDateTimeProvider>();
+
+            var attackMessageProcessor = new AttackMessageProcessor(dateTimeProviderMock.Object, fleetServiceMock.Object, galaxyServiceMock.Object, userPlanetsServiceMock.Object, missionServiceMock.Object, planetOverviewServiceMock.Object, mapper);
 
             var attackMessage = new AttackMessage(new Mission("")
             {
@@ -437,11 +439,14 @@ namespace OGame.Bot.UnitTests.Domain.Services.MessageProcessors
             });
 
 
-            await attackMessageProcessor.ProcessAsync(attackMessage);
+            var messages = await attackMessageProcessor.ProcessAsync(attackMessage);
 
 
             planetOverviewServiceMock.Verify(m => m.GetPlanetOverviewAsync(It.IsAny<UserPlanet>()), Times.Once);
             fleetServiceMock.Verify(m => m.SendFleetAsync(It.IsAny<Fleet>(), It.IsAny<Coordinates>(), It.IsAny<Coordinates>(), It.IsAny<MissionTarget>(), It.IsAny<MissionType>(), It.IsAny<FleetSpeed>(), planetResources), Times.Once);
+            Assert.AreEqual(1, messages.Count());
+            var returnFleetMessage = messages.ElementAt(0) as ReturnFleetMessage;
+            Assert.NotNull(returnFleetMessage);
         }
 
 

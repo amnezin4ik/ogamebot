@@ -61,19 +61,22 @@ namespace OGame.Bot.Application.MessageBus
                     Message message;
                     if (_messagesQueue.TryDequeue(out message))
                     {
-                        var messageProcessor = _messageProcessorFactory.GetMessageProcessor(message);
-                        if (messageProcessor.ShouldProcessRightNow(message))
+                        var messageProcessors = _messageProcessorFactory.GetMessageProcessors(message);
+                        foreach (var messageProcessor in messageProcessors)
                         {
-                            _logger.Info($"Processing message: {message}");
-                            var postProcessMessages = await messageProcessor.ProcessAsync(message);
-                            foreach (var postProcessMessage in postProcessMessages)
+                            if (messageProcessor.ShouldProcessRightNow(message))
                             {
-                                AddMessage(postProcessMessage);
+                                _logger.Info($"Processing message: {message}");
+                                var postProcessMessages = await messageProcessor.ProcessAsync(message);
+                                foreach (var postProcessMessage in postProcessMessages)
+                                {
+                                    AddMessage(postProcessMessage);
+                                }
                             }
-                        }
-                        else
-                        {
-                            AddMessage(message);
+                            else
+                            {
+                                AddMessage(message);
+                            }
                         }
                         await Task.Delay(TimeSpan.FromMilliseconds(10));
                     }

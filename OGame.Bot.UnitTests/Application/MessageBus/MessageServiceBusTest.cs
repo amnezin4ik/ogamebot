@@ -28,8 +28,8 @@ namespace OGame.Bot.UnitTests.Application.MessageBus
 
             var messageProcessorFactoryMock = new Mock<IMessageProcessorFactory>();
             messageProcessorFactoryMock
-                .Setup(m => m.GetMessageProcessor(It.IsAny<Message>()))
-                .Returns(messageProcessorMock.Object);
+                .Setup(m => m.GetMessageProcessors(It.IsAny<Message>()))
+                .Returns(new[] { messageProcessorMock.Object });
 
             var messagesComparerMock = new Mock<IMessagesComparer>();
 
@@ -76,8 +76,8 @@ namespace OGame.Bot.UnitTests.Application.MessageBus
             var messageProcessorMock = new Mock<IMessageProcessor>();
             var messageProcessorFactoryMock = new Mock<IMessageProcessorFactory>();
             messageProcessorFactoryMock
-                .Setup(m => m.GetMessageProcessor(It.IsAny<Message>()))
-                .Returns(messageProcessorMock.Object);
+                .Setup(m => m.GetMessageProcessors(It.IsAny<Message>()))
+                .Returns(new[] { messageProcessorMock.Object });
             var messagesComparerMock = new Mock<IMessagesComparer>();
             var messageServiceBus = new MessageServiceBus(messageProcessorFactoryMock.Object, messagesComparerMock.Object);
 
@@ -92,7 +92,7 @@ namespace OGame.Bot.UnitTests.Application.MessageBus
 
 
             Assert.IsFalse(messageServiceBus.IsRunning);
-            messageProcessorFactoryMock.Verify(m => m.GetMessageProcessor(It.IsAny<Message>()), Times.Never);
+            messageProcessorFactoryMock.Verify(m => m.GetMessageProcessors(It.IsAny<Message>()), Times.Never);
         }
 
         [Test]
@@ -108,8 +108,8 @@ namespace OGame.Bot.UnitTests.Application.MessageBus
 
             var messageProcessorFactoryMock = new Mock<IMessageProcessorFactory>();
             messageProcessorFactoryMock
-                .Setup(m => m.GetMessageProcessor(It.IsAny<Message>()))
-                .Returns(messageProcessorMock.Object);
+                .Setup(m => m.GetMessageProcessors(It.IsAny<Message>()))
+                .Returns(new[] { messageProcessorMock.Object });
 
             var messagesComparerMock = new Mock<IMessagesComparer>();
             var messageServiceBus = new MessageServiceBus(messageProcessorFactoryMock.Object, messagesComparerMock.Object);
@@ -139,8 +139,8 @@ namespace OGame.Bot.UnitTests.Application.MessageBus
 
             var messageProcessorFactoryMock = new Mock<IMessageProcessorFactory>();
             messageProcessorFactoryMock
-                .Setup(m => m.GetMessageProcessor(It.IsAny<Message>()))
-                .Returns(messageProcessorMock.Object);
+                .Setup(m => m.GetMessageProcessors(It.IsAny<Message>()))
+                .Returns(new[] { messageProcessorMock.Object });
 
             var messagesComparer = new MessagesComparer();
             var messageServiceBus = new MessageServiceBus(messageProcessorFactoryMock.Object, messagesComparer);
